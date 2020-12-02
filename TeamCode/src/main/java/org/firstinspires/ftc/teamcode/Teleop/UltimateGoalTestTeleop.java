@@ -22,7 +22,7 @@ import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MotorPair;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 
-@TeleOp(name = "UltimateGoalTeleop", group = "Basic")
+@TeleOp(name = "Ultimate Goal Teleop", group = "Basic")
 public class UltimateGoalTestTeleop extends OpMode {
     private Robot robot;
     private MecanumDrive mecanumDrive;
@@ -80,10 +80,12 @@ public class UltimateGoalTestTeleop extends OpMode {
         if(gamepad1.a){
             shooter1.setPower(1.0);
             shooter2.setPower(0.5);
+            telemetry.addLine("Shooting");
         }
         else {
             shooter1.setPower(0.0);
             shooter2.setPower(0.0);
+            telemetry.addLine("Not Shooting");
         }
 
         this.mecanumDrive.complexDrive(-gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, telemetry);

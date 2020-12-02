@@ -22,42 +22,47 @@ import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MotorPair;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 
-@TeleOp(name = "UltimateGoalTestTeleop", group = "Basic")
+@TeleOp(name = "UltimateGoalTeleop", group = "Basic")
 public class UltimateGoalTestTeleop extends OpMode {
     private Robot robot;
     private MecanumDrive mecanumDrive;
-    private MotorPair intake;
-    private DcMotor arm;
-    private DcMotor elevator;
-    private Servo grabber;
-    private Servo assist;
-    private Servo clampLeft;
-    private Servo clampRight;
+    private DcMotor shooter1;
+    private DcMotor shooter2;
+    //private MotorPair intake;
+    //private DcMotor arm;
+    //private DcMotor elevator;
+
+    //private Servo grabber;
+    //private Servo assist;
+    //private Servo clampLeft;
+    //private Servo clampRight;
     //private GrabberState grabberState = GrabberState.CLOSED;
     //private ClampState clampState = ClampState.UP;
-    private IntegratingGyroscope gyro;
-    private ModernRoboticsI2cGyro modernRoboticsI2cGyro;
-    private AngularVelocity rates;
-    private IMUWrapper imuWrapper;
+    //private IntegratingGyroscope gyro;
+    //private ModernRoboticsI2cGyro modernRoboticsI2cGyro;
+    //private AngularVelocity rates;
+    //private IMUWrapper imuWrapper;
 
     @Override
     public void init() {
         this.robot = new Robot(hardwareMap);
         this.mecanumDrive = (MecanumDrive) this.robot.getDrivetrain();
-        this.intake = new MotorPair(hardwareMap, "intake1", "intake2");
-        this.arm = hardwareMap.get(DcMotor.class, "arm");
-        this.elevator = hardwareMap.get(DcMotor.class, "elevator");
-        this.grabber = hardwareMap.get(Servo.class, "grabber");
-        this.assist = hardwareMap.get(Servo.class, "assist");
-        this.clampLeft = hardwareMap.get(Servo.class, "clamp_left");
-        this.clampRight = hardwareMap.get(Servo.class, "clamp_right");
-        this.modernRoboticsI2cGyro = hardwareMap.get(ModernRoboticsI2cGyro.class, "gyro");
-        this.imuWrapper = new IMUWrapper(hardwareMap);
+        this.shooter1 = hardwareMap.get(DcMotor.class, "shooter1");
+        this.shooter2 = hardwareMap.get(DcMotor.class, "shooter2");
+        //this.intake = new MotorPair(hardwareMap, "intake1", "intake2");
+        //this.arm = hardwareMap.get(DcMotor.class, "arm");
+        //this.elevator = hardwareMap.get(DcMotor.class, "elevator");
+        //this.grabber = hardwareMap.get(Servo.class, "grabber");
+        //this.assist = hardwareMap.get(Servo.class, "assist");
+        //this.clampLeft = hardwareMap.get(Servo.class, "clamp_left");
+        //this.clampRight = hardwareMap.get(Servo.class, "clamp_right");
+        //this.modernRoboticsI2cGyro = hardwareMap.get(ModernRoboticsI2cGyro.class, "gyro");
+        //this.imuWrapper = new IMUWrapper(hardwareMap);
         /*this.gyro = (IntegratingGyroscope) modernRoboticsI2cGyro;
         modernRoboticsI2cGyro.calibrate();*/
 
-        this.elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //this.elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //this.arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     @Override
@@ -70,7 +75,16 @@ public class UltimateGoalTestTeleop extends OpMode {
         // check for collision. If collided, stop to prevent further damage
         /*if (CollisionExecutor.calculate(modernRoboticsI2cGyro.getHeading(), this.imuWrapper)) {
             this.mecanumDrive.stopMoving();
-        }*/
+         */
+
+        if(gamepad1.a){
+            shooter1.setPower(1.0);
+            shooter2.setPower(0.5);
+        }
+        else {
+            shooter1.setPower(0.0);
+            shooter2.setPower(0.0);
+        }
 
         this.mecanumDrive.complexDrive(-gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, telemetry);
 
@@ -110,21 +124,21 @@ public class UltimateGoalTestTeleop extends OpMode {
         }
         */
         // arm
-        this.arm.setPower(gamepad2.left_stick_y * 0.5);
+        //this.arm.setPower(gamepad2.left_stick_y * 0.5);
 
         // intake
-        this.intake.getMotor1().setPower((this.intake.getMotor1().getPower() == 0) && (gamepad1.x || gamepad2.x) ? 1 : 0);
-        this.intake.getMotor2().setPower((this.intake.getMotor2().getPower() == 0) && (gamepad1.x || gamepad2.x) ? -1 : 0);
-        this.intake.getMotor1().setPower((this.intake.getMotor1().getPower() == 0) && (gamepad1.y || gamepad2.y) ? -1 : 0);
-        this.intake.getMotor2().setPower((this.intake.getMotor2().getPower() == 0) && (gamepad1.y || gamepad2.y) ? 1 : 0);
+        //this.intake.getMotor1().setPower((this.intake.getMotor1().getPower() == 0) && (gamepad1.x || gamepad2.x) ? 1 : 0);
+        //this.intake.getMotor2().setPower((this.intake.getMotor2().getPower() == 0) && (gamepad1.x || gamepad2.x) ? -1 : 0);
+        //this.intake.getMotor1().setPower((this.intake.getMotor1().getPower() == 0) && (gamepad1.y || gamepad2.y) ? -1 : 0);
+        //this.intake.getMotor2().setPower((this.intake.getMotor2().getPower() == 0) && (gamepad1.y || gamepad2.y) ? 1 : 0);
 
         // elevator
-        if (gamepad2.right_stick_y >= 0) {
-            this.elevator.setPower(-gamepad2.right_stick_y* 0.65);
-        }
-        else if (gamepad2.right_stick_y < 0) {
-            this.elevator.setPower(-gamepad2.right_stick_y);
-        }
+        //if (gamepad2.right_stick_y >= 0) {
+        //    this.elevator.setPower(-gamepad2.right_stick_y* 0.65);
+        //}
+        //else if (gamepad2.right_stick_y < 0) {
+        //    this.elevator.setPower(-gamepad2.right_stick_y);
+        //}
 
         /* clamp
         if (this.clampState.equals(ClampState.UP) && (gamepad2.dpad_down || gamepad1.dpad_down)) {
@@ -151,13 +165,8 @@ public class UltimateGoalTestTeleop extends OpMode {
          */
 
 
-        // stop
-        if (gamepad1.right_bumper) {
-            this.intake.stopMoving();
-            this.mecanumDrive.stopMoving();
-            //this.grabber.setPower(0);
-            this.arm.setPower(0);
-            this.elevator.setPower(0);
+
         }
-    }
+
 }
+

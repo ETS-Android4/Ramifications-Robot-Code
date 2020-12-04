@@ -28,6 +28,7 @@ public class UltimateGoalTestTeleop extends OpMode {
     private MecanumDrive mecanumDrive;
     private DcMotor shooter1;
     private DcMotor shooter2;
+    double firepower = 0.5;
     //private MotorPair intake;
     //private DcMotor arm;
     //private DcMotor elevator;
@@ -45,6 +46,7 @@ public class UltimateGoalTestTeleop extends OpMode {
 
     @Override
     public void init() {
+
         this.robot = new Robot(hardwareMap);
         this.mecanumDrive = (MecanumDrive) this.robot.getDrivetrain();
         this.shooter1 = hardwareMap.get(DcMotor.class, "shooter1");
@@ -77,16 +79,30 @@ public class UltimateGoalTestTeleop extends OpMode {
             this.mecanumDrive.stopMoving();
          */
 
-        if(gamepad1.a){
-            shooter1.setPower(1.0);
-            shooter2.setPower(0.5);
-            telemetry.addLine("Shooting");
+        if(gamepad1.a && (firepower<=0.95)){
+            telemetry.addLine("Increasing Firepower");
+            firepower += 0.05;
+            try {
+                wait(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
-        else {
-            shooter1.setPower(0.0);
-            shooter2.setPower(0.0);
-            telemetry.addLine("Not Shooting");
+        if(gamepad1.b && (firepower>=0.5)) {
+            telemetry.addLine("Decreasing Firepower");
+            firepower -= 0.05;
+            try {
+                wait(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+
+        String powerlevel = (firepower*100) + "%";
+        telemetry.addLine("Firepower is: " + powerlevel);
+        shooter1.setPower(firepower);
+        shooter2.setPower(firepower/2);
 
         this.mecanumDrive.complexDrive(-gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, telemetry);
 

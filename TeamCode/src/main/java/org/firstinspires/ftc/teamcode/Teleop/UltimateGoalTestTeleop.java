@@ -79,7 +79,7 @@ public class UltimateGoalTestTeleop extends OpMode {
             this.mecanumDrive.stopMoving();
          */
 
-        if(gamepad1.a && (firepower<=0.95)){
+        if(gamepad1.a && (firepower<1)){
             telemetry.addLine("Increasing Firepower");
             firepower += 0.05;
             try {
@@ -89,7 +89,7 @@ public class UltimateGoalTestTeleop extends OpMode {
             }
 
         }
-        if(gamepad1.b && (firepower>=0.5)) {
+        if(gamepad1.b && (firepower>0.05)) {
             telemetry.addLine("Decreasing Firepower");
             firepower -= 0.05;
             try {

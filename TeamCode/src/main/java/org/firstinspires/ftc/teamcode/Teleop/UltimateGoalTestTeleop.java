@@ -22,7 +22,7 @@ import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MotorPair;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 
-@TeleOp(name = "Ultimate Goal Teleop", group = "Basic")
+@TeleOp(name = "Ultimate Goal Teleop V:1.0", group = "Basic")
 public class UltimateGoalTestTeleop extends OpMode {
     private Robot robot;
     private MecanumDrive mecanumDrive;

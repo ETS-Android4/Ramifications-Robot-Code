@@ -67,6 +67,29 @@ public class UltimateGoalTestTeleop extends OpMode {
         //this.arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
+    private double computeMovement(double x) {
+        if (gamepad1.right_trigger == 0) {
+            if (x == 0.0) {
+                return 0.0;
+            } else if (x > 0.0) {
+                return Math.pow(100, (1.02 * x) - 1.07) + 0.2;
+            } else if (x < 0.0) {
+                return -(Math.pow(100, (-1.02 * x) - 1.07) + 0.2);
+            }
+            return 0.0;
+        } else if (gamepad1.right_trigger == 1) {
+            if (x == 0.0) {
+                return 0.0;
+            } else if (x > 0.0) {
+                return Math.pow(100, (0.87 * x) - 1.07) + 0.4;
+            } else if (x < 0.0) {
+                return -(Math.pow(100, (-0.87 * x) - 1.07) + 0.4);
+            }
+            return 0.0;
+        }
+        return 0.0;
+    }
+
     @Override
     public void loop() {
         //rates = gyro.getAngularVelocity(AngleUnit.DEGREES.DEGREES);

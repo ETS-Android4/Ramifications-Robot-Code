@@ -29,6 +29,8 @@ public class UltimateGoalTestTeleop extends OpMode {
     private DcMotor shooter1;
     private DcMotor shooter2;
     double firepower = 0.5;
+    private DcMotor arm;
+    private CRServo claw;
     //private MotorPair intake;
     //private DcMotor arm;
     //private DcMotor elevator;
@@ -51,6 +53,8 @@ public class UltimateGoalTestTeleop extends OpMode {
         this.mecanumDrive = (MecanumDrive) this.robot.getDrivetrain();
         this.shooter1 = hardwareMap.get(DcMotor.class, "shooter1");
         this.shooter2 = hardwareMap.get(DcMotor.class, "shooter2");
+        this.arm = hardwareMap.get(DcMotor.class, "arm");
+        this.claw = hardwareMap.get(CRServo.class, "claw");
         //this.intake = new MotorPair(hardwareMap, "intake1", "intake2");
         //this.arm = hardwareMap.get(DcMotor.class, "arm");
         //this.elevator = hardwareMap.get(DcMotor.class, "elevator");
@@ -92,6 +96,7 @@ public class UltimateGoalTestTeleop extends OpMode {
 
     @Override
     public void loop() {
+
         //rates = gyro.getAngularVelocity(AngleUnit.DEGREES.DEGREES);
         //telemetry.addData("isGrabberOpen", this.grabberState);
         //telemetry.addData("Collision Detected", CollisionExecutor.calculate(modernRoboticsI2cGyro.getHeading(), this.imuWrapper));
@@ -106,7 +111,7 @@ public class UltimateGoalTestTeleop extends OpMode {
             telemetry.addLine("Increasing Firepower");
             firepower += 0.05;
             try {
-                wait(500);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -116,18 +121,31 @@ public class UltimateGoalTestTeleop extends OpMode {
             telemetry.addLine("Decreasing Firepower");
             firepower -= 0.05;
             try {
-                wait(500);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
         }
 
         String powerlevel = (firepower*100) + "%";
         telemetry.addLine("Firepower is: " + powerlevel);
         shooter1.setPower(firepower);
-        shooter2.setPower(firepower/2);
+        shooter2.setPower(1);
+        this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
 
-        this.mecanumDrive.complexDrive(-gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, telemetry);
+        if(gamepad2.b){
+            claw.setPower(1);
+        }
+        else if(gamepad2.a){
+            claw.setPower(-1);
+        }
+        else{
+            claw.setPower(0);
+        }
+        arm.setPower(gamepad2.right_stick_y);
+
+
 
         /*
         // assist

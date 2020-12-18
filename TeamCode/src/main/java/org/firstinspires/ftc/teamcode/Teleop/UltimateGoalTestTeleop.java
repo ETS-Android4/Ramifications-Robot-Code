@@ -30,7 +30,12 @@ public class UltimateGoalTestTeleop extends OpMode {
     private DcMotor shooter2;
     double firepower = 0.5;
     private DcMotor arm;
-    private CRServo claw;
+    private Servo claw;
+    boolean clawstate = false;
+    boolean hopstate = false;
+    double firepowerstate = 0.0;
+    private DcMotor intake;
+    private Servo hopperpush;
     //private MotorPair intake;
     //private DcMotor arm;
     //private DcMotor elevator;
@@ -54,7 +59,12 @@ public class UltimateGoalTestTeleop extends OpMode {
         this.shooter1 = hardwareMap.get(DcMotor.class, "shooter1");
         this.shooter2 = hardwareMap.get(DcMotor.class, "shooter2");
         this.arm = hardwareMap.get(DcMotor.class, "arm");
-        this.claw = hardwareMap.get(CRServo.class, "claw");
+        this.claw = hardwareMap.get(Servo.class, "claw");
+        claw.setPosition(0);
+        this.hopperpush = hardwareMap.get(Servo.class, "hopperpush");
+        this.intake = hardwareMap.get(DcMotor.class, "intake");
+        hopperpush.setPosition(1);
+
         //this.intake = new MotorPair(hardwareMap, "intake1", "intake2");
         //this.arm = hardwareMap.get(DcMotor.class, "arm");
         //this.elevator = hardwareMap.get(DcMotor.class, "elevator");
@@ -102,48 +112,116 @@ public class UltimateGoalTestTeleop extends OpMode {
         //telemetry.addData("Collision Detected", CollisionExecutor.calculate(modernRoboticsI2cGyro.getHeading(), this.imuWrapper));
         telemetry.update();
 
+
         // check for collision. If collided, stop to prevent further damage
         /*if (CollisionExecutor.calculate(modernRoboticsI2cGyro.getHeading(), this.imuWrapper)) {
             this.mecanumDrive.stopMoving();
          */
 
-        if(gamepad1.a && (firepower<1)){
-            telemetry.addLine("Increasing Firepower");
-            firepower += 0.05;
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        }
-        if(gamepad1.b && (firepower>0.05)) {
-            telemetry.addLine("Decreasing Firepower");
-            firepower -= 0.05;
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
+        if (gamepad1.x) {
+            intake.setPower(-1);
+            telemetry.addLine("intake active");
+        } else if (gamepad1.y) {
+            intake.setPower(1);
+            telemetry.addLine("reversing intake");
+        } else {
+            intake.setPower(0);
+            telemetry.addLine("intake off");
         }
 
-        String powerlevel = (firepower*100) + "%";
-        telemetry.addLine("Firepower is: " + powerlevel);
-        shooter1.setPower(firepower);
-        shooter2.setPower(1);
+
+        if (gamepad2.b) {
+            if (firepowerstate == 0) {
+                telemetry.addLine("single shot mode activated");
+                shooter2.setPower(1);
+                firepowerstate = 0.7;
+                shooter1.setPower(firepowerstate);
+                try {
+                    Thread.sleep(200);
+                } catch (Exception e) {
+
+                }
+            } else if (firepowerstate == 0.70) {
+                telemetry.addLine("burst mode activate");
+                shooter2.setPower(1);
+                firepowerstate = 0.75;
+                shooter1.setPower(firepowerstate);
+                try {
+                    Thread.sleep(200);
+                } catch (Exception e) {
+
+                }
+            } else if (firepowerstate == 0.75) {
+                telemetry.addLine("yeeter shut down");
+                shooter2.setPower(0);
+                firepowerstate = 0.0;
+                shooter1.setPower(firepowerstate);
+                try {
+                    Thread.sleep(200);
+                } catch (Exception e) {
+
+                }
+            }
+        }
+
+
+        //control over drivetrain
         this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
 
-        if(gamepad2.b){
-            claw.setPower(1);
+
+        //open or close claw on wobble goal arm
+        arm.setPower(-gamepad2.right_stick_y);
+
+        //wobble goal claw
+        if (gamepad2.a) {
+            if (clawstate == false) {
+                telemetry.addLine("Wobble Claw Opening");
+                claw.setPosition(1);
+                clawstate = true;
+                try {
+                    Thread.sleep(150);
+                } catch (Exception e) {
+
+                }
+            } else if (clawstate == true) {
+                telemetry.addLine("Wobble Claw Closing");
+                claw.setPosition(0);
+                clawstate = false;
+                try {
+                    Thread.sleep(150);
+                } catch (Exception e) {
+
+                }
+
+            }
         }
-        else if(gamepad2.a){
-            claw.setPower(-1);
+
+        //hopper pusher
+        if (gamepad1.a) {
+            if (hopstate == false) {
+                telemetry.addLine("Hopper pusher Opening");
+                hopperpush.setPosition(1);
+                hopstate = true;
+                try {
+                    Thread.sleep(150);
+                } catch (Exception e) {
+
+                }
+            } else if (hopstate == true) {
+                telemetry.addLine("Hopper Pusher Closing");
+                hopperpush.setPosition(0);
+                hopstate = false;
+                try {
+                    Thread.sleep(150);
+                } catch (Exception e) {
+
+                }
+
+            }
         }
-        else{
-            claw.setPower(0);
-        }
-        arm.setPower(gamepad2.right_stick_y);
+    }
+
+
 
 
 
@@ -182,22 +260,22 @@ public class UltimateGoalTestTeleop extends OpMode {
                 break;
         }
         */
-        // arm
-        //this.arm.setPower(gamepad2.left_stick_y * 0.5);
+            // arm
+            //this.arm.setPower(gamepad2.left_stick_y * 0.5);
 
-        // intake
-        //this.intake.getMotor1().setPower((this.intake.getMotor1().getPower() == 0) && (gamepad1.x || gamepad2.x) ? 1 : 0);
-        //this.intake.getMotor2().setPower((this.intake.getMotor2().getPower() == 0) && (gamepad1.x || gamepad2.x) ? -1 : 0);
-        //this.intake.getMotor1().setPower((this.intake.getMotor1().getPower() == 0) && (gamepad1.y || gamepad2.y) ? -1 : 0);
-        //this.intake.getMotor2().setPower((this.intake.getMotor2().getPower() == 0) && (gamepad1.y || gamepad2.y) ? 1 : 0);
+            // intake
+            //this.intake.getMotor1().setPower((this.intake.getMotor1().getPower() == 0) && (gamepad1.x || gamepad2.x) ? 1 : 0);
+            //this.intake.getMotor2().setPower((this.intake.getMotor2().getPower() == 0) && (gamepad1.x || gamepad2.x) ? -1 : 0);
+            //this.intake.getMotor1().setPower((this.intake.getMotor1().getPower() == 0) && (gamepad1.y || gamepad2.y) ? -1 : 0);
+            //this.intake.getMotor2().setPower((this.intake.getMotor2().getPower() == 0) && (gamepad1.y || gamepad2.y) ? 1 : 0);
 
-        // elevator
-        //if (gamepad2.right_stick_y >= 0) {
-        //    this.elevator.setPower(-gamepad2.right_stick_y* 0.65);
-        //}
-        //else if (gamepad2.right_stick_y < 0) {
-        //    this.elevator.setPower(-gamepad2.right_stick_y);
-        //}
+            // elevator
+            //if (gamepad2.right_stick_y >= 0) {
+            //    this.elevator.setPower(-gamepad2.right_stick_y* 0.65);
+            //}
+            //else if (gamepad2.right_stick_y < 0) {
+            //    this.elevator.setPower(-gamepad2.right_stick_y);
+            //}
 
         /* clamp
         if (this.clampState.equals(ClampState.UP) && (gamepad2.dpad_down || gamepad1.dpad_down)) {
@@ -224,8 +302,5 @@ public class UltimateGoalTestTeleop extends OpMode {
          */
 
 
-
         }
-
-}
 

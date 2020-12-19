@@ -130,7 +130,7 @@ public class UltimateGoalTestTeleop extends OpMode {
         }
 
 
-        if (gamepad2.b) {
+        if (gamepad1.b) {
             if (firepowerstate == 0) {
                 telemetry.addLine("single shot mode activated");
                 shooter2.setPower(1);
@@ -167,6 +167,64 @@ public class UltimateGoalTestTeleop extends OpMode {
 
         //control over drivetrain
         this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+
+
+        if(gamepad1.right_trigger > 0){
+            shooter1.setPower(1);
+            shooter2.setPower(0.75);
+
+            hopperpush.setPosition(0.0);
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            try { Thread.sleep(200); } catch (Exception e) { }
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            try { Thread.sleep(250); } catch (Exception e) { }
+            hopperpush.setPosition(1);
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            try { Thread.sleep(200); } catch (Exception e) { }
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            try { Thread.sleep(250); } catch (Exception e) { }
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            hopperpush.setPosition(0);
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            try { Thread.sleep(200); } catch (Exception e) { }
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            try { Thread.sleep(250); } catch (Exception e) { }
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            hopperpush.setPosition(1);
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            try { Thread.sleep(200); } catch (Exception e) { }
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            try { Thread.sleep(250); } catch (Exception e) { }
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            hopperpush.setPosition(0);
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            try { Thread.sleep(200); } catch (Exception e) { }
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            try { Thread.sleep(250); } catch (Exception e) { }
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            hopperpush.setPosition(1);
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            try { Thread.sleep(200); } catch (Exception e) { }
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            try { Thread.sleep(250); } catch (Exception e) { }
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            hopperpush.setPosition(0);
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            try { Thread.sleep(200); } catch (Exception e) { }
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            try { Thread.sleep(250); } catch (Exception e) { }
+            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            hopperpush.setPosition(1);
+
+
+
+
+
+            shooter1.setPower(0);
+            shooter2.setPower(0);
+
+
+        }
 
 
         //open or close claw on wobble goal arm
@@ -220,6 +278,7 @@ public class UltimateGoalTestTeleop extends OpMode {
             }
         }
     }
+
 
 
 

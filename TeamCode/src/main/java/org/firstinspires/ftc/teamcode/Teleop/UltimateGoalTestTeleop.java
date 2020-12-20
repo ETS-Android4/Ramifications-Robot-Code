@@ -22,7 +22,7 @@ import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MotorPair;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 
-@TeleOp(name = "Ultimate Goal Teleop V:1.0", group = "Basic")
+@TeleOp(name = "Ultimate Goal Teleop V:3.0", group = "Basic")
 public class UltimateGoalTestTeleop extends OpMode {
     private Robot robot;
     private MecanumDrive mecanumDrive;
@@ -63,7 +63,7 @@ public class UltimateGoalTestTeleop extends OpMode {
         claw.setPosition(0);
         this.hopperpush = hardwareMap.get(Servo.class, "hopperpush");
         this.intake = hardwareMap.get(DcMotor.class, "intake");
-        hopperpush.setPosition(1);
+        hopperpush.setPosition(0.5);
 
         //this.intake = new MotorPair(hardwareMap, "intake1", "intake2");
         //this.arm = hardwareMap.get(DcMotor.class, "arm");
@@ -166,62 +166,59 @@ public class UltimateGoalTestTeleop extends OpMode {
 
 
         //control over drivetrain
-        this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+        this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
 
 
         if(gamepad1.right_trigger > 0){
+
+            //start of rapidfire instruction sequence
             shooter1.setPower(1);
             shooter2.setPower(0.75);
-
             hopperpush.setPosition(0.0);
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             try { Thread.sleep(200); } catch (Exception e) { }
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             try { Thread.sleep(250); } catch (Exception e) { }
             hopperpush.setPosition(1);
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             try { Thread.sleep(200); } catch (Exception e) { }
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             try { Thread.sleep(250); } catch (Exception e) { }
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             hopperpush.setPosition(0);
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             try { Thread.sleep(200); } catch (Exception e) { }
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             try { Thread.sleep(250); } catch (Exception e) { }
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             hopperpush.setPosition(1);
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             try { Thread.sleep(200); } catch (Exception e) { }
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             try { Thread.sleep(250); } catch (Exception e) { }
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             hopperpush.setPosition(0);
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             try { Thread.sleep(200); } catch (Exception e) { }
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             try { Thread.sleep(250); } catch (Exception e) { }
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             hopperpush.setPosition(1);
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             try { Thread.sleep(200); } catch (Exception e) { }
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             try { Thread.sleep(250); } catch (Exception e) { }
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             hopperpush.setPosition(0);
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             try { Thread.sleep(200); } catch (Exception e) { }
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             try { Thread.sleep(250); } catch (Exception e) { }
-            this.mecanumDrive.complexDrive(gamepad1.right_stick_x, gamepad1.left_stick_y, gamepad1.left_stick_x, telemetry);
+            this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
             hopperpush.setPosition(1);
-
-
-
-
-
             shooter1.setPower(0);
             shooter2.setPower(0);
+            //end of rapidfire instruction sequence
 
 
         }

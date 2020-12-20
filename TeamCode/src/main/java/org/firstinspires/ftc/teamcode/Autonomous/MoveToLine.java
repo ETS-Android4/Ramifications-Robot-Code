@@ -1,59 +1,40 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
-
-import android.graphics.Color;
+// import lines were omitted. OnBotJava will add them automatically.
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
-import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
-
-@Autonomous(name = "MoveToLine", group = "Generic")
+@Autonomous
 public class MoveToLine extends LinearOpMode {
+    DcMotor main1;
 
-    private Robot robot;
-    private MecanumDrive mecanumDrive;
-    int step = 0;
-
-
-
-
+    @Override
     public void runOpMode() {
-        // init
-        this.robot = new Robot(hardwareMap);
-        this.mecanumDrive = (MecanumDrive) this.robot.getDrivetrain();
+        main1 = hardwareMap.get(DcMotor.class, "main1");
 
-
-        // set motors to coast
-        this.mecanumDrive.getMajorDiagonal().getMotor1().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        this.mecanumDrive.getMajorDiagonal().getMotor2().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        this.mecanumDrive.getMinorDiagonal().getMotor1().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        this.mecanumDrive.getMinorDiagonal().getMotor2().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        // Reset the encoder during initialization
+        main1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         waitForStart();
 
+        // Set the motor's target position to 300 ticks
+        main1.setTargetPosition(300);
 
+        // Switch to RUN_TO_POSITION mode
+        main1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        // Start the motor moving by setting the max velocity to 200 ticks per second
+        main1.setPower(200);
+
+        // While the Op Mode is running, show the motor's status via telemetry
         while (opModeIsActive()) {
-            // update colors
-
-
+            telemetry.addData("velocity", main1.getPower());
+            telemetry.addData("position", main1.getCurrentPosition());
+            telemetry.addData("is at target", !main1.isBusy());
             telemetry.update();
-
-            switch (step) {
-
-                case 0:
-                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
-                    sleep(2300);
-                    this.mecanumDrive.stopMoving();
-                    step++;
-                    break;
-
-            }
         }
+        main1.setPower(0);
     }
 }

@@ -8,33 +8,36 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 @Autonomous
 public class MoveToLine extends LinearOpMode {
-    DcMotor main1;
+    DcMotor main2;
+
+    //main 2 is front right and works
+    //minor2 is front left and it works
 
     @Override
     public void runOpMode() {
-        main1 = hardwareMap.get(DcMotor.class, "main1");
+        main2 = hardwareMap.get(DcMotor.class, "minor2");
 
         // Reset the encoder during initialization
-        main1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        main2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         waitForStart();
 
         // Set the motor's target position to 300 ticks
-        main1.setTargetPosition(300);
+        main2.setTargetPosition(300);
 
         // Switch to RUN_TO_POSITION mode
-        main1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        main2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // Start the motor moving by setting the max velocity to 200 ticks per second
-        main1.setPower(200);
+        main2.setPower(200);
 
         // While the Op Mode is running, show the motor's status via telemetry
         while (opModeIsActive()) {
-            telemetry.addData("velocity", main1.getPower());
-            telemetry.addData("position", main1.getCurrentPosition());
-            telemetry.addData("is at target", !main1.isBusy());
+            telemetry.addData("velocity", main2.getPower());
+            telemetry.addData("position", main2.getCurrentPosition());
+            telemetry.addData("is at target", !main2.isBusy());
             telemetry.update();
         }
-        main1.setPower(0);
+        main2.setPower(0);
     }
 }

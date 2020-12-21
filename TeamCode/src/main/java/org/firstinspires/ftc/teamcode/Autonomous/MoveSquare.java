@@ -33,16 +33,16 @@ public class MoveSquare extends LinearOpMode {
         sleep(500);
         this.mecanumDrive.stopMoving();
 
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),1,0);
-        sleep(500);
+        this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
+        sleep(600);
         this.mecanumDrive.stopMoving();
 
         this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
         sleep(500);
         this.mecanumDrive.stopMoving();
 
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),1,0);
-        sleep(500);
+        this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
+        sleep(600);
         this.mecanumDrive.stopMoving();
 
     }

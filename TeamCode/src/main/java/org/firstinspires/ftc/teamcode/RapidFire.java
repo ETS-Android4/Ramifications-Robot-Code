@@ -8,7 +8,14 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 
 public class RapidFire {
-    public static void rapidFire(MecanumDrive mecanumDrive, DcMotor shooter1, DcMotor shooter2, Servo hopperpush, Gamepad gamepad1, Telemetry telemetry) {
+    public static void rapidFire(DcMotor shooter1, DcMotor shooter2, Servo hopperpush, Telemetry telemetry, int numRings) {
+        for (int i = 0; i < numRings; ++i) {
+            shooter1.setPower(1);
+            shooter2.setPower(2);
+            hopperpush.setPosition(0.0);
+        }
+    }
+    public static void rapidFire(DcMotor shooter1, DcMotor shooter2, Servo hopperpush, Telemetry telemetry, MecanumDrive mecanumDrive, Gamepad gamepad1) {
         shooter1.setPower(1);
         shooter2.setPower(0.75);
         hopperpush.setPosition(0.0);

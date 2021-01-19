@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.RapidFire;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 
@@ -23,6 +24,8 @@ public class AutoRedCenter extends LinearOpMode {
     double firepowerstate = 0.0;
     private DcMotor intake;
     private Servo hopperpush;
+    private int storedRings = 0;
+    private int fieldRings;
 
     private enum AutoMode {
         MOVE_TO_LINE,
@@ -39,12 +42,26 @@ public class AutoRedCenter extends LinearOpMode {
     }
 
     private AutoMode autoMode;
+    private FieldMode fieldMode;
 
     @Override
     public void runOpMode() {
         this.robot = new Robot(hardwareMap);
         this.mecanumDrive = (MecanumDrive) this.robot.getDrivetrain();
         this.autoMode = AutoMode.MOVE_TO_LINE;
+        this.fieldMode = FieldMode.A;
+
+        switch(this.fieldMode) {
+            case A:
+                this.fieldRings = 0;
+                break;
+            case B:
+                this.fieldRings = 1;
+                break;
+            case C:
+                this.fieldRings = 4;
+                break;
+        }
 
         waitForStart();
 
@@ -106,8 +123,16 @@ public class AutoRedCenter extends LinearOpMode {
                     // TODO
                     break;
                 case PICKUP:
+                    while (storedRings < this.fieldRings) {
+                        this.intake.setPower(0.5);
+                        sleep(1);
+                    }
+                    this.intake.setPower(0);
                     break;
                 case FIRE_GOAL:
+                    while (storedRings != 0) {
+                        RapidFire.rapidFire(shooter1,shooter2,hopperpush,telemetry, mecanumDrive, gamepad1);
+                    }
                     break;
                 case DROP_WOBBLE:
                     break;

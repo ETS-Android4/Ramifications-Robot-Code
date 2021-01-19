@@ -1,0 +1,7 @@
+TODOs (in order of most to least important):
+
+Create an autonomous:
+    Make an accurate power-shot thing
+    Be able to re-center for goal shooting
+Make an accu-drive
+Organize rapid-fire

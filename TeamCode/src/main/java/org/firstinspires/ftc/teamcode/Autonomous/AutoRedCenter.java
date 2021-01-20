@@ -30,7 +30,9 @@ public class AutoRedCenter extends LinearOpMode {
     private enum AutoMode {
         MOVE_TO_LINE,
         FIRE_POWER_SHOT,
-        PICKUP,
+        PICKUP_A,
+        PICKUP_B,
+        PICKUP_C,
         FIRE_GOAL,
         DROP_WOBBLE,
         PARK_LINE
@@ -43,6 +45,7 @@ public class AutoRedCenter extends LinearOpMode {
 
     private AutoMode autoMode;
     private FieldMode fieldMode;
+    private AutoMode pickupConfig;
 
     @Override
     public void runOpMode() {
@@ -50,16 +53,30 @@ public class AutoRedCenter extends LinearOpMode {
         this.mecanumDrive = (MecanumDrive) this.robot.getDrivetrain();
         this.autoMode = AutoMode.MOVE_TO_LINE;
         this.fieldMode = FieldMode.A;
+        this.shooter1 = hardwareMap.get(DcMotor.class, "shooter1");
+        this.shooter2 = hardwareMap.get(DcMotor.class, "shooter2");
+        this.arm = hardwareMap.get(DcMotor.class, "arm");
+        this.claw = hardwareMap.get(Servo.class, "claw");
+        claw.setPosition(0);
+        this.hopperpush = hardwareMap.get(Servo.class, "hopperpush");
+        this.intake = hardwareMap.get(DcMotor.class, "intake");
+        hopperpush.setPosition(0.5);
+
+
+
 
         switch(this.fieldMode) {
             case A:
                 this.fieldRings = 0;
+                this.pickupConfig = AutoMode.PICKUP_A;
                 break;
             case B:
                 this.fieldRings = 1;
+                this.pickupConfig = AutoMode.PICKUP_B;
                 break;
             case C:
                 this.fieldRings = 4;
+                this.pickupConfig = AutoMode.PICKUP_C;
                 break;
         }
 
@@ -71,7 +88,7 @@ public class AutoRedCenter extends LinearOpMode {
         * Drive to center line
         * Assess what configuration the field is in
         *
-        * if (field_config == "A") {
+        * if (field_config == "A") { <-- LUCAS IS DOING THIS BOI
         *   // Square is in lower right
         *   // 0 rings
         *   pick up wobble goal
@@ -82,15 +99,31 @@ public class AutoRedCenter extends LinearOpMode {
         *   drive forward 12 in.
         *   deposit wobble goal
         * }
-        * else if (field_config == "B") {
+        * else if (field_config == "B") { <-- BAZ IS DOING
         *   // Square is in middle
         *   // 1 ring
         *   pick up wobble goal
+
         *   drive almost to launch line
+
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
+            sleep(500);
+            this.mecanumDrive.stopMoving();
+
+
         *   shoot the three pre-loaded rings into the power-shots
         *   drive forward to pick up 1 ring
+
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
+            sleep(500);
+            this.mecanumDrive.stopMoving();
+
+
         *   shoot 1 ring into the top goal
         *   rotate 90 degrees to the right
+
+
+
         *   drive forward a few inches
         *   deposit wobble goal
         * }
@@ -115,23 +148,35 @@ public class AutoRedCenter extends LinearOpMode {
             switch (this.autoMode) {
                 case MOVE_TO_LINE:
                     this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
-                    sleep(100);
+                    sleep(100); // Change to refect actual distance
                     this.mecanumDrive.stopMoving();
                     this.autoMode = AutoMode.FIRE_POWER_SHOT;
                     break;
                 case FIRE_POWER_SHOT:
                     // TODO
                     break;
-                case PICKUP:
+                case PICKUP_A:
                     while (storedRings < this.fieldRings) {
                         this.intake.setPower(0.5);
                         sleep(1);
                     }
                     this.intake.setPower(0);
+                    this.autoMode = AutoMode.FIRE_GOAL;
+                    break;
+                case PICKUP_B:
+                    this.autoMode = AutoMode.FIRE_GOAL;
+                    break;
+                case PICKUP_C:
+                    this.autoMode = AutoMode.FIRE_GOAL;
                     break;
                 case FIRE_GOAL:
                     while (storedRings != 0) {
-                        RapidFire.rapidFire(shooter1,shooter2,hopperpush,telemetry, mecanumDrive, gamepad1);
+                        RapidFire.rapidFire(shooter1,shooter2,hopperpush,storedRings);
+                    }
+                    if (this.fieldMode == FieldMode.C) {
+                        this.autoMode = AutoMode.PICKUP_B;
+                    } else {
+                        this.autoMode = AutoMode.DROP_WOBBLE;
                     }
                     break;
                 case DROP_WOBBLE:
@@ -143,3 +188,27 @@ public class AutoRedCenter extends LinearOpMode {
     }
 
 }
+
+
+
+/*
+
+
+
+        this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
+        sleep(500);
+        this.mecanumDrive.stopMoving();
+
+        this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
+        sleep(600);
+        this.mecanumDrive.stopMoving();
+
+        this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
+        sleep(500);
+        this.mecanumDrive.stopMoving();
+
+        this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
+        sleep(600);
+        this.mecanumDrive.stopMoving();
+
+*/

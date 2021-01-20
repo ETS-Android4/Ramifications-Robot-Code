@@ -171,7 +171,7 @@ public class UltimateGoalTestTeleop extends OpMode {
 
 
         if(gamepad1.right_trigger > 0){
-            RapidFire.rapidFire(mecanumDrive,shooter1,shooter2,hopperpush,gamepad1,telemetry);
+            RapidFire.rapidFire(shooter1,shooter2,hopperpush,telemetry, mecanumDrive,gamepad1);
         }
 
 

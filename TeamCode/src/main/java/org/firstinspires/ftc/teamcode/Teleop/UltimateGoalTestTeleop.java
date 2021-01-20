@@ -37,7 +37,6 @@ public class UltimateGoalTestTeleop extends OpMode {
     double firepowerstate = 0.0;
     private DcMotor intake;
     private Servo hopperpush;
-    private CRServo midtake;
     //private MotorPair intake;
     //private DcMotor arm;
     //private DcMotor elevator;
@@ -65,7 +64,6 @@ public class UltimateGoalTestTeleop extends OpMode {
         claw.setPosition(0);
         this.hopperpush = hardwareMap.get(Servo.class, "hopperpush");
         this.intake = hardwareMap.get(DcMotor.class, "intake");
-        this.midtake = hardwareMap.get(CRServo.class, "midtake");
         hopperpush.setPosition(0.5);
 
         //this.intake = new MotorPair(hardwareMap, "intake1", "intake2");
@@ -123,11 +121,9 @@ public class UltimateGoalTestTeleop extends OpMode {
 
         if (gamepad1.x) {
             intake.setPower(-1);
-            midtake.setPower(-1);
             telemetry.addLine("intake active");
         } else if (gamepad1.y) {
             intake.setPower(1);
-            midtake.setPower(1);
             telemetry.addLine("reversing intake");
         } else {
             intake.setPower(0);

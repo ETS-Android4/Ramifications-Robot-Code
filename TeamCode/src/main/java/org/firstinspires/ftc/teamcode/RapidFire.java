@@ -17,6 +17,7 @@ public class RapidFire {
             hopperpush.setPosition(0);
             try { sleep(250); } catch (Exception e) { }
             hopperpush.setPosition(1);
+            try { sleep(250); } catch (Exception e) { }
         }
         shooter1.setPower(0);
         shooter2.setPower(0);

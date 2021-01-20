@@ -28,6 +28,7 @@ public class AutoRedCenter extends LinearOpMode {
     private int fieldRings;
 
     private enum AutoMode {
+        PICK_UP_WOBBLE,
         MOVE_TO_LINE,
         FIRE_POWER_SHOT,
         PICKUP_A,
@@ -83,77 +84,107 @@ public class AutoRedCenter extends LinearOpMode {
         waitForStart();
 
         /** Pseudocode for Auto */
-
         /*
-        * Drive to center line
-        * Assess what configuration the field is in
-        *
-        * if (field_config == "A") { <-- LUCAS IS DOING THIS BOI
-        *   // Square is in lower right
-        *   // 0 rings
-        *   pick up wobble goal
-        *   drive almost to launch line
-        *   shoot the three loaded rings into the power-shots
-        *   rotate 90 degrees to the right
-        *   strafe left 4 in.
-        *   drive forward 12 in.
-        *   deposit wobble goal
-        * }
-        * else if (field_config == "B") { <-- BAZ IS DOING
-        *   // Square is in middle
-        *   // 1 ring
-        *   pick up wobble goal
 
-        *   drive almost to launch line
+        //Drive to center line
+        //Assess what configuration the field is in
+
+        if (field_config == "A") { <-- LUCAS IS DOING THIS BOI
+            // Square is in lower right
+            // 0 rings
+            //pick up wobble goal
+            //drive almost to launch line
+            //shoot the three loaded rings into the power-shots
+            //rotate 90 degrees to the right
+            //strafe left 4 in.
+            //drive forward 12 in.
+            //deposit wobble goal
+        }
+        else if (field_config == "B") { //<-- BAZ IS DOING
+            // Square is in middle
+            // 1 ring
+            //pick up wobble goal
+
+            //WOBBLE GOAL PICKUP SEQUENCE:
+            arm.setPower(-1);
+            sleep(150);
+            arm.setPower(0);
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
+            sleep(50);
+            this.mecanumDrive.stopMoving();
+
+            //drive almost to launch line
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
+            sleep(500);
+            this.mecanumDrive.stopMoving();
+
+            //shoot the three pre-loaded rings into the power-shots
+
+            RapidFire.rapidFire(shooter1, shooter2, hopperpush, this.fieldRings);
+
+            //drive forward to pick up 1 ring
 
             this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
             sleep(500);
             this.mecanumDrive.stopMoving();
 
 
-        *   shoot the three pre-loaded rings into the power-shots
-        *   drive forward to pick up 1 ring
+            //shoot 1 ring into the top goal
+
+            this.shooter1.setPower(1);
+            this.shooter2.setPower(1);
+            sleep(500);
+            this.shooter1.setPower(0);
+            this.shooter1.setPower(0);
+
+            //rotate 90 degrees to the right
+
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
+            sleep(1000);
+            this.mecanumDrive.stopMoving();
+
+            //drive forward a few inches
 
             this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
             sleep(500);
             this.mecanumDrive.stopMoving();
 
+            //deposit wobble goal
+        }
+        else if (field_config == "C") {
+            // Square is in the top right
+            // Four rings
+            //pick up wobble goal
+            //drive almost to the launch line
+            //shoot the three pre-loaded rings into the power-shots
+            //drive forward and pick up three rings
+            //shoot 3 rings into the top goal
+            //pick up last ring
+            //shoot 1 ring into the top goal
+            //drive forward the last few inches
+            //deposit wobble goal
+        }*/
 
-        *   shoot 1 ring into the top goal
-        *   rotate 90 degrees to the right
 
-
-
-        *   drive forward a few inches
-        *   deposit wobble goal
-        * }
-        * else if (field_config == "C") {
-        *   // Square is in the top right
-        *   // Four rings
-        *   pick up wobble goal
-        *   drive almost to the launch line
-        *   shoot the three pre-loaded rings into the power-shots
-        *   drive forward and pick up three rings
-        *   shoot 3 rings into the top goal
-        *   pick up last ring
-        *   shoot 1 ring into the top goal
-        *   drive forward the last few inches
-        *   deposit wobble goal
-        * }
-        *
-        * */
 
         /** Actual code for Auto */
         while (opModeIsActive()) {
             switch (this.autoMode) {
+                case PICK_UP_WOBBLE:
+                    arm.setPower(-1);
+                    sleep(150);
+                    arm.setPower(0);
+                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
+                    sleep(50);
+                    this.mecanumDrive.stopMoving();
                 case MOVE_TO_LINE:
                     this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
-                    sleep(100); // Change to refect actual distance
+                    sleep(100); // Change to reflect actual distance
                     this.mecanumDrive.stopMoving();
                     this.autoMode = AutoMode.FIRE_POWER_SHOT;
                     break;
                 case FIRE_POWER_SHOT:
-                    // TODO
+                    RapidFire.rapidFire(shooter1, shooter2, hopperpush, this.fieldRings);
                     break;
                 case PICKUP_A:
                     while (storedRings < this.fieldRings) {
@@ -168,12 +199,13 @@ public class AutoRedCenter extends LinearOpMode {
                     break;
                 case PICKUP_C:
                     this.autoMode = AutoMode.FIRE_GOAL;
+                    this.fieldRings = 1;
                     break;
                 case FIRE_GOAL:
                     while (storedRings != 0) {
                         RapidFire.rapidFire(shooter1,shooter2,hopperpush,storedRings);
                     }
-                    if (this.fieldMode == FieldMode.C) {
+                    if (this.fieldRings == 1) {
                         this.autoMode = AutoMode.PICKUP_B;
                     } else {
                         this.autoMode = AutoMode.DROP_WOBBLE;

@@ -34,9 +34,11 @@ public class UltimateGoalTestTeleop extends OpMode {
     private Servo claw;
     boolean clawstate = false;
     boolean hopstate = false;
+    boolean anglerstate = false;
     double firepowerstate = 0.0;
     private DcMotor intake;
     private Servo hopperpush;
+    private Servo angler;
     //private MotorPair intake;
     //private DcMotor arm;
     //private DcMotor elevator;
@@ -65,6 +67,7 @@ public class UltimateGoalTestTeleop extends OpMode {
         this.hopperpush = hardwareMap.get(Servo.class, "hopperpush");
         this.intake = hardwareMap.get(DcMotor.class, "intake");
         hopperpush.setPosition(0.5);
+        this.angler = hardwareMap.get(Servo.class, "angler");
 
         //this.intake = new MotorPair(hardwareMap, "intake1", "intake2");
         //this.arm = hardwareMap.get(DcMotor.class, "arm");
@@ -225,6 +228,15 @@ public class UltimateGoalTestTeleop extends OpMode {
                 }
 
             }
+        }
+
+        if (gamepad1.right_bumper) { // Servo to angle the hopper
+            telemetry.addLine("Angler Used");
+            angler.setPosition(anglerstate ? 0 : 0.25);
+            anglerstate = !anglerstate;
+            try {
+                Thread.sleep(150);
+            } catch (Exception e) {}
         }
     }
 

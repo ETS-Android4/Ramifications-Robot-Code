@@ -182,55 +182,28 @@ public class UltimateGoalTestTeleop extends OpMode {
         //open or close claw on wobble goal arm
         arm.setPower(-gamepad2.right_stick_y);
 
-        //wobble goal claw
+        // Wobble Goal Claw
         if (gamepad2.a) {
-            if (clawstate == false) {
-                telemetry.addLine("Wobble Claw Opening");
-                claw.setPosition(1);
-                clawstate = true;
-                try {
-                    Thread.sleep(150);
-                } catch (Exception e) {
-
-                }
-            } else if (clawstate == true) {
-                telemetry.addLine("Wobble Claw Closing");
-                claw.setPosition(0);
-                clawstate = false;
-                try {
-                    Thread.sleep(150);
-                } catch (Exception e) {
-
-                }
-
-            }
+            telemetry.addLine("Wobble Claw Used");
+            claw.setPosition(clawstate ? 0 : 1);
+            clawstate = !clawstate;
+            try {
+                Thread.sleep(150);
+            } catch (Exception e) {}
         }
 
-        //hopper pusher
+        // Hopper Pusher
         if (gamepad1.a) {
-            if (hopstate == false) {
-                telemetry.addLine("Hopper pusher Opening");
-                hopperpush.setPosition(1);
-                hopstate = true;
-                try {
-                    Thread.sleep(150);
-                } catch (Exception e) {
-
-                }
-            } else if (hopstate == true) {
-                telemetry.addLine("Hopper Pusher Closing");
-                hopperpush.setPosition(0);
-                hopstate = false;
-                try {
-                    Thread.sleep(150);
-                } catch (Exception e) {
-
-                }
-
-            }
+            telemetry.addLine("Hopper Pusher Used");
+            hopperpush.setPosition(hopstate ? 0 : 1);
+            hopstate = !hopstate;
+            try {
+                Thread.sleep(150);
+            } catch (Exception e) {}
         }
 
-        if (gamepad1.right_bumper) { // Servo to angle the hopper
+        // Servo to angle the hopper
+        if (gamepad1.right_bumper) {
             telemetry.addLine("Angler Used");
             angler.setPosition(anglerstate ? 0 : 0.25);
             anglerstate = !anglerstate;

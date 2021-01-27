@@ -258,7 +258,7 @@ public class UltimateGoalTestTeleop extends OpMode {
                 Thread.sleep(150);
             } catch (Exception e) {}
         }
-<<<<<<< HEAD
+
 /*
         if (gamepad1.right_bumper) { // Servo to angle the hopper
 =======

@@ -23,7 +23,13 @@ import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MotorPair;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 
-@TeleOp(name = "Ultimate Goal Teleop V:3.0", group = "Basic")
+// TODO: 1/26/2021  right trigger = feed one ring
+// TODO: 1/26/2021 work on delay
+// TODO: 1/26/2021 add physical limit to wobble goal arm
+// TODO: 1/26/2021 add delay to toggle for intake on bumper
+// TODO: 1/26/2021 look into multi-threading
+
+@TeleOp(name = "Ultimate Goal Teleop V:4.0", group = "Basic")
 public class UltimateGoalTestTeleop extends OpMode {
     private Robot robot;
     private MecanumDrive mecanumDrive;
@@ -39,6 +45,7 @@ public class UltimateGoalTestTeleop extends OpMode {
     private DcMotor intake;
     private Servo hopperpush;
     private Servo angler;
+    private Boolean intakeState;
     //private MotorPair intake;
     //private DcMotor arm;
     //private DcMotor elevator;
@@ -69,6 +76,8 @@ public class UltimateGoalTestTeleop extends OpMode {
         hopperpush.setPosition(0.5);
         this.angler = hardwareMap.get(Servo.class, "angler");
 
+        intakeState = false;
+
         //this.intake = new MotorPair(hardwareMap, "intake1", "intake2");
         //this.arm = hardwareMap.get(DcMotor.class, "arm");
         //this.elevator = hardwareMap.get(DcMotor.class, "elevator");
@@ -83,9 +92,12 @@ public class UltimateGoalTestTeleop extends OpMode {
 
         //this.elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //this.arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+
+
     }
 
-    private double computeMovement(double x) {
+    /*private double computeMovement(double x) {
         if (gamepad1.right_trigger == 0) {
             if (x == 0.0) {
                 return 0.0;
@@ -106,7 +118,7 @@ public class UltimateGoalTestTeleop extends OpMode {
             return 0.0;
         }
         return 0.0;
-    }
+    }*/
 
     @Override
     public void loop() {
@@ -121,8 +133,17 @@ public class UltimateGoalTestTeleop extends OpMode {
         /*if (CollisionExecutor.calculate(modernRoboticsI2cGyro.getHeading(), this.imuWrapper)) {
             this.mecanumDrive.stopMoving();
          */
+        //angler code
+        if(gamepad1.dpad_up){
+            angler.setPosition(0.8); //upper limit is 0.8
+        }
+        if(gamepad1.dpad_down){
+            angler.setPosition(0.39);
+        }
 
-        if (gamepad1.x) {
+
+/*
+        if (gamepad1.x || (gamepad1.left_bumper)) {
             intake.setPower(-1);
             telemetry.addLine("intake active");
         } else if (gamepad1.y) {
@@ -134,12 +155,48 @@ public class UltimateGoalTestTeleop extends OpMode {
             telemetry.addLine("intake off");
         }
 
+ */
 
+        //left bumper is intake toggle
+
+        if(gamepad1.left_bumper){
+            if(intakeState){
+                intakeState = false;
+            }
+            else{
+                intakeState = true;
+            }
+        }
+
+
+        if(intakeState){
+            intake.setPower(-1);
+            try {
+                Thread.sleep(200);
+            } catch (Exception e) {
+
+            }
+        }
+        else{
+            intake.setPower(0);
+        }
+
+
+        if(gamepad1.left_trigger>0){
+            shooter2.setPower(1);
+            shooter1.setPower(0.75);
+        }
+        else{
+            shooter2.setPower(0);
+            shooter1.setPower(0);
+        }
+
+        /*
         if (gamepad1.b) {
             if (firepowerstate == 0) {
                 telemetry.addLine("single shot mode activated");
                 shooter2.setPower(1);
-                firepowerstate = 0.7;
+                firepowerstate = 0.75; //flipped power to be multi shot
                 shooter1.setPower(firepowerstate);
                 try {
                     Thread.sleep(200);
@@ -149,7 +206,7 @@ public class UltimateGoalTestTeleop extends OpMode {
             } else if (firepowerstate == 0.70) {
                 telemetry.addLine("burst mode activate");
                 shooter2.setPower(1);
-                firepowerstate = 0.75;
+                firepowerstate = 0.7; //flopped power to be single shot
                 shooter1.setPower(firepowerstate);
                 try {
                     Thread.sleep(200);
@@ -167,14 +224,14 @@ public class UltimateGoalTestTeleop extends OpMode {
 
                 }
             }
-        }
+        } */
 
 
         //control over drivetrain
         this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
 
 
-        if(gamepad1.right_trigger > 0){
+        if(gamepad1.right_bumper){
             RapidFire.rapidFire(shooter1,shooter2,hopperpush,telemetry, mecanumDrive,gamepad1);
         }
 
@@ -229,7 +286,7 @@ public class UltimateGoalTestTeleop extends OpMode {
 
             }
         }
-
+/*
         if (gamepad1.right_bumper) { // Servo to angle the hopper
             telemetry.addLine("Angler Used");
             angler.setPosition(anglerstate ? 0 : 0.25);
@@ -238,6 +295,10 @@ public class UltimateGoalTestTeleop extends OpMode {
                 Thread.sleep(150);
             } catch (Exception e) {}
         }
+
+
+ */
+
     }
 
 

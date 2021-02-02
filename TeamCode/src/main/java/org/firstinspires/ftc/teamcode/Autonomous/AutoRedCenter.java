@@ -187,6 +187,7 @@ public class AutoRedCenter extends LinearOpMode {
         }*/
 
 
+<<<<<<< Updated upstream
             while (!opModeIsActive()) {
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
@@ -205,7 +206,27 @@ public class AutoRedCenter extends LinearOpMode {
                                     recognition.getRight(), recognition.getBottom());
                         }
                         telemetry.update();
+=======
+
+        while (!opModeIsActive()) {
+            if (tfod != null) {
+                // getUpdatedRecognitions() will return null if no new information is available since
+                // the last time that call was made.
+                List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+                if (updatedRecognitions != null) {
+                    telemetry.addData("# Object Detected", updatedRecognitions.size());
+
+                    // step through the list of recognitions and display boundary info.
+                    int i = 0;
+                    for (Recognition recognition : updatedRecognitions) {
+                        telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                        telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                                recognition.getLeft(), recognition.getTop());
+                        telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                                recognition.getRight(), recognition.getBottom());
+>>>>>>> Stashed changes
                     }
+                    telemetry.update();
                 }
             }
 
@@ -235,6 +256,7 @@ public class AutoRedCenter extends LinearOpMode {
                     while (this.groundSensor.blue() < 200) {
                         this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
                         telemetry.addLine("Blue: " + this.groundSensor.blue());
+                        telemetry.update();
                         sleep(50);
                     }
                     this.mecanumDrive.stopMoving();

@@ -187,7 +187,6 @@ public class AutoRedCenter extends LinearOpMode {
         }*/
 
 
-        if (!opModeIsActive()) {
             while (!opModeIsActive()) {
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
@@ -209,8 +208,13 @@ public class AutoRedCenter extends LinearOpMode {
                     }
                 }
             }
-        }
 
+
+        if(!opModeIsActive()){
+            if (tfod != null) {
+                tfod.shutdown();
+            }
+        }
 
 
         /** Actual code for Auto */
@@ -283,11 +287,7 @@ public class AutoRedCenter extends LinearOpMode {
                     this.mecanumDrive.stopMoving();
                     break;
             }
-            if(!opModeIsActive()){
-                if (tfod != null) {
-                    tfod.shutdown();
-                }
-            }
+
         }
     }
     private void initVuforia() {

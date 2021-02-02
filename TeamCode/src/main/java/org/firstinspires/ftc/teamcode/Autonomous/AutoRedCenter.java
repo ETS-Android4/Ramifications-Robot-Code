@@ -28,34 +28,18 @@ public class AutoRedCenter extends LinearOpMode {
     private int storedRings = 0;
     private int fieldRings;
     private ColorSensor groundSensor;
+    private boolean wobbleIn = false;
 
-    private enum AutoMode {
-        PICK_UP_WOBBLE,
-        MOVE_TO_LINE,
-        FIRE_POWER_SHOT,
-        PICKUP_A,
-        PICKUP_B,
-        PICKUP_C,
-        FIRE_GOAL,
-        DROP_WOBBLE,
-        PARK_LINE
-    };
-    private enum FieldMode {
-        A, // Wobble zone is on bottom, 0 rings
-        B, // Wobble zone is in the middle, 1 ring
-        C, // Wobble zone is on top, 4 rings
-    }
-
-    private AutoMode autoMode;
-    private FieldMode fieldMode;
-    private AutoMode pickupConfig;
+    private Enums.AutoMode autoMode;
+    private Enums.FieldMode fieldMode;
+    private Enums.AutoMode pickupConfig;
 
     @Override
     public void runOpMode() {
         this.robot = new Robot(hardwareMap);
         this.mecanumDrive = (MecanumDrive) this.robot.getDrivetrain();
-        this.autoMode = AutoMode.MOVE_TO_LINE;
-        this.fieldMode = FieldMode.A;
+        this.autoMode = Enums.AutoMode.MOVE_TO_LINE;
+        this.fieldMode = Enums.FieldMode.A;
         this.shooter1 = hardwareMap.get(DcMotor.class, "shooter1");
         this.shooter2 = hardwareMap.get(DcMotor.class, "shooter2");
         this.arm = hardwareMap.get(DcMotor.class, "arm");
@@ -72,15 +56,12 @@ public class AutoRedCenter extends LinearOpMode {
         switch(this.fieldMode) {
             case A:
                 this.fieldRings = 0;
-                this.pickupConfig = AutoMode.PICKUP_A;
                 break;
             case B:
                 this.fieldRings = 1;
-                this.pickupConfig = AutoMode.PICKUP_B;
                 break;
             case C:
                 this.fieldRings = 4;
-                this.pickupConfig = AutoMode.PICKUP_C;
                 break;
         }
 
@@ -174,53 +155,49 @@ public class AutoRedCenter extends LinearOpMode {
         while (opModeIsActive()) {
             switch (this.autoMode) {
                 case PICK_UP_WOBBLE:
-                    arm.setPower(-1);
-                    sleep(150);
-                    arm.setPower(0);
-                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
-                    sleep(50);
-                    this.mecanumDrive.stopMoving();
-                    this.autoMode = AutoMode.MOVE_TO_LINE;
+                    if (wobbleIn) {
+                        arm.setPower(-1);
+                        sleep(150);
+                        arm.setPower(0);
+                        this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
+                        sleep(50);
+                        this.mecanumDrive.stopMoving();
+                    }
+                    this.autoMode = Enums.AutoMode.MOVE_TO_LINE;
                     break;
                 case MOVE_TO_LINE:
-                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
-                    sleep(100); // Change to reflect actual distance
+                    while (this.groundSensor.blue() < 200) {
+                        this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
+                        telemetry.addLine("Blue: " + this.groundSensor.blue());
+                        sleep(50);
+                    }
                     this.mecanumDrive.stopMoving();
-                    this.autoMode = AutoMode.FIRE_POWER_SHOT;
+                    this.autoMode = Enums.AutoMode.FIRE_POWER_SHOT;
                     break;
                 case FIRE_POWER_SHOT:
                     // TODO: Make powershot algorithm
                     RapidFire.rapidFire(shooter1,shooter2,hopperpush,storedRings);
                     this.autoMode = pickupConfig;
                     break;
-                case PICKUP_A:
-                    this.autoMode = AutoMode.FIRE_GOAL;
-                    break;
-                case PICKUP_B:
-                    while (storedRings < 1) {
-                        this.intake.setPower(0.5);
-                        sleep(50);
+                case PICKUP:
+                    this.intake.setPower(0.5);
+                    int currentRings = this.fieldRings;
+                    for (int i = currentRings; i > 0; --i) {
+                        sleep(1500);
+                        if (this.storedRings == 3) {
+                            break;
+                        }
+                        this.fieldRings -= 1;
                     }
                     this.intake.setPower(0);
-                    this.autoMode = AutoMode.FIRE_GOAL;
-                    break;
-                case PICKUP_C:
-                    while (storedRings < 3) {
-                        this.intake.setPower(0.5);
-                        sleep(50);
-                    }
-                    this.intake.setPower(0);
-                    this.autoMode = AutoMode.FIRE_GOAL;
-                    this.fieldRings = 1;
+                    this.autoMode = Enums.AutoMode.FIRE_GOAL;
                     break;
                 case FIRE_GOAL:
-                    while (storedRings != 0) {
-                        RapidFire.rapidFire(shooter1,shooter2,hopperpush,storedRings); // Shoots the rings based off the number of rings
-                    }
-                    if (this.fieldRings == 1) {
-                        this.autoMode = AutoMode.PICKUP_B;
+                    RapidFire.rapidFire(shooter1,shooter2,hopperpush,storedRings);
+                    if (this.fieldRings > 0) {
+                        this.autoMode = Enums.AutoMode.PICKUP;
                     } else {
-                        this.autoMode = AutoMode.DROP_WOBBLE;
+                        this.autoMode = Enums.AutoMode.DROP_WOBBLE;
                     }
                     break;
                 case DROP_WOBBLE:
@@ -231,10 +208,9 @@ public class AutoRedCenter extends LinearOpMode {
                     this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
                     sleep(50);
                     this.mecanumDrive.stopMoving();
-                    this.autoMode = AutoMode.PARK_LINE;
+                    this.autoMode = Enums.AutoMode.PARK_LINE;
                     break;
                 case PARK_LINE:
-                    // TODO: Move to the line
                     while (this.groundSensor.blue() < 200) {
                         this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
                         telemetry.addLine(String.valueOf(this.groundSensor.blue()));

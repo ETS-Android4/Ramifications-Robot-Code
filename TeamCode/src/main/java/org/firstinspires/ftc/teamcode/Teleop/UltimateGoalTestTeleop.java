@@ -159,34 +159,23 @@ public class UltimateGoalTestTeleop extends OpMode {
 
         //left bumper is intake toggle
 
-        if(gamepad1.left_bumper){
-            if(intakeState){
-                intakeState = false;
-            }
-            else{
-                intakeState = true;
-            }
-        }
+        if (gamepad1.left_bumper) intakeState = !intakeState;
 
 
-        if(intakeState){
+        if (intakeState) {
             intake.setPower(-1);
             try {
                 Thread.sleep(200);
-            } catch (Exception e) {
-
-            }
-        }
-        else{
+            } catch (Exception e) {}
+        } else {
             intake.setPower(0);
         }
 
 
-        if(gamepad1.left_trigger>0){
+        if (gamepad1.left_trigger > 0){
             shooter2.setPower(1);
             shooter1.setPower(0.75);
-        }
-        else{
+        } else {
             shooter2.setPower(0);
             shooter1.setPower(0);
         }

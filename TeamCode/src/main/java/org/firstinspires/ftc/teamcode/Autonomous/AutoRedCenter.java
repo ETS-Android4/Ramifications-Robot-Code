@@ -201,6 +201,7 @@ public class AutoRedCenter extends LinearOpMode {
                         this.intake.setPower(0.5);
                         sleep(50);
                     }
+                    this.intake.setPower(0);
                     this.autoMode = AutoMode.FIRE_GOAL;
                     break;
                 case PICKUP_C:
@@ -208,6 +209,7 @@ public class AutoRedCenter extends LinearOpMode {
                         this.intake.setPower(0.5);
                         sleep(50);
                     }
+                    this.intake.setPower(0);
                     this.autoMode = AutoMode.FIRE_GOAL;
                     this.fieldRings = 1;
                     break;

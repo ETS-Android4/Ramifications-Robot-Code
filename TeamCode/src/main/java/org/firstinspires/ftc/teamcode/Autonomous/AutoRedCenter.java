@@ -186,27 +186,27 @@ public class AutoRedCenter extends LinearOpMode {
             //deposit wobble goal
         }*/
 
+        while (!opModeIsActive()) {
+            if (tfod != null) {
+                // getUpdatedRecognitions() will return null if no new information is available since
+                // the last time that call was made.
+                List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+                if (updatedRecognitions != null) {
+                    telemetry.addData("# Object Detected", updatedRecognitions.size());
 
-<<<<<<< Updated upstream
-            while (!opModeIsActive()) {
-                if (tfod != null) {
-                    // getUpdatedRecognitions() will return null if no new information is available since
-                    // the last time that call was made.
-                    List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-                    if (updatedRecognitions != null) {
-                        telemetry.addData("# Object Detected", updatedRecognitions.size());
-
-                        // step through the list of recognitions and display boundary info.
-                        int i = 0;
-                        for (Recognition recognition : updatedRecognitions) {
-                            telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
-                            telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
-                                    recognition.getLeft(), recognition.getTop());
-                            telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
-                                    recognition.getRight(), recognition.getBottom());
-                        }
-                        telemetry.update();
-=======
+                    // step through the list of recognitions and display boundary info.
+                    int i = 0;
+                    for (Recognition recognition : updatedRecognitions) {
+                        telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                        telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                                recognition.getLeft(), recognition.getTop());
+                        telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                                recognition.getRight(), recognition.getBottom());
+                    }
+                    telemetry.update();
+                }
+            }
+        }
 
         while (!opModeIsActive()) {
             if (tfod != null) {
@@ -224,16 +224,16 @@ public class AutoRedCenter extends LinearOpMode {
                                 recognition.getLeft(), recognition.getTop());
                         telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                                 recognition.getRight(), recognition.getBottom());
->>>>>>> Stashed changes
                     }
                     telemetry.update();
                 }
             }
 
 
-        if(!opModeIsActive()){
-            if (tfod != null) {
-                tfod.shutdown();
+            if (!opModeIsActive()) {
+                if (tfod != null) {
+                    tfod.shutdown();
+                }
             }
         }
 
@@ -254,7 +254,7 @@ public class AutoRedCenter extends LinearOpMode {
                     break;
                 case MOVE_TO_LINE:
                     while (this.groundSensor.blue() < 200) {
-                        this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
+                        this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
                         telemetry.addLine("Blue: " + this.groundSensor.blue());
                         telemetry.update();
                         sleep(50);

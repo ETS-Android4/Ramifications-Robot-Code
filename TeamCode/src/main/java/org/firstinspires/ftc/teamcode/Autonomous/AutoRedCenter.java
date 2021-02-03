@@ -253,12 +253,14 @@ public class AutoRedCenter extends LinearOpMode {
                     this.autoMode = Enums.AutoMode.MOVE_TO_LINE;
                     break;
                 case MOVE_TO_LINE:
-                    while (this.groundSensor.blue() < 200) {
+                    /*while (this.groundSensor.blue() < 200) {
                         this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
                         telemetry.addLine("Blue: " + this.groundSensor.blue());
                         telemetry.update();
                         sleep(50);
-                    }
+                    }*/
+                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
+                    sleep(1000);
                     this.mecanumDrive.stopMoving();
                     this.autoMode = Enums.AutoMode.FIRE_POWER_SHOT;
                     break;
@@ -300,7 +302,7 @@ public class AutoRedCenter extends LinearOpMode {
                     break;
                 case PARK_LINE:
                     while (this.groundSensor.blue() < 200) {
-                        this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
+                        this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
                         telemetry.addLine(String.valueOf(this.groundSensor.blue()));
                         telemetry.update();
                         sleep(50);

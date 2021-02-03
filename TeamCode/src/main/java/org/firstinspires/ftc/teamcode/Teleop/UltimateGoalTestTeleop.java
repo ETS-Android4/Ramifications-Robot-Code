@@ -43,7 +43,7 @@ public class UltimateGoalTestTeleop extends OpMode {
     boolean anglerstate = false;
     double firepowerstate = 0.0;
     private DcMotor intake;
-    private Servo hopperpush;
+    private CRServo hopperpush;
     private Servo angler;
     private Boolean intakeState;
     //private MotorPair intake;
@@ -71,9 +71,9 @@ public class UltimateGoalTestTeleop extends OpMode {
         this.arm = hardwareMap.get(DcMotor.class, "arm");
         this.claw = hardwareMap.get(Servo.class, "claw");
         claw.setPosition(0);
-        this.hopperpush = hardwareMap.get(Servo.class, "hopperpush");
+        this.hopperpush = hardwareMap.get(CRServo.class, "hopperpush");
         this.intake = hardwareMap.get(DcMotor.class, "intake");
-        hopperpush.setPosition(0.5);
+        //hopperpush.setPosition(0.5);
         this.angler = hardwareMap.get(Servo.class, "angler");
 
         intakeState = false;
@@ -221,7 +221,7 @@ public class UltimateGoalTestTeleop extends OpMode {
 
 
         if(gamepad1.right_bumper){
-            RapidFire.rapidFire(shooter1,shooter2,hopperpush,telemetry, mecanumDrive,gamepad1);
+            //RapidFire.rapidFire(shooter1,shooter2,hopperpush,telemetry, mecanumDrive,gamepad1);
         }
 
 
@@ -241,7 +241,7 @@ public class UltimateGoalTestTeleop extends OpMode {
         // Hopper Pusher
         if (gamepad1.a) {
             telemetry.addLine("Hopper Pusher Used");
-            hopperpush.setPosition(hopstate ? 0 : 1);
+            //hopperpush.setPosition(hopstate ? 0 : 1);
             hopstate = !hopstate;
             try {
                 Thread.sleep(150);

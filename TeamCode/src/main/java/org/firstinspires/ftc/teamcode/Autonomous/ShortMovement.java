@@ -30,11 +30,7 @@ public class ShortMovement extends LinearOpMode {
         this.mecanumDrive.stopMoving();
 
         this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
-<<<<<<< Updated upstream
         sleep(1000);
-=======
-        sleep(300);
->>>>>>> Stashed changes
         this.mecanumDrive.stopMoving();
 
         this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);

@@ -231,7 +231,7 @@ public class UltimateGoalTestTeleop extends OpMode {
         // Wobble Goal Claw
         if (gamepad2.a) {
             telemetry.addLine("Wobble Claw Used");
-            claw.setPosition(clawstate ? 0 : 1);
+            claw.setPosition(clawstate ? 0 : 0.5);
             clawstate = !clawstate;
             try {
                 Thread.sleep(150);
@@ -247,24 +247,6 @@ public class UltimateGoalTestTeleop extends OpMode {
                 Thread.sleep(150);
             } catch (Exception e) {}
         }
-
-/*
-        if (gamepad1.right_bumper) { // Servo to angle the hopper
-=======
-
-        // Servo to angle the hopper
-        if (gamepad1.right_bumper) {
->>>>>>> master
-            telemetry.addLine("Angler Used");
-            angler.setPosition(anglerstate ? 0 : 0.25);
-            anglerstate = !anglerstate;
-            try {
-                Thread.sleep(150);
-            } catch (Exception e) {}
-        }
-
-
- */
 
     }
 

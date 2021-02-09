@@ -12,6 +12,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 import org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage;
+import org.firstinspires.ftc.teamcode.Autonomous.Enums;
 import java.util.List;
 
 
@@ -21,24 +22,29 @@ public class MainAutonomous extends LinearOpMode {
 
 
     // instance variables for auto
+
+    // Vuforia Nonsense
     private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
     private static final String LABEL_FIRST_ELEMENT = "Quad";
     private static final String LABEL_SECOND_ELEMENT = "Single";
-    private boolean SingleStackDetected = false;
-    private boolean QuadStackDetected = false;
-    private boolean NoStackDetected = true;
+
+    // Field Config
+    private Enums.FieldMode fieldMode = Enums.FieldMode.UNKNOWN;
+
+    // Hardware
     private Robot robot;
     private MecanumDrive mecanumDrive;
     private DcMotor shooter1;
     private DcMotor shooter2;
     private CRServo hopperpush;
+
+    // For Movement
     private double voltage;
 
 
 
-    //license key for our team to use viewforia
-    private static final String VUFORIA_KEY =
-            "AXzt31f/////AAABmV9p+iVHU0ZHtGQg7c/xtGhGJJCOO6foIZXqzmKvx7QaM8mjYlhw0ULaoIHkuNgygvO62ZMAIo3p4oQq4gJ7ssX6U7nGNUbX7msGcpya2jt671T4qESqm6Izz+vgTu0box2Yb2Q/JO9Z9jBTdVFQ+EaBY/HF6e7rnjuff3gYVld640+0kE1+s34jc6lLOV/ITgUsD0bZihYjopeTeAGW9YSyxL4WeJza6Hi4vm4Ic+F2/Qcxlxyn65fJoSfGZs70QAqVDL9MVeC4W8sc5djcISaDIoEM7+laAj2DT9Hr71Id486ZB3cQDoBY8QvdbFH7l6GPKs7zeUQlkGDH46M0BCUhLmGQAdjsH4H0UsCA8Obh";
+    //license key for our team to use vuforia
+    private static final String VUFORIA_KEY = "AXzt31f/////AAABmV9p+iVHU0ZHtGQg7c/xtGhGJJCOO6foIZXqzmKvx7QaM8mjYlhw0ULaoIHkuNgygvO62ZMAIo3p4oQq4gJ7ssX6U7nGNUbX7msGcpya2jt671T4qESqm6Izz+vgTu0box2Yb2Q/JO9Z9jBTdVFQ+EaBY/HF6e7rnjuff3gYVld640+0kE1+s34jc6lLOV/ITgUsD0bZihYjopeTeAGW9YSyxL4WeJza6Hi4vm4Ic+F2/Qcxlxyn65fJoSfGZs70QAqVDL9MVeC4W8sc5djcISaDIoEM7+laAj2DT9Hr71Id486ZB3cQDoBY8QvdbFH7l6GPKs7zeUQlkGDH46M0BCUhLmGQAdjsH4H0UsCA8Obh";
 
     //more vuforia and robot private instance variables
     private VuforiaLocalizer vuforia;
@@ -85,9 +91,6 @@ public class MainAutonomous extends LinearOpMode {
             sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 35));
             this.mecanumDrive.stopMoving();
 
-
-
-
             //iterator variable (we could do a for loop, but we probably shouldn't mess with this much at all, since its the way vuforia wants us to do it
             int iterator = 1000;
             while (iterator>0) {
@@ -108,26 +111,20 @@ public class MainAutonomous extends LinearOpMode {
                             if(recognition.getLabel().equals("Quad")){ //tell the rest of the auto if we are dealing with quad stack
                                 telemetry.addLine("Quad Detected");
                                 telemetry.update();
-                                  SingleStackDetected = false;
-                                  QuadStackDetected = true;
-                                  NoStackDetected = false;
+                                this.fieldMode = Enums.FieldMode.C;
                             }
 
                             else if(recognition.getLabel().equals("Single")){ //tell the rest of the auto if we are dealing with single stack
 
                                 telemetry.addLine("Single Detected");
                                 telemetry.update();
-                                SingleStackDetected = true;
-                                QuadStackDetected = false;
-                                NoStackDetected = false;
+                                fieldMode = Enums.FieldMode.B;
                             }
 
                             else{ //tell the rest of the auto if we are dealing with no stack
                                 telemetry.addLine("None Detected");
                                 telemetry.update();
-                                SingleStackDetected = false;
-                                QuadStackDetected = false;
-                                NoStackDetected = true;
+                                fieldMode = Enums.FieldMode.A;
                             }
                             //telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
                             //        recognition.getLeft(), recognition.getTop());
@@ -140,7 +137,6 @@ public class MainAutonomous extends LinearOpMode {
                 iterator--;
             }
 
-
             sleep(1000);
 
         }
@@ -150,9 +146,7 @@ public class MainAutonomous extends LinearOpMode {
         }
 
         telemetry.addLine("Proceeding to movement");
-        telemetry.addLine("quad: " + QuadStackDetected);
-        telemetry.addLine("single: " + SingleStackDetected);
-        telemetry.addLine("none:" + NoStackDetected);
+        telemetry.addLine("Field Configuration: " + fieldMode.toString());
         telemetry.update();
         sleep(500);
 
@@ -162,7 +156,29 @@ public class MainAutonomous extends LinearOpMode {
         Here is where all subsequent Autonomous code can go:
          */
 
-        if (QuadStackDetected==true){
+        // Aligning with the wall
+        mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
+        sleep(TimeOffsetVoltage.calculateDistance(voltage, 50));
+        mecanumDrive.stopMoving();
+        sleep(100);
+
+        switch(fieldMode) {
+            case A:
+                this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),0.75,0);
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 150));
+                this.mecanumDrive.stopMoving();
+
+                sleep(100);
+                break;
+            case B:
+                
+                break;
+            case C:
+
+                break;
+
+        }
+        if (QuadStackDetected) {
 
             this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
             sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
@@ -272,7 +288,7 @@ public class MainAutonomous extends LinearOpMode {
 
 
         }
-        else if (NoStackDetected==true){
+        else if (SingleStackDetected) {
 
             this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
             sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
@@ -295,7 +311,7 @@ public class MainAutonomous extends LinearOpMode {
             this.mecanumDrive.stopMoving();
 
         }
-        else{
+        else {
 
             this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
             sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 10));

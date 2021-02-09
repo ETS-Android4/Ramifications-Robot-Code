@@ -149,7 +149,7 @@ public class MainAutonomous extends LinearOpMode {
             tfod.shutdown();
         }
 
-        telemetry.addLine("PRoceeding to movement");
+        telemetry.addLine("Proceeding to movement");
         telemetry.addLine("quad: " + QuadStackDetected);
         telemetry.addLine("single: " + SingleStackDetected);
         telemetry.addLine("none:" + NoStackDetected);
@@ -165,12 +165,12 @@ public class MainAutonomous extends LinearOpMode {
         if (QuadStackDetected==true){
 
             this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
-            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
             this.mecanumDrive.stopMoving();
 
             sleep(100);
 
-            this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),0.75,0);
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
             sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 150));
             this.mecanumDrive.stopMoving();
 
@@ -180,11 +180,7 @@ public class MainAutonomous extends LinearOpMode {
             sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
             this.mecanumDrive.stopMoving();
 
-            sleep(100);
-
-            this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
-            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 45));
-            this.mecanumDrive.stopMoving();
+            //insert wobble goal code here
 
             sleep(100);
 
@@ -195,13 +191,13 @@ public class MainAutonomous extends LinearOpMode {
             sleep(100);
 
             this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
-            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 30));
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 60));
             this.mecanumDrive.stopMoving();
 
             sleep(100);
 
             this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
-            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 75));
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 110));
             this.mecanumDrive.stopMoving();
 
             sleep(100);
@@ -215,7 +211,7 @@ public class MainAutonomous extends LinearOpMode {
 
             sleep(100);
 
-            this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
             sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 10));
             this.mecanumDrive.stopMoving();
 
@@ -227,24 +223,48 @@ public class MainAutonomous extends LinearOpMode {
 
             sleep(100);
 
-            this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
             sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 10));
             this.mecanumDrive.stopMoving();
 
             sleep(100);
 
-           /* this.hopperpush.setPower(1.0);
-            sleep(TimeOffsetVoltage.calculateDistance(this.voltage,200));
-            this.hopperpush.setPower(0)
+            this.hopperpush.setPower(1.0);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage,33));
+            this.hopperpush.setPower(0);
 
-            this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
-            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 20));
+            sleep(100);
+
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 100));
             this.mecanumDrive.stopMoving();
 
-            sleep(100);*/
+            sleep(100);
+
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 100));
+            this.mecanumDrive.stopMoving();
+
+            sleep(100);
+
+            //turn on intake now
 
             this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
-            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 20));
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 100));
+            this.mecanumDrive.stopMoving();
+
+            sleep(100);
+
+            this.hopperpush.setPower(1.0);
+            sleep(1000);
+            this.hopperpush.setPower(0);
+            this.shooter1.setPower(0);
+            this.shooter2.setPower(0);
+
+            sleep(100);
+
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 25));
             this.mecanumDrive.stopMoving();
 
 
@@ -252,7 +272,7 @@ public class MainAutonomous extends LinearOpMode {
 
 
         }
-        else if (SingleStackDetected==true){
+        else if (NoStackDetected==true){
 
             this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
             sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));

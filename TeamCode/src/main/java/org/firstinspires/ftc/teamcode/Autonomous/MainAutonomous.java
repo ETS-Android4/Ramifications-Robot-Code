@@ -55,7 +55,7 @@ public class MainAutonomous extends LinearOpMode {
         if (tfod != null) {
             tfod.activate();
 
-            //tfod.setZoom(2.5, 1.78); //uncomment this to adjust field of view or zoom on camera
+            tfod.setZoom(1.5, 1.5); //uncomment this to adjust field of view or zoom on camera
         }
 
 
@@ -80,15 +80,16 @@ public class MainAutonomous extends LinearOpMode {
 
             // TODO: 2/6/2021 CORRECT DRIVE DISTANCE HERE TO RELIABLY GET TO STACK POSITION
             //drive to line
+
             this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
-            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 35));
             this.mecanumDrive.stopMoving();
 
 
 
 
             //iterator variable (we could do a for loop, but we probably shouldn't mess with this much at all, since its the way vuforia wants us to do it
-            int iterator = 100;  // TODO: 2/6/2021 We probably need to change this right here. I don't know how long a vuforia scan cycle lasts, so testing will be required to determine this
+            int iterator = 1000;
             while (iterator>0) {
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
@@ -103,40 +104,57 @@ public class MainAutonomous extends LinearOpMode {
                             telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
 
 
-                            // TODO: 2/6/2021 We need to verify that these lables are spelled and written correctly otherwise these string comparisons won't work
 
-                            if(recognition.getLabel().equals("quad")){ //tell the rest of the auto if we are dealing with quad stack
+                            if(recognition.getLabel().equals("Quad")){ //tell the rest of the auto if we are dealing with quad stack
+                                telemetry.addLine("Quad Detected");
+                                telemetry.update();
                                   SingleStackDetected = false;
                                   QuadStackDetected = true;
                                   NoStackDetected = false;
                             }
 
-                            else if(recognition.getLabel().equals("single")){ //tell the rest of the auto if we are dealing with single stack
+                            else if(recognition.getLabel().equals("Single")){ //tell the rest of the auto if we are dealing with single stack
+
+                                telemetry.addLine("Single Detected");
+                                telemetry.update();
                                 SingleStackDetected = true;
                                 QuadStackDetected = false;
                                 NoStackDetected = false;
                             }
 
                             else{ //tell the rest of the auto if we are dealing with no stack
+                                telemetry.addLine("None Detected");
+                                telemetry.update();
                                 SingleStackDetected = false;
                                 QuadStackDetected = false;
                                 NoStackDetected = true;
                             }
-                            telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
-                                    recognition.getLeft(), recognition.getTop());
-                            telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
-                                    recognition.getRight(), recognition.getBottom());
+                            //telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                            //        recognition.getLeft(), recognition.getTop());
+                            //telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                            //        recognition.getRight(), recognition.getBottom());
                         }
                         telemetry.update();
                     }
                 }
                 iterator--;
             }
+
+
+            sleep(1000);
+
         }
         //shut down vuforia sequence
         if (tfod != null) {
             tfod.shutdown();
         }
+
+        telemetry.addLine("PRoceeding to movement");
+        telemetry.addLine("quad: " + QuadStackDetected);
+        telemetry.addLine("single: " + SingleStackDetected);
+        telemetry.addLine("none:" + NoStackDetected);
+        telemetry.update();
+        sleep(500);
 
 
 
@@ -144,22 +162,142 @@ public class MainAutonomous extends LinearOpMode {
         Here is where all subsequent Autonomous code can go:
          */
 
+        if (QuadStackDetected==true){
+
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
+            this.mecanumDrive.stopMoving();
+
+            sleep(100);
+
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),0.75,0);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 150));
+            this.mecanumDrive.stopMoving();
+
+            sleep(100);
+
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
+            this.mecanumDrive.stopMoving();
+
+            sleep(100);
+
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 45));
+            this.mecanumDrive.stopMoving();
+
+            sleep(100);
+
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 75));
+            this.mecanumDrive.stopMoving();
+
+            sleep(100);
+
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 30));
+            this.mecanumDrive.stopMoving();
+
+            sleep(100);
+
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 75));
+            this.mecanumDrive.stopMoving();
+
+            sleep(100);
+
+            this.shooter1.setPower(1.0);
+            this.shooter2.setPower(0.7);
+            sleep(500);
+            this.hopperpush.setPower(1.0);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 10));
+            this.hopperpush.setPower(0);
+
+            sleep(100);
+
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 10));
+            this.mecanumDrive.stopMoving();
+
+            sleep(100);
+
+            this.hopperpush.setPower(1.0);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage,33));
+            this.hopperpush.setPower(0);
+
+            sleep(100);
+
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 10));
+            this.mecanumDrive.stopMoving();
+
+            sleep(100);
+
+           /* this.hopperpush.setPower(1.0);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage,200));
+            this.hopperpush.setPower(0)
+
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 20));
+            this.mecanumDrive.stopMoving();
+
+            sleep(100);*/
+
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 20));
+            this.mecanumDrive.stopMoving();
 
 
 
 
 
+        }
+        else if (SingleStackDetected==true){
 
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
+            this.mecanumDrive.stopMoving();
 
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 100));
+            this.mecanumDrive.stopMoving();
 
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
+            this.mecanumDrive.stopMoving();
 
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
+            this.mecanumDrive.stopMoving();
 
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 200));
+            this.mecanumDrive.stopMoving();
 
+        }
+        else{
 
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 10));
+            this.mecanumDrive.stopMoving();
 
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 250));
+            this.mecanumDrive.stopMoving();
 
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 100));
+            this.mecanumDrive.stopMoving();
 
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
+            this.mecanumDrive.stopMoving();
 
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 110));
+            this.mecanumDrive.stopMoving();
+
+        }
 
 
 

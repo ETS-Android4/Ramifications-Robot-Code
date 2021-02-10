@@ -37,6 +37,7 @@ public class testhopperpush extends LinearOpMode {
     private DcMotor shooter1;
     private DcMotor shooter2;
     private CRServo hopperpush;
+    private DcMotor intake;
 
     // For Movement
     private double voltage;
@@ -72,6 +73,7 @@ public class testhopperpush extends LinearOpMode {
         this.shooter2 = hardwareMap.get(DcMotor.class, "shooter2");
         this.hopperpush = hardwareMap.get(CRServo.class, "hopperpush");
         this.voltage = hardwareMap.voltageSensor.get("Expansion Hub 10").getVoltage();
+        this.intake = hardwareMap.get(DcMotor.class, "intake");
 
         //telemetry
         telemetry.addData(">", "Press Play to start op mode");
@@ -82,8 +84,8 @@ public class testhopperpush extends LinearOpMode {
 
         //if the play button has been hit, execute subsequent code
         if (opModeIsActive()) {
+            intake.setPower(1);
 
-            hopperpush.setPower(1);
             // TODO: 2/6/2021 CORRECT DRIVE DISTANCE HERE TO RELIABLY GET TO STACK POSITION
             //drive to line
 

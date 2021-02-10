@@ -40,11 +40,11 @@ public class UltimateGoalTestTeleop extends OpMode {
     private Servo claw;
     boolean clawstate = false;
     boolean hopstate = false;
-    boolean anglerstate = false;
+    //boolean anglerstate = false;
     double firepowerstate = 0.0;
     private DcMotor intake;
     private CRServo hopperpush;
-    private Servo angler;
+    //private Servo angler;
     private Boolean intakeState;
     //private MotorPair intake;
     //private DcMotor arm;
@@ -74,7 +74,7 @@ public class UltimateGoalTestTeleop extends OpMode {
         this.hopperpush = hardwareMap.get(CRServo.class, "hopperpush");
         this.intake = hardwareMap.get(DcMotor.class, "intake");
         //hopperpush.setPosition(0.5);
-        this.angler = hardwareMap.get(Servo.class, "angler");
+        //this.angler = hardwareMap.get(Servo.class, "angler");
 
         intakeState = false;
 
@@ -134,12 +134,12 @@ public class UltimateGoalTestTeleop extends OpMode {
             this.mecanumDrive.stopMoving();
          */
         //angler code
-        if(gamepad1.dpad_up){
-            angler.setPosition(0.8); //upper limit is 0.8
-        }
-        if(gamepad1.dpad_down){
-            angler.setPosition(0.39);
-        }
+        //if(gamepad1.dpad_up){
+        //    angler.setPosition(0.8); //upper limit is 0.8
+        //}
+        //if(gamepad1.dpad_down){
+        //    angler.setPosition(0.39);
+        //}
 
 
 /*
@@ -159,7 +159,7 @@ public class UltimateGoalTestTeleop extends OpMode {
 
         //left bumper is intake toggle
 
-        if (gamepad1.left_bumper) intakeState = !intakeState;
+        if (gamepad1.left_bumper) intakeState = !intakeState; // TODO: 2/9/2021 I think this could cause an issue 
 
 
         if (intakeState) {
@@ -240,7 +240,7 @@ public class UltimateGoalTestTeleop extends OpMode {
 
         // Hopper Pusher
         if (gamepad1.a) {
-            hopperpush.setPower(1); // TODO: 2/9/2021 IF THE HOPPER PUSHER IS GOING REVERSED, MAKE THIS A -1 
+            hopperpush.setPower(1); // TODO: 2/9/2021 IF THE HOPPER PUSHER IS GOING REVERSED, MAKE THIS A -1
             //telemetry.addLine("Hopper Pusher Used");
             //hopperpush.setPosition(hopstate ? 0 : 1);
             //hopstate = !hopstate;

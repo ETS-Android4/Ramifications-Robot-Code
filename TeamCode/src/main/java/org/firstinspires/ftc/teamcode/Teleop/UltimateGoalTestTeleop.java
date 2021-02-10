@@ -174,7 +174,7 @@ public class UltimateGoalTestTeleop extends OpMode {
         //}
 
 
-        intake.setPower(gamepad2.left_bumper ? 1 : 0);
+        intake.setPower(gamepad2.y ? 1 : 0);
         intake.setPower(gamepad2.x ? -1 : 0);
 
 

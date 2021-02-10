@@ -128,6 +128,14 @@ public class UltimateGoalTestTeleop extends OpMode {
         //telemetry.addData("Collision Detected", CollisionExecutor.calculate(modernRoboticsI2cGyro.getHeading(), this.imuWrapper));
         telemetry.update();
 
+        if(gamepad1.b){
+            hopperpush.setPower(-1);
+        }
+        else{
+            hopperpush.setPower(0);
+        }
+
+
 
         // check for collision. If collided, stop to prevent further damage
         /*if (CollisionExecutor.calculate(modernRoboticsI2cGyro.getHeading(), this.imuWrapper)) {
@@ -246,6 +254,7 @@ public class UltimateGoalTestTeleop extends OpMode {
             } catch (Exception e) {}
         }
 
+        /*
         // Hopper Pusher
         if (gamepad1.a) {
             hopperpush.setPower(1); // TODO: 2/9/2021 IF THE HOPPER PUSHER IS GOING REVERSED, MAKE THIS A -1
@@ -258,6 +267,8 @@ public class UltimateGoalTestTeleop extends OpMode {
         } else {
             hopperpush.setPower(0);
         }
+
+         */
 
     }
 

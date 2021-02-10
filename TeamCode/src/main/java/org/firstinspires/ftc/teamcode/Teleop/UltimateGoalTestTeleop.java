@@ -164,14 +164,15 @@ public class UltimateGoalTestTeleop extends OpMode {
 
         */
 
-        if (gamepad1.left_bumper || gamepad1.x) {
-            telemetry.addLine("Intake Used");
-            intake.setPower(intakeState ? 1 : 0);
-            intakeState = !intakeState;
+        //if (gamepad1.left_bumper || gamepad1.x) {
+         //   telemetry.addLine("Intake Used");
+         //   intake.setPower(intakeState ? 1 : 0);
+        //    intakeState = !intakeState;
             /*try {
                 Thread.sleep(150);
             } catch (Exception e) {}*/
-        }
+        //}
+
 
         intake.setPower(gamepad2.left_bumper ? 1 : 0);
         intake.setPower(gamepad2.x ? -1 : 0);

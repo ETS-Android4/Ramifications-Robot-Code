@@ -130,9 +130,11 @@ public class UltimateGoalTestTeleop extends OpMode {
 
         if(gamepad1.a){
             hopperpush.setPower(-0.75);
+            shooter2.setPower(1);
         }
         else{
             hopperpush.setPower(0);
+            shooter2.setPower(0);
         }
 
 
@@ -177,10 +179,10 @@ public class UltimateGoalTestTeleop extends OpMode {
 
 
         if (gamepad1.left_trigger > 0){
-            shooter2.setPower(1);
+           // shooter2.setPower(1);
             shooter1.setPower(0.75);
         } else {
-            shooter2.setPower(0);
+            //shooter2.setPower(0);  //liam asked me to move these to the hopper push sequence
             shooter1.setPower(0);
         }
 

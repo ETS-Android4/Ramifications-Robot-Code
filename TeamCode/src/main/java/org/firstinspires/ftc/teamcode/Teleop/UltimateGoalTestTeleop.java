@@ -257,7 +257,7 @@ public class UltimateGoalTestTeleop extends OpMode {
         /*
         // Hopper Pusher
         if (gamepad1.a) {
-            hopperpush.setPower(1); // TODO: 2/9/2021 IF THE HOPPER PUSHER IS GOING REVERSED, MAKE THIS A -1
+            hopperpush.setPower(-1); // TODO: 2/9/2021 IF THE HOPPER PUSHER IS GOING REVERSED, MAKE THIS A -1
             //telemetry.addLine("Hopper Pusher Used");
             //hopperpush.setPosition(hopstate ? 0 : 1);
             //hopstate = !hopstate;

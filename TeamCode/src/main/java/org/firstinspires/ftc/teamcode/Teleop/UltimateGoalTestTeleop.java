@@ -45,7 +45,7 @@ public class UltimateGoalTestTeleop extends OpMode {
     private DcMotor intake;
     private CRServo hopperpush;
     //private Servo angler;
-    private Boolean intakeState;
+    private int intakeState;
     //private MotorPair intake;
     //private DcMotor arm;
     //private DcMotor elevator;
@@ -76,7 +76,7 @@ public class UltimateGoalTestTeleop extends OpMode {
         //hopperpush.setPosition(0.5);
         //this.angler = hardwareMap.get(Servo.class, "angler");
 
-        intakeState = false;
+        intakeState = 0;
 
         //this.intake = new MotorPair(hardwareMap, "intake1", "intake2");
         //this.arm = hardwareMap.get(DcMotor.class, "arm");
@@ -159,17 +159,14 @@ public class UltimateGoalTestTeleop extends OpMode {
 
         //left bumper is intake toggle
 
-        if (gamepad1.left_bumper) intakeState = !intakeState; // TODO: 2/9/2021 I think this could cause an issue 
+        if (gamepad1.left_bumper) intakeState += 1;
+        if (intakeState == 2) intakeState = -1;
 
 
-        if (intakeState) {
-            intake.setPower(-1);
-            try {
-                Thread.sleep(200);
-            } catch (Exception e) {}
-        } else {
-            intake.setPower(0);
-        }
+        intake.setPower(intakeState);
+        try {
+            Thread.sleep(200);
+        } catch (Exception e) {}
 
 
         if (gamepad1.left_trigger > 0){
@@ -247,8 +244,7 @@ public class UltimateGoalTestTeleop extends OpMode {
             //try {
              //   Thread.sleep(150);
             //} catch (Exception e) {}
-        }
-        else{
+        } else {
             hopperpush.setPower(0);
         }
 

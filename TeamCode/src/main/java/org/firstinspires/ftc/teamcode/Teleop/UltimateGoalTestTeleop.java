@@ -138,6 +138,14 @@ public class UltimateGoalTestTeleop extends OpMode {
         }
 
 
+        if(gamepad2.y){
+            intake.setPower(1);
+        }
+        else{
+            intake.setPower(0);
+        }
+
+
 
         // check for collision. If collided, stop to prevent further damage
         /*if (CollisionExecutor.calculate(modernRoboticsI2cGyro.getHeading(), this.imuWrapper)) {
@@ -174,8 +182,8 @@ public class UltimateGoalTestTeleop extends OpMode {
         //}
 
 
-        intake.setPower(gamepad2.y ? 1 : 0);
-        intake.setPower(gamepad2.x ? -1 : 0);
+       // intake.setPower(gamepad2.y ? 1 : 0);
+        //intake.setPower(gamepad2.x ? -1 : 0);
 
 
 

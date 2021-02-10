@@ -175,6 +175,10 @@ public class UltimateGoalTestTeleop extends OpMode {
         intake.setPower(gamepad1.x? -1 : 0);
 
 
+        intake.setPower(gamepad2.left_bumper? 1 : 0);
+        intake.setPower(gamepad2.x? -1 : 0);
+
+
 
         if (gamepad1.left_trigger > 0){
             shooter2.setPower(1);

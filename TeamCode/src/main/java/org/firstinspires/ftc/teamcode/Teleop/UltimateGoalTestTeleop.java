@@ -45,7 +45,7 @@ public class UltimateGoalTestTeleop extends OpMode {
     private DcMotor intake;
     private CRServo hopperpush;
     //private Servo angler;
-    private int intakeState;
+    private boolean intakeState;
     //private MotorPair intake;
     //private DcMotor arm;
     //private DcMotor elevator;
@@ -76,7 +76,7 @@ public class UltimateGoalTestTeleop extends OpMode {
         //hopperpush.setPosition(0.5);
         //this.angler = hardwareMap.get(Servo.class, "angler");
 
-        intakeState = 0;
+        intakeState = false;
 
         //this.intake = new MotorPair(hardwareMap, "intake1", "intake2");
         //this.arm = hardwareMap.get(DcMotor.class, "arm");
@@ -128,8 +128,8 @@ public class UltimateGoalTestTeleop extends OpMode {
         //telemetry.addData("Collision Detected", CollisionExecutor.calculate(modernRoboticsI2cGyro.getHeading(), this.imuWrapper));
         telemetry.update();
 
-        if(gamepad1.b){
-            hopperpush.setPower(-1);
+        if(gamepad1.a){
+            hopperpush.setPower(-0.75);
         }
         else{
             hopperpush.setPower(0);
@@ -148,22 +148,6 @@ public class UltimateGoalTestTeleop extends OpMode {
         //if(gamepad1.dpad_down){
         //    angler.setPosition(0.39);
         //}
-
-
-/*
-        if (gamepad1.x || (gamepad1.left_bumper)) {
-            intake.setPower(-1);
-            telemetry.addLine("intake active");
-        } else if (gamepad1.y) {
-            intake.setPower(1);
-            telemetry.addLine("reversing intake");
-        } else {
-            intake.setPower(0);
-            intake.setPower(0);
-            telemetry.addLine("intake off");
-        }
-
- */
 /*
         //left bumper is intake toggle
 
@@ -179,12 +163,18 @@ public class UltimateGoalTestTeleop extends OpMode {
         */
 
 
-        intake.setPower(gamepad1.left_bumper? 1 : 0);
-        intake.setPower(gamepad1.x? -1 : 0);
+        if (gamepad1.left_bumper || gamepad1.x) {
+            telemetry.addLine("Intake Used");
+            intake.setPower(intakeState ? 1 : 0);
+            intakeState = !intakeState;
+            try {
+                Thread.sleep(150);
+            } catch (Exception e) {}
+        }
 
 
-        intake.setPower(gamepad2.left_bumper? 1 : 0);
-        intake.setPower(gamepad2.x? -1 : 0);
+        intake.setPower(gamepad2.left_bumper ? 1 : 0);
+        intake.setPower(gamepad2.x ? -1 : 0);
 
 
 

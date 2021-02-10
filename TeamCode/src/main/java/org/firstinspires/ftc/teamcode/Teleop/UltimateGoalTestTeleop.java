@@ -231,7 +231,7 @@ public class UltimateGoalTestTeleop extends OpMode {
         // Wobble Goal Claw
         if (gamepad2.a) {
             telemetry.addLine("Wobble Claw Used");
-            claw.setPosition(clawstate ? 0 : 0.5);
+            claw.setPosition(clawstate ? 0 : 0.25);
             clawstate = !clawstate;
             try {
                 Thread.sleep(150);
@@ -240,12 +240,16 @@ public class UltimateGoalTestTeleop extends OpMode {
 
         // Hopper Pusher
         if (gamepad1.a) {
-            telemetry.addLine("Hopper Pusher Used");
+            hopperpush.setPower(1); // TODO: 2/9/2021 IF THE HOPPER PUSHER IS GOING REVERSED, MAKE THIS A -1 
+            //telemetry.addLine("Hopper Pusher Used");
             //hopperpush.setPosition(hopstate ? 0 : 1);
-            hopstate = !hopstate;
-            try {
-                Thread.sleep(150);
-            } catch (Exception e) {}
+            //hopstate = !hopstate;
+            //try {
+             //   Thread.sleep(150);
+            //} catch (Exception e) {}
+        }
+        else{
+            hopperpush.setPower(0);
         }
 
     }

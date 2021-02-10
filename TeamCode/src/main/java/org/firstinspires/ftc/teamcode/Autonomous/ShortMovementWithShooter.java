@@ -41,7 +41,7 @@ public class ShortMovementWithShooter extends LinearOpMode {
         this.hopperpush.setPower(0);
 
         this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
-        sleep(300);
+        sleep(350);
         this.mecanumDrive.stopMoving();
 
         /*this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);

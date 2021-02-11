@@ -261,7 +261,7 @@ public class UltimateGoalTestTeleop extends OpMode {
 
 
         //open or close claw on wobble goal arm
-        arm.setPower(gamepad2.right_stick_y); // TODO: 2/11/2021 might need to reverse again
+        arm.setPower(gamepad2.left_stick_y); // TODO: 2/11/2021 might need to reverse again
 
         // Wobble Goal Claw
         if (gamepad2.a) {

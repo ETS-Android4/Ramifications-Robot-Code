@@ -137,14 +137,14 @@ public class UltimateGoalTestTeleop extends OpMode {
             shooter2.setPower(0);
         }
 
-        if(gamepad1.b){ //reverse the hopper pusher
-            hopperpush.setPower(0.75);
+        //if(gamepad1.b){ //reverse the hopper pusher
+         //   hopperpush.setPower(0.75);
 
-        }
-        else{
-            hopperpush.setPower(0);
+        //}
+        //else{
+        //    hopperpush.setPower(0);
   
-        }
+        //}
 
 
         if(gamepad2.y || gamepad1.y){

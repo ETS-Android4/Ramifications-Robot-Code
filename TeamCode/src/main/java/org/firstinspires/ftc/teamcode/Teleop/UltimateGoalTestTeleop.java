@@ -261,12 +261,12 @@ public class UltimateGoalTestTeleop extends OpMode {
 
 
         //open or close claw on wobble goal arm
-        arm.setPower(-gamepad2.right_stick_y);
+        arm.setPower(gamepad2.right_stick_y); // TODO: 2/11/2021 might need to reverse again
 
         // Wobble Goal Claw
         if (gamepad2.a) {
             telemetry.addLine("Wobble Claw Used");
-            claw.setPosition(clawstate ? 0.675 : 1);
+            claw.setPosition(clawstate ? 0.63 : 1);
             clawstate = !clawstate;
             try {
                 Thread.sleep(200);

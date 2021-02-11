@@ -68,7 +68,7 @@ public class UltimateGoalTestTeleop extends OpMode {
         //hopper + feeding control
         if(gamepad1.right_trigger>0){
             hopperpush.setPower(-0.75);
-            shooter2.setPower(1);
+            shooter2.setPower(0.75);
         }
         else if(gamepad1.a){
             hopperpush.setPower(0.75);
@@ -96,10 +96,10 @@ public class UltimateGoalTestTeleop extends OpMode {
 
        //override shooter power
         if(gamepad1.left_bumper){
-            shooter1Power = 0.75; // TODO: 2/11/2021 change this to be a power drivers are happy with
+            shooter1Power = 0.8; // TODO: 2/11/2021 change this to be a power drivers are happy with
         }
         else{
-            shooter1Power = 0.85; // TODO: 2/11/2021 change this to be a power drivers are happy with
+            shooter1Power = 1; // TODO: 2/11/2021 change this to be a power drivers are happy with
         }
 
 

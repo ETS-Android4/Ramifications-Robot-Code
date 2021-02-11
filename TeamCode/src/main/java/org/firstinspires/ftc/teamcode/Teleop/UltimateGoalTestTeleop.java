@@ -107,7 +107,7 @@ public class UltimateGoalTestTeleop extends OpMode {
         if (gamepad1.left_trigger > 0){
             shooter1.setPower(shooter1Power);
         } else {
-            shooter1.setPower(shooter1Power);
+            shooter1.setPower(0);
         }
 
         //control over drivetrain

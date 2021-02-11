@@ -23,11 +23,6 @@ import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MotorPair;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 
-// TODO: 1/26/2021  right trigger = feed one ring
-// TODO: 1/26/2021 work on delay
-// TODO: 1/26/2021 add physical limit to wobble goal arm
-// TODO: 1/26/2021 add delay to toggle for intake on bumper
-// TODO: 1/26/2021 look into multi-threading
 
 @TeleOp(name = "Ultimate Goal Teleop V:4.0", group = "Basic")
 public class UltimateGoalTestTeleop extends OpMode {
@@ -38,7 +33,7 @@ public class UltimateGoalTestTeleop extends OpMode {
     double firepower = 0.5;
     private DcMotor arm;
     private Servo claw;
-    boolean clawstate = false;
+    boolean clawstate = true;
     boolean hopstate = false;
     //boolean anglerstate = false;
     double firepowerstate = 0.0;
@@ -46,6 +41,8 @@ public class UltimateGoalTestTeleop extends OpMode {
     private CRServo hopperpush;
     //private Servo angler;
     private boolean intakeState;
+    private double shooter1Power;
+    private double shooter2Power;
     //private MotorPair intake;
     //private DcMotor arm;
     //private DcMotor elevator;
@@ -132,6 +129,10 @@ public class UltimateGoalTestTeleop extends OpMode {
             hopperpush.setPower(-0.75);
             shooter2.setPower(1);
         }
+        else if(gamepad1.b){
+            hopperpush.setPower(0.75);
+            shooter2.setPower(0); // TODO: 2/11/2021 maybe change this to -1 to push rings back? testing required!
+        }
         else{
             hopperpush.setPower(0);
             shooter2.setPower(0);
@@ -149,6 +150,9 @@ public class UltimateGoalTestTeleop extends OpMode {
 
         if(gamepad2.y || gamepad1.y){
             intake.setPower(1);
+        }
+        else if(gamepad1.dpad_down || gamepad2.dpad_down){
+            intake.setPower(-1);
         }
         else{
             intake.setPower(0);
@@ -193,15 +197,22 @@ public class UltimateGoalTestTeleop extends OpMode {
 
        // intake.setPower(gamepad2.y ? 1 : 0); 
         //intake.setPower(gamepad2.x ? -1 : 0);
+        if(gamepad1.left_bumper){
+            shooter1Power = 0.7; // TODO: 2/11/2021 change this to be a power drivers are happy with
+        }
+        else{
+            shooter1Power = 0.77; // TODO: 2/11/2021 change this to be a power drivers are happy with
+        }
+
 
 
 
         if (gamepad1.left_trigger > 0){
            // shooter2.setPower(1);
-            shooter1.setPower(0.75);
+            shooter1.setPower(shooter1Power);
         } else {
             //shooter2.setPower(0);  //liam asked me to move these to the hopper push sequence
-            shooter1.setPower(0);
+            shooter1.setPower(shooter1Power);
         }
 
         /*
@@ -258,14 +269,14 @@ public class UltimateGoalTestTeleop extends OpMode {
             claw.setPosition(clawstate ? 0.675 : 1);
             clawstate = !clawstate;
             try {
-                Thread.sleep(150);
+                Thread.sleep(200);
             } catch (Exception e) {}
         }
 
         /*
         // Hopper Pusher
         if (gamepad1.a) {
-            hopperpush.setPower(-1); // TODO: 2/9/2021 IF THE HOPPER PUSHER IS GOING REVERSED, MAKE THIS A -1
+            hopperpush.setPower(-1);
             //telemetry.addLine("Hopper Pusher Used");
             //hopperpush.setPosition(hopstate ? 0 : 1);
             //hopstate = !hopstate;

@@ -70,7 +70,7 @@ public class UltimateGoalTestTeleop extends OpMode {
         this.shooter2 = hardwareMap.get(DcMotor.class, "shooter2");
         this.arm = hardwareMap.get(DcMotor.class, "arm");
         this.claw = hardwareMap.get(Servo.class, "claw");
-        claw.setPosition(0);
+        claw.setPosition(1);
         this.hopperpush = hardwareMap.get(CRServo.class, "hopperpush");
         this.intake = hardwareMap.get(DcMotor.class, "intake");
         //hopperpush.setPosition(0.5);
@@ -246,7 +246,7 @@ public class UltimateGoalTestTeleop extends OpMode {
         // Wobble Goal Claw
         if (gamepad2.a) {
             telemetry.addLine("Wobble Claw Used");
-            claw.setPosition(clawstate ? 0 : 0.25);
+            claw.setPosition(clawstate ? 0 : 0.6);
             clawstate = !clawstate;
             try {
                 Thread.sleep(150);

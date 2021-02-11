@@ -35,28 +35,13 @@ public class UltimateGoalTestTeleop extends OpMode {
     private Servo claw;
     boolean clawstate = true;
     boolean hopstate = false;
-    //boolean anglerstate = false;
     double firepowerstate = 0.0;
     private DcMotor intake;
     private CRServo hopperpush;
-    //private Servo angler;
     private boolean intakeState;
     private double shooter1Power;
-    private double shooter2Power;
-    //private MotorPair intake;
-    //private DcMotor arm;
-    //private DcMotor elevator;
 
-    //private Servo grabber;
-    //private Servo assist;
-    //private Servo clampLeft;
-    //private Servo clampRight;
-    //private GrabberState grabberState = GrabberState.CLOSED;
-    //private ClampState clampState = ClampState.UP;
-    //private IntegratingGyroscope gyro;
-    //private ModernRoboticsI2cGyro modernRoboticsI2cGyro;
-    //private AngularVelocity rates;
-    //private IMUWrapper imuWrapper;
+
 
     @Override
     public void init() {
@@ -70,66 +55,22 @@ public class UltimateGoalTestTeleop extends OpMode {
         claw.setPosition(1);
         this.hopperpush = hardwareMap.get(CRServo.class, "hopperpush");
         this.intake = hardwareMap.get(DcMotor.class, "intake");
-        //hopperpush.setPosition(0.5);
-        //this.angler = hardwareMap.get(Servo.class, "angler");
-
         intakeState = false;
-
-        //this.intake = new MotorPair(hardwareMap, "intake1", "intake2");
-        //this.arm = hardwareMap.get(DcMotor.class, "arm");
-        //this.elevator = hardwareMap.get(DcMotor.class, "elevator");
-        //this.grabber = hardwareMap.get(Servo.class, "grabber");
-        //this.assist = hardwareMap.get(Servo.class, "assist");
-        //this.clampLeft = hardwareMap.get(Servo.class, "clamp_left");
-        //this.clampRight = hardwareMap.get(Servo.class, "clamp_right");
-        //this.modernRoboticsI2cGyro = hardwareMap.get(ModernRoboticsI2cGyro.class, "gyro");
-        //this.imuWrapper = new IMUWrapper(hardwareMap);
-        /*this.gyro = (IntegratingGyroscope) modernRoboticsI2cGyro;
-        modernRoboticsI2cGyro.calibrate();*/
-
-        //this.elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //this.arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-
-
     }
 
-    /*private double computeMovement(double x) {
-        if (gamepad1.right_trigger == 0) {
-            if (x == 0.0) {
-                return 0.0;
-            } else if (x > 0.0) {
-                return Math.pow(100, (1.02 * x) - 1.07) + 0.2;
-            } else if (x < 0.0) {
-                return -(Math.pow(100, (-1.02 * x) - 1.07) + 0.2);
-            }
-            return 0.0;
-        } else if (gamepad1.right_trigger == 1) {
-            if (x == 0.0) {
-                return 0.0;
-            } else if (x > 0.0) {
-                return Math.pow(100, (0.87 * x) - 1.07) + 0.4;
-            } else if (x < 0.0) {
-                return -(Math.pow(100, (-0.87 * x) - 1.07) + 0.4);
-            }
-            return 0.0;
-        }
-        return 0.0;
-    }*/
+
 
     @Override
     public void loop() {
 
-        //rates = gyro.getAngularVelocity(AngleUnit.DEGREES.DEGREES);
-        //telemetry.addData("isGrabberOpen", this.grabberState);
-        //telemetry.addData("Collision Detected", CollisionExecutor.calculate(modernRoboticsI2cGyro.getHeading(), this.imuWrapper));
         telemetry.update();
 
-        if(gamepad1.a){
+        //hopper + feeding control
+        if(gamepad1.right_trigger>0){
             hopperpush.setPower(-0.75);
             shooter2.setPower(1);
         }
-        else if(gamepad1.b){
+        else if(gamepad1.a){
             hopperpush.setPower(0.75);
             shooter2.setPower(0); // TODO: 2/11/2021 maybe change this to -1 to push rings back? testing required!
         }
@@ -138,20 +79,13 @@ public class UltimateGoalTestTeleop extends OpMode {
             shooter2.setPower(0);
         }
 
-        //if(gamepad1.b){ //reverse the hopper pusher
-         //   hopperpush.setPower(0.75);
-
-        //}
-        //else{
-        //    hopperpush.setPower(0);
-  
-        //}
 
 
-        if(gamepad2.y || gamepad1.y){
+        //intake control
+        if(gamepad2.right_bumper || gamepad1.right_bumper){
             intake.setPower(1);
         }
-        else if(gamepad1.dpad_down || gamepad2.dpad_down){
+        else if(gamepad1.b || gamepad2.b){
             intake.setPower(-1);
         }
         else{
@@ -160,43 +94,7 @@ public class UltimateGoalTestTeleop extends OpMode {
 
 
 
-        // check for collision. If collided, stop to prevent further damage
-        /*if (CollisionExecutor.calculate(modernRoboticsI2cGyro.getHeading(), this.imuWrapper)) {
-            this.mecanumDrive.stopMoving();
-         */
-        //angler code
-        //if(gamepad1.dpad_up){
-        //    angler.setPosition(0.8); //upper limit is 0.8
-        //}
-        //if(gamepad1.dpad_down){
-        //    angler.setPosition(0.39);
-        //}
-/*
-        //left bumper is intake toggle
-
-        if (gamepad1.left_bumper) intakeState += 1;
-        if (intakeState == 2) intakeState = -1;
-
-
-        intake.setPower(intakeState);
-        try {
-            Thread.sleep(200);
-        } catch (Exception e) {}
-
-        */
-
-        //if (gamepad1.left_bumper || gamepad1.x) {
-         //   telemetry.addLine("Intake Used");
-         //   intake.setPower(intakeState ? 1 : 0);
-        //    intakeState = !intakeState;
-            /*try {
-                Thread.sleep(150);
-            } catch (Exception e) {}*/
-        //}
-
-
-       // intake.setPower(gamepad2.y ? 1 : 0); 
-        //intake.setPower(gamepad2.x ? -1 : 0);
+       //override shooter power
         if(gamepad1.left_bumper){
             shooter1Power = 0.7; // TODO: 2/11/2021 change this to be a power drivers are happy with
         }
@@ -205,62 +103,17 @@ public class UltimateGoalTestTeleop extends OpMode {
         }
 
 
-
-
+        //activate shooter
         if (gamepad1.left_trigger > 0){
-           // shooter2.setPower(1);
             shooter1.setPower(shooter1Power);
         } else {
-            //shooter2.setPower(0);  //liam asked me to move these to the hopper push sequence
             shooter1.setPower(shooter1Power);
         }
-
-        /*
-        if (gamepad1.b) {
-            if (firepowerstate == 0) {
-                telemetry.addLine("single shot mode activated");
-                shooter2.setPower(1);
-                firepowerstate = 0.75; //flipped power to be multi shot
-                shooter1.setPower(firepowerstate);
-                try {
-                    Thread.sleep(200);
-                } catch (Exception e) {
-
-                }
-            } else if (firepowerstate == 0.70) {
-                telemetry.addLine("burst mode activate");
-                shooter2.setPower(1);
-                firepowerstate = 0.7; //flopped power to be single shot
-                shooter1.setPower(firepowerstate);
-                try {
-                    Thread.sleep(200);
-                } catch (Exception e) {
-
-                }
-            } else if (firepowerstate == 0.75) {
-                telemetry.addLine("yeeter shut down");
-                shooter2.setPower(0);
-                firepowerstate = 0.0;
-                shooter1.setPower(firepowerstate);
-                try {
-                    Thread.sleep(200);
-                } catch (Exception e) {
-
-                }
-            }
-        } */
-
 
         //control over drivetrain
         this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
 
-
-        if(gamepad1.right_bumper){
-            //RapidFire.rapidFire(shooter1,shooter2,hopperpush,telemetry, mecanumDrive,gamepad1);
-        }
-
-
-        //open or close claw on wobble goal arm
+        //extend or retract wobble arm
         arm.setPower(gamepad2.left_stick_y); // TODO: 2/11/2021 might need to reverse again
 
         // Wobble Goal Claw
@@ -273,105 +126,8 @@ public class UltimateGoalTestTeleop extends OpMode {
             } catch (Exception e) {}
         }
 
-        /*
-        // Hopper Pusher
-        if (gamepad1.a) {
-            hopperpush.setPower(-1);
-            //telemetry.addLine("Hopper Pusher Used");
-            //hopperpush.setPosition(hopstate ? 0 : 1);
-            //hopstate = !hopstate;
-            //try {
-             //   Thread.sleep(150);
-            //} catch (Exception e) {}
-        } else {
-            hopperpush.setPower(0);
-        }
-
-         */
-
-    }
 
 
-
-
-
-
-        /*
-        // assist
-        this.assist.setPosition((gamepad1.right_bumper || gamepad2.right_bumper) ? TeleOpConstants.ASSIST_CLOSED : TeleOpConstants.ASSIST_OPEN);
-
-        // grabber
-        if (this.grabberState.equals(GrabberState.CLOSED) && (gamepad2.right_bumper || gamepad1.right_bumper)) {
-            // we want to open it partially then
-            this.grabberState = GrabberState.PARTIAL;
-        }
-        else if (this.grabberState.equals(GrabberState.PARTIAL) && !(gamepad2.right_bumper || gamepad1.right_bumper)) {
-            // we want to close it by default then then
-            this.grabberState = GrabberState.CLOSED;
-        }
-        else if (gamepad2.dpad_left || gamepad1.dpad_left) {
-            // fully open the grabber
-            this.grabberState = GrabberState.OPEN;
-        }
-        else if (this.grabberState.equals(GrabberState.OPEN) && (gamepad2.dpad_right || gamepad1.dpad_right)) {
-            // close the grabber from the full position
-            this.grabberState = GrabberState.CLOSED;
-        }
-        */
-        /* grabber servo enum controller switch
-        switch (this.grabberState) {
-            case OPEN:
-                this.grabber.setPosition(TeleOpConstants.GRABBER_FULL_OPEN);
-                break;
-            case PARTIAL:
-                this.grabber.setPosition(TeleOpConstants.GRABBER_PARTIAL_OPEN);
-                break;
-            case CLOSED:
-                this.grabber.setPosition(TeleOpConstants.GRABBER_CLOSED);
-                break;
-        }
-        */
-            // arm
-            //this.arm.setPower(gamepad2.left_stick_y * 0.5);
-
-            // intake
-            //this.intake.getMotor1().setPower((this.intake.getMotor1().getPower() == 0) && (gamepad1.x || gamepad2.x) ? 1 : 0);
-            //this.intake.getMotor2().setPower((this.intake.getMotor2().getPower() == 0) && (gamepad1.x || gamepad2.x) ? -1 : 0);
-            //this.intake.getMotor1().setPower((this.intake.getMotor1().getPower() == 0) && (gamepad1.y || gamepad2.y) ? -1 : 0);
-            //this.intake.getMotor2().setPower((this.intake.getMotor2().getPower() == 0) && (gamepad1.y || gamepad2.y) ? 1 : 0);
-
-            // elevator
-            //if (gamepad2.right_stick_y >= 0) {
-            //    this.elevator.setPower(-gamepad2.right_stick_y* 0.65);
-            //}
-            //else if (gamepad2.right_stick_y < 0) {
-            //    this.elevator.setPower(-gamepad2.right_stick_y);
-            //}
-
-        /* clamp
-        if (this.clampState.equals(ClampState.UP) && (gamepad2.dpad_down || gamepad1.dpad_down)) {
-            // close the clamp
-            this.clampState = ClampState.DOWN;
-        }
-        else if (this.clampState.equals(ClampState.DOWN) && (gamepad2.dpad_up || gamepad1.dpad_up)) {
-            // raise the clamp
-            this.clampState = ClampState.UP;
-        }
-
-        //clamp servo switch controller
-        switch (this.clampState) {
-            case UP:
-                this.clampLeft.setPosition(AutonomousConstants.CLAMP_LEFT_UP);
-                this.clampRight.setPosition(AutonomousConstants.CLAMP_RIGHT_UP);
-                break;
-            case DOWN:
-                this.clampLeft.setPosition(AutonomousConstants.CLAMP_LEFT_DOWN);
-                this.clampRight.setPosition(AutonomousConstants.CLAMP_RIGHT_DOWN);
-                break;
-        }
-
-         */
-
-
-        }
+    } //end loop
+} //end class
 

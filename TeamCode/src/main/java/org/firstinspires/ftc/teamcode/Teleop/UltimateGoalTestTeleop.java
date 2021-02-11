@@ -96,10 +96,10 @@ public class UltimateGoalTestTeleop extends OpMode {
 
        //override shooter power
         if(gamepad1.left_bumper){
-            shooter1Power = 0.7; // TODO: 2/11/2021 change this to be a power drivers are happy with
+            shooter1Power = 0.75; // TODO: 2/11/2021 change this to be a power drivers are happy with
         }
         else{
-            shooter1Power = 0.77; // TODO: 2/11/2021 change this to be a power drivers are happy with
+            shooter1Power = 0.85; // TODO: 2/11/2021 change this to be a power drivers are happy with
         }
 
 

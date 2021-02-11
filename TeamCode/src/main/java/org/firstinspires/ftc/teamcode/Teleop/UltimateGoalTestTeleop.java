@@ -82,7 +82,7 @@ public class UltimateGoalTestTeleop extends OpMode {
 
 
         //intake control
-        if(gamepad2.right_bumper || gamepad1.right_bumper){
+        if(gamepad2.y || gamepad1.right_bumper){
             intake.setPower(1);
         }
         else if(gamepad1.b || gamepad2.x){

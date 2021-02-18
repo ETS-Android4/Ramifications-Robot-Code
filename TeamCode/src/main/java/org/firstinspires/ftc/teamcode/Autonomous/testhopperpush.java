@@ -29,7 +29,7 @@ public class testhopperpush extends LinearOpMode {
     private static final String LABEL_SECOND_ELEMENT = "Single";
 
     // Field Config
-    private Enums.FieldMode fieldMode = Enums.FieldMode.UNKNOWN;
+    private Enums.FieldMode fieldMode = Enums.FieldMode.A;
 
     // Hardware
     private Robot robot;

@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -9,16 +10,16 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+import org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
-import org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage;
-import org.firstinspires.ftc.teamcode.Autonomous.Enums;
+
 import java.util.List;
 
 
-@Autonomous(name = "MainAutonomous", group = "Concept")
+@Autonomous(name = "HighGoalAuto", group = "Concept")
 
-public class MainAutonomous extends LinearOpMode {
+public class HighGoalAuto extends LinearOpMode {
 
 
     // instance variables for auto
@@ -61,7 +62,7 @@ public class MainAutonomous extends LinearOpMode {
         if (tfod != null) {
             tfod.activate();
 
-            tfod.setZoom(1.5, 1.5); //uncomment this to adjust field of view or zoom on camera
+            tfod.setZoom(1.25, 1.25); //uncomment this to adjust field of view or zoom on camera
         }
 
 
@@ -87,9 +88,9 @@ public class MainAutonomous extends LinearOpMode {
             // TODO: 2/6/2021 CORRECT DRIVE DISTANCE HERE TO RELIABLY GET TO STACK POSITION
             //drive to line
 
-            this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
+            /*this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
             sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 35));
-            this.mecanumDrive.stopMoving();
+            this.mecanumDrive.stopMoving();*/
 
             //iterator variable (we could do a for loop, but we probably shouldn't mess with this much at all, since its the way vuforia wants us to do it
             int iterator = 1000;
@@ -157,143 +158,51 @@ public class MainAutonomous extends LinearOpMode {
          */
 
         // Aligning with the wall
-        mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
-        sleep(TimeOffsetVoltage.calculateDistance(voltage, 75));
-        mecanumDrive.stopMoving();
-        sleep(100);
+
+        this.hopperpush.setPower(0);
+
+        sleep(1500);
+
+        this.shooter1.setPower(0.68);
+        this.shooter2.setPower(0.68);
+
+        sleep(700);
+
+        this.shooter1.setPower(0.75);
+        this.shooter2.setPower(0.75);
+
+        sleep(400);
+
+        this.shooter1.setPower(0.82);
+        this.shooter2.setPower(0.82);
+
+        sleep(1500);
+
+        this.hopperpush.setPower(-0.5);
+        sleep(5000);
+        this.hopperpush.setPower(0);
+        this.shooter1.setPower(0);
+        this.shooter2.setPower(0);
+
 
         switch(fieldMode) {
             case A:
 
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 10));
-                this.mecanumDrive.stopMoving();
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 100));
-                this.mecanumDrive.stopMoving();
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
-                this.mecanumDrive.stopMoving();
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 110));
-                this.mecanumDrive.stopMoving();
-
-                this.shooter1.setPower(1.0);
-                this.shooter2.setPower(0.7);
-                sleep(500);
-                this.hopperpush.setPower(1.0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 10));
-                this.hopperpush.setPower(0);
-
-                sleep(100);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 10));
-                this.mecanumDrive.stopMoving();
-
-                sleep(100);
-
-                this.hopperpush.setPower(1.0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage,33));
-                this.hopperpush.setPower(0);
-
-                sleep(100);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 10));
-                this.mecanumDrive.stopMoving();
-
-                sleep(100);
-
-                this.hopperpush.setPower(1.0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage,33));
-                this.hopperpush.setPower(0);
-                this.shooter1.setPower(0);
-                this.shooter2.setPower(0);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
-                this.mecanumDrive.stopMoving();
-
                 this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 20));
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 150));
                 this.mecanumDrive.stopMoving();
+
+                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
+                this.mecanumDrive.stopMoving();
+
+                //wobble goal code here
 
                 break;
+
             case B:
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 100));
-                this.mecanumDrive.stopMoving();
 
-                sleep(100);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
-                this.mecanumDrive.stopMoving();
-
-                sleep(100);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
-                this.mecanumDrive.stopMoving();
-
-                sleep(100);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 110));
-                this.mecanumDrive.stopMoving();
-
-                sleep(100);
-
-                this.shooter1.setPower(1.0);
-                this.shooter2.setPower(0.7);
-                sleep(500);
-                this.hopperpush.setPower(1.0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 10));
-                this.hopperpush.setPower(0);
-
-                sleep(100);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 10));
-                this.mecanumDrive.stopMoving();
-
-                sleep(100);
-
-                this.hopperpush.setPower(1.0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage,33));
-                this.hopperpush.setPower(0);
-
-                sleep(100);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 10));
-                this.mecanumDrive.stopMoving();
-
-                sleep(100);
-
-                this.hopperpush.setPower(1.0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage,33));
-                this.hopperpush.setPower(0);
-
-                sleep(100);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 100));
-                this.mecanumDrive.stopMoving();
-
-                sleep(100);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 100));
-                this.mecanumDrive.stopMoving();
-
-                sleep(100);
-
-                //turn on intake now
+                // turn on intake
 
                 this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
                 sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 100));
@@ -301,30 +210,71 @@ public class MainAutonomous extends LinearOpMode {
 
                 sleep(100);
 
-                this.hopperpush.setPower(1.0);
+                this.shooter1.setPower(0.75);
+                this.shooter2.setPower(0.75);
+                sleep(2000);
+                this.hopperpush.setPower(-0.5);
                 sleep(1000);
                 this.hopperpush.setPower(0);
                 this.shooter1.setPower(0);
                 this.shooter2.setPower(0);
 
-                sleep(100);
+                //turn off intake
 
                 this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 25));
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 75));
                 this.mecanumDrive.stopMoving();
+
+                sleep(100);
+
+                this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
+                this.mecanumDrive.stopMoving();
+
+                //wobble goal code here
+
+                sleep(100);
+
+                this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 60));
+                this.mecanumDrive.stopMoving();
+
 
                 break;
 
             case C:
 
+                //turn on intake
+
                 this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 170));
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 200));
+                this.mecanumDrive.stopMoving();
+
+                //turn off intake
+
+                sleep(500);
+
+                this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 100));
                 this.mecanumDrive.stopMoving();
 
                 sleep(500);
 
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
+                this.shooter1.setPower(0.75);
+                this.shooter2.setPower(0.75);
+                sleep(1000);
+                this.hopperpush.setPower(-0.5);
+                sleep(5000);
+                this.hopperpush.setPower(0);
+                this.shooter1.setPower(0);
+                this.shooter2.setPower(0);
+
+                this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 100));
+                this.mecanumDrive.stopMoving();
+
+                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,-1);
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 30));
                 this.mecanumDrive.stopMoving();
 
                 //insert wobble goal code here
@@ -332,85 +282,7 @@ public class MainAutonomous extends LinearOpMode {
                 sleep(500);
 
                 this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 90));
-                this.mecanumDrive.stopMoving();
-
-                sleep(500);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
-                this.mecanumDrive.stopMoving();
-
-                sleep(500);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
-                this.shooter1.setPower(0.75);
-                this.shooter2.setPower(0.75);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 55));
-                this.mecanumDrive.stopMoving();
-
-                this.hopperpush.setPower(-1.0);
-                sleep(50);
-                this.hopperpush.setPower(0);
-
-                this.hopperpush.setPower(-1.0);
-                sleep(200);
-                this.hopperpush.setPower(0);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 15));
-                this.mecanumDrive.stopMoving();
-
-                this.hopperpush.setPower(-1.0);
-                sleep(200);
-                this.hopperpush.setPower(0);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 15));
-                this.mecanumDrive.stopMoving();
-
-                this.hopperpush.setPower(-1.0);
-                sleep(1000);
-                this.hopperpush.setPower(0);
-
-                sleep(500);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 75));
-                this.mecanumDrive.stopMoving();
-
-                sleep(500);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
-                this.mecanumDrive.stopMoving();
-
-                sleep(500);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
-                this.mecanumDrive.stopMoving();
-
-                sleep(500);
-
-                //turn on intake now
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
                 sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 100));
-                this.mecanumDrive.stopMoving();
-
-                sleep(500);
-
-                this.hopperpush.setPower(-1.0);
-                sleep(4000);
-                this.hopperpush.setPower(0);
-                this.shooter1.setPower(0);
-                this.shooter2.setPower(0);
-
-                sleep(500);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 25));
                 this.mecanumDrive.stopMoving();
 
                 break;

@@ -11,7 +11,7 @@ public class Enums {
         PARK_LINE
     };
     public enum FieldMode {
-        UNKNOWN, // We don't know where anything is (default)
+        //UNKNOWN, // We don't know where anything is (default)
         A, // Wobble zone is on bottom, 0 rings
         B, // Wobble zone is in the middle, 1 ring
         C, // Wobble zone is on top, 4 rings

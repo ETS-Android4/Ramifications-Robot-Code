@@ -9,12 +9,12 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 
+@Autonomous(name = "EncoderTest", group = "Concept")
 public class EncoderTest extends LinearOpMode {
     private Robot robot;
     private DcMotorEx shooter1;
     private DcMotorEx shooter2;
     private CRServo hopperpush;
-    private MecanumDrive mecanumDrive;
     private int motorVelocity = 2200;
 
     @Override
@@ -30,10 +30,6 @@ public class EncoderTest extends LinearOpMode {
 
         waitForStart();
 
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
-        sleep(1900);
-        this.mecanumDrive.stopMoving();
-
         this.shooter1.setVelocity(motorVelocity);
         this.shooter2.setVelocity(motorVelocity*0.75);
         sleep(500);
@@ -42,10 +38,6 @@ public class EncoderTest extends LinearOpMode {
         this.shooter1.setVelocity(0);
         this.shooter2.setVelocity(0);
         this.hopperpush.setPower(0);
-
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
-        sleep(350);
-        this.mecanumDrive.stopMoving();
 
     }
 }

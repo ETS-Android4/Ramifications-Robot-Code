@@ -41,7 +41,7 @@ public class UltimateGoalTestTeleop extends OpMode {
     private CRServo hopperpush;
     private boolean intakeState;
     private double shooter1Power;
-    private int motorVelocity = 2400;
+    private int motorVelocity = 0;
 
 
 
@@ -99,10 +99,14 @@ public class UltimateGoalTestTeleop extends OpMode {
 
        //override shooter power
         if(gamepad1.left_bumper){
-            shooter1Power = 0.8; // TODO: 2/11/2021 change this to be a power drivers are happy with
+            motorVelocity = 1200; // TODO: 2/11/2021 change this to be a power drivers are happy with
+            telemetry.addLine("POWERSHOT");
+            telemetry.update();
         }
         else{
-            shooter1Power = 1; // TODO: 2/11/2021 change this to be a power drivers are happy with
+            motorVelocity = 2000; // TODO: 2/11/2021 change this to be a power drivers are happy with
+            telemetry.addLine("FULL POWER");
+            telemetry.update();
         }
 
 

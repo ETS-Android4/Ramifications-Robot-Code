@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.IntegratingGyroscope;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -28,8 +29,8 @@ import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 public class UltimateGoalTestTeleop extends OpMode {
     private Robot robot;
     private MecanumDrive mecanumDrive;
-    private DcMotor shooter1;
-    private DcMotor shooter2;
+    private DcMotorEx shooter1;
+    private DcMotor shooter2; //DcMotorEx
     double firepower = 0.5;
     private DcMotor arm;
     private Servo claw;
@@ -40,6 +41,7 @@ public class UltimateGoalTestTeleop extends OpMode {
     private CRServo hopperpush;
     private boolean intakeState;
     private double shooter1Power;
+    private int motorVelocity = 2400;
 
 
 
@@ -48,7 +50,8 @@ public class UltimateGoalTestTeleop extends OpMode {
 
         this.robot = new Robot(hardwareMap);
         this.mecanumDrive = (MecanumDrive) this.robot.getDrivetrain();
-        this.shooter1 = hardwareMap.get(DcMotor.class, "shooter1");
+        this.shooter1 = (DcMotorEx) hardwareMap.get(DcMotor.class, "shooter1");
+        this.shooter1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         this.shooter2 = hardwareMap.get(DcMotor.class, "shooter2");
         this.arm = hardwareMap.get(DcMotor.class, "arm");
         this.claw = hardwareMap.get(Servo.class, "claw");
@@ -105,7 +108,7 @@ public class UltimateGoalTestTeleop extends OpMode {
 
         //activate shooter
         if (gamepad1.left_trigger > 0){
-            shooter1.setPower(shooter1Power);
+            this.shooter1.setVelocity(motorVelocity);
         } else {
             shooter1.setPower(0);
         }

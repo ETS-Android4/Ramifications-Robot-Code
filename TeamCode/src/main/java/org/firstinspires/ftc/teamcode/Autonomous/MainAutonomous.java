@@ -414,6 +414,9 @@ public class MainAutonomous extends LinearOpMode {
                 this.mecanumDrive.stopMoving();
 
                 break;
+            default:
+                telemetry.addLine("Field State: " + this.fieldMode.toString());
+                break;
         }
 
 

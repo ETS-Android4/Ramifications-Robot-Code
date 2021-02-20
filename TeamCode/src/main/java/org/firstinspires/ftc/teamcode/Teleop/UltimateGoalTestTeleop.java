@@ -126,8 +126,13 @@ public class UltimateGoalTestTeleop extends OpMode {
         // Wobble Goal Claw
         if (gamepad2.a) {
             telemetry.addLine("Wobble Claw Used");
-            claw.setPosition(clawstate ? 0.63 : 1);
-            clawstate = !clawstate;
+            if (clawstate) {
+                claw.setPosition(0.63);
+                clawstate = false;
+            } else if (!clawstate) {
+                claw.setPosition(1);
+                clawstate = true;
+            }
             try {
                 Thread.sleep(200);
             } catch (Exception e) {}

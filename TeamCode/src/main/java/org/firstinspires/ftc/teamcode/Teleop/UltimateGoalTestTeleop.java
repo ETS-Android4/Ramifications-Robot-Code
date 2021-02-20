@@ -55,7 +55,7 @@ public class UltimateGoalTestTeleop extends OpMode {
         this.shooter2 = hardwareMap.get(DcMotor.class, "shooter2");
         this.arm = hardwareMap.get(DcMotor.class, "arm");
         this.claw = hardwareMap.get(Servo.class, "claw");
-        claw.setPosition(1);
+        //claw.setPosition(1);
         this.hopperpush = hardwareMap.get(CRServo.class, "hopperpush");
         this.intake = hardwareMap.get(DcMotor.class, "intake");
         intakeState = false;

@@ -25,7 +25,7 @@ import org.firstinspires.ftc.teamcode.robotplus.hardware.MotorPair;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 
 
-@TeleOp(name = "Ultimate Goal Teleop V:4.0", group = "Basic")
+@TeleOp(name = "Ultimate Goal Teleop V:5.0", group = "Basic")
 public class UltimateGoalTestTeleop extends OpMode {
     private Robot robot;
     private MecanumDrive mecanumDrive;
@@ -55,7 +55,7 @@ public class UltimateGoalTestTeleop extends OpMode {
         this.shooter2 = hardwareMap.get(DcMotor.class, "shooter2");
         this.arm = hardwareMap.get(DcMotor.class, "arm");
         this.claw = hardwareMap.get(Servo.class, "claw");
-        //claw.setPosition(1);
+        claw.setPosition(1);
         this.hopperpush = hardwareMap.get(CRServo.class, "hopperpush");
         this.intake = hardwareMap.get(DcMotor.class, "intake");
         intakeState = false;
@@ -99,7 +99,7 @@ public class UltimateGoalTestTeleop extends OpMode {
 
        //override shooter power
         if(gamepad1.left_bumper){
-            motorVelocity = 1200; // TODO: 2/11/2021 change this to be a power drivers are happy with
+            motorVelocity = 1600; // TODO: 2/11/2021 change this to be a power drivers are happy with
             telemetry.addLine("POWERSHOT");
             telemetry.update();
         }

@@ -99,12 +99,12 @@ public class UltimateGoalTestTeleop extends OpMode {
 
        //override shooter power
         if(gamepad1.left_bumper){
-            motorVelocity = 1600; // TODO: 2/11/2021 change this to be a power drivers are happy with
+            motorVelocity = 1850; // TODO: 2/11/2021 change this to be a power drivers are happy with
             telemetry.addLine("POWERSHOT");
             telemetry.update();
         }
         else{
-            motorVelocity = 2000; // TODO: 2/11/2021 change this to be a power drivers are happy with
+            motorVelocity = 2200; // TODO: 2/11/2021 change this to be a power drivers are happy with
             telemetry.addLine("FULL POWER");
             telemetry.update();
         }

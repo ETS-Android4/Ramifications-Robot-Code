@@ -3,6 +3,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
@@ -12,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 import org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage;
-import org.firstinspires.ftc.teamcode.Autonomous.Enums;
+import org.firstinspires.ftc.teamcode.Autonomous.SimplifiedMovement;
 import java.util.List;
 
 
@@ -34,9 +36,10 @@ public class MainAutonomous extends LinearOpMode {
     // Hardware
     private Robot robot;
     private MecanumDrive mecanumDrive;
-    private DcMotor shooter1;
+    private DcMotorEx shooter1;
     private DcMotor shooter2;
     private CRServo hopperpush;
+    private DcMotor arm;
 
     // For Movement
     private double voltage;
@@ -68,10 +71,11 @@ public class MainAutonomous extends LinearOpMode {
         //hardware mapping
         this.robot = new Robot(hardwareMap);
         this.mecanumDrive = (MecanumDrive) this.robot.getDrivetrain();
-        this.shooter1 = hardwareMap.get(DcMotor.class, "shooter1");
+        this.shooter1 = (DcMotorEx) hardwareMap.get(DcMotor.class, "shooter1");
         this.shooter2 = hardwareMap.get(DcMotor.class, "shooter2");
         this.hopperpush = hardwareMap.get(CRServo.class, "hopperpush");
         this.voltage = hardwareMap.voltageSensor.get("Expansion Hub 10").getVoltage();
+        this.arm = hardwareMap.get(DcMotor.class, "arm");
 
         //telemetry
         telemetry.addData(">", "Press Play to start op mode");
@@ -156,15 +160,19 @@ public class MainAutonomous extends LinearOpMode {
         Here is where all subsequent Autonomous code can go:
          */
 
-        // Aligning with the wall
-        mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
-        sleep(TimeOffsetVoltage.calculateDistance(voltage, 75));
-        mecanumDrive.stopMoving();
-        sleep(100);
+        // Moving the robot forward while also positioning the wobble goal
+        arm.setPower(-0.35);
+        SimplifiedMovement.Forward(this, robot, mecanumDrive, voltage, 25, 1);
+        arm.setPower(0);
 
-        switch(fieldMode) {
+        // Shooting the pre-loaded rings
+        shooter1.setVelocity(1850);
+        sleep(2000);
+        hopperpush.setPower(-0.75);
+        shooter2.setPower(0.75);
+        sleep(5000);
+        /*switch(fieldMode) {
             case A:
-
                 this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
                 sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 10));
                 this.mecanumDrive.stopMoving();
@@ -417,7 +425,7 @@ public class MainAutonomous extends LinearOpMode {
             default:
                 telemetry.addLine("Field State: " + this.fieldMode.toString());
                 break;
-        }
+        }*/
 
 
 /*

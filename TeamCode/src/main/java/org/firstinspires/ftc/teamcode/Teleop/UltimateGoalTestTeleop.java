@@ -102,8 +102,7 @@ public class UltimateGoalTestTeleop extends OpMode {
             motorVelocity = 1850; // TODO: 2/11/2021 change this to be a power drivers are happy with
             telemetry.addLine("POWERSHOT");
             telemetry.update();
-        }
-        else{
+        } else {
             motorVelocity = 2200; // TODO: 2/11/2021 change this to be a power drivers are happy with
             telemetry.addLine("FULL POWER");
             telemetry.update();

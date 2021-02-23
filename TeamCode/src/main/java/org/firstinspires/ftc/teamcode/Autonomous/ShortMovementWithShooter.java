@@ -29,7 +29,7 @@ public class ShortMovementWithShooter extends LinearOpMode {
         this.shooter2 = hardwareMap.get(DcMotor.class, "shooter2");
         this.hopperpush = hardwareMap.get(CRServo.class, "hopperpush");
         this.claw = hardwareMap.get(Servo.class, "claw");
-        claw.setPosition(0.63);
+        claw.setPosition(0.675);
         this.arm = hardwareMap.get(DcMotor.class, "arm");
 
         waitForStart();

@@ -34,26 +34,31 @@ public class ShortMovementWithShooter extends LinearOpMode {
 
         waitForStart();
 
-        arm.setPower(-0.2); // TODO: 2/11/2021 might need to reverse again
+        arm.setPower(0.45); // TODO: 2/11/2021 might need to reverse again
+        claw.setPosition(0.63);
 
         this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
-        sleep(1900);
+        sleep(1800);
         this.mecanumDrive.stopMoving();
 
         arm.setPower(0); // TODO: 2/11/2021 might need to reverse again
 
-        this.shooter1.setVelocity(2300);
+        this.shooter1.setVelocity(2050);
         this.shooter2.setPower(0.75);
-        sleep(500);
+        sleep(2500);
         this.hopperpush.setPower(-0.5);
         sleep(3000);
         this.shooter1.setVelocity(0);
         this.shooter2.setPower(0);
         this.hopperpush.setPower(0);
+        claw.setPosition(0.63);
 
+        arm.setPower(-0.25); // TODO: 2/11/2021 might need to reverse again
         this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
-        sleep(350);
+        sleep(450);
         this.mecanumDrive.stopMoving();
+        claw.setPosition(0.63);
+        arm.setPower(0); // TODO: 2/11/2021 might need to reverse again
 
         /*this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
         sleep(1000);

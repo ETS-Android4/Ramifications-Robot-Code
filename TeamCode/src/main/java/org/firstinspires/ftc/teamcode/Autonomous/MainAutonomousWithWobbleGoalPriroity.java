@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -11,18 +12,16 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+import org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
-import org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage;
-import org.firstinspires.ftc.teamcode.Autonomous.SimplifiedMovement;
+
 import java.util.List;
 
-import javax.crypto.Mac;
 
+@Autonomous(name = "MainAutonomousWithWobbleGoalPriority", group = "Concept")
 
-@Autonomous(name = "MainAutonomous", group = "Concept")
-
-public class MainAutonomous extends LinearOpMode {
+public class MainAutonomousWithWobbleGoalPriroity extends LinearOpMode {
 
 
     // instance variables for auto
@@ -178,11 +177,17 @@ public class MainAutonomous extends LinearOpMode {
         sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 90));
         this.mecanumDrive.stopMoving();
         claw.setPosition(clawPos);
+
+        //go left
         this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
         claw.setPosition(clawPos);
-        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 20));
+        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 15));
         claw.setPosition(clawPos);
         this.mecanumDrive.stopMoving();
+
+
+
+
         claw.setPosition(clawPos);
         sleep(500);
         claw.setPosition(clawPos);
@@ -193,78 +198,20 @@ public class MainAutonomous extends LinearOpMode {
         sleep(2500);
         arm.setPower(0);
         sleep(2500);
-        hopperpush.setPower(-0.5);
+        hopperpush.setPower(-0.5); // TODO: 2/23/2021 fix the rotation values
         shooter2.setPower(0.75);
         sleep(5000);
-
         this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
         sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 30));
         claw.setPosition(clawPos);
         this.mecanumDrive.stopMoving();
         claw.setPosition(clawPos);
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 0.2, 0);
-        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 160));
-        this.mecanumDrive.stopMoving();
-        claw.setPosition(clawPos);
 
-        /*switch(fieldMode) {
+
+
+        switch(fieldMode) {
             case A:
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 10));
-                this.mecanumDrive.stopMoving();
 
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 100));
-                this.mecanumDrive.stopMoving();
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
-                this.mecanumDrive.stopMoving();
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 110));
-                this.mecanumDrive.stopMoving();
-
-                this.shooter1.setPower(1.0);
-                this.shooter2.setPower(0.7);
-                sleep(500);
-                this.hopperpush.setPower(1.0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 10));
-                this.hopperpush.setPower(0);
-
-                sleep(100);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 10));
-                this.mecanumDrive.stopMoving();
-
-                sleep(100);
-
-                this.hopperpush.setPower(1.0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage,33));
-                this.hopperpush.setPower(0);
-
-                sleep(100);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 10));
-                this.mecanumDrive.stopMoving();
-
-                sleep(100);
-
-                this.hopperpush.setPower(1.0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage,33));
-                this.hopperpush.setPower(0);
-                this.shooter1.setPower(0);
-                this.shooter2.setPower(0);
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
-                this.mecanumDrive.stopMoving();
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 20));
-                this.mecanumDrive.stopMoving();
 
                 break;
             case B:
@@ -461,7 +408,7 @@ public class MainAutonomous extends LinearOpMode {
             default:
                 telemetry.addLine("Field State: " + this.fieldMode.toString());
                 break;
-        }*/
+        }
 
 
 /*

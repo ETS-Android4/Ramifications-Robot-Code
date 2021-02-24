@@ -185,9 +185,7 @@ public class ULTIMATE_AUTO extends LinearOpMode {
         claw.setPosition(clawPos);
         this.mecanumDrive.stopMoving();
 
-
-
-
+        // Making sure the claw behaves
         claw.setPosition(clawPos);
         sleep(500);
         claw.setPosition(clawPos);
@@ -202,7 +200,7 @@ public class ULTIMATE_AUTO extends LinearOpMode {
         shooter2.setPower(0.75);
         sleep(5000);
 
-
+        // Moving around with the wobble goal
         this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
         claw.setPosition(clawPos);
         sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 20));

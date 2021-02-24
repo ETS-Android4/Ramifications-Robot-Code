@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 
+import java.sql.Time;
 import java.util.List;
 
 
@@ -110,22 +111,16 @@ public class MainAutonomousWithWobbleGoalPriroity extends LinearOpMode {
                         for (Recognition recognition : updatedRecognitions) {
                             telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
 
-
-
-                            if(recognition.getLabel().equals("Quad")){ //tell the rest of the auto if we are dealing with quad stack
+                            if (recognition.getLabel().equals("Quad")) { //tell the rest of the auto if we are dealing with quad stack
                                 telemetry.addLine("Quad Detected");
                                 telemetry.update();
                                 this.fieldMode = Enums.FieldMode.C;
-                            }
-
-                            else if(recognition.getLabel().equals("Single")){ //tell the rest of the auto if we are dealing with single stack
+                            } else if (recognition.getLabel().equals("Single")) { //tell the rest of the auto if we are dealing with single stack
 
                                 telemetry.addLine("Single Detected");
                                 telemetry.update();
                                 fieldMode = Enums.FieldMode.B;
-                            }
-
-                            else{ //tell the rest of the auto if we are dealing with no stack
+                            } else { //tell the rest of the auto if we are dealing with no stack
                                 telemetry.addLine("None Detected");
                                 telemetry.update();
                                 fieldMode = Enums.FieldMode.A;
@@ -160,164 +155,209 @@ public class MainAutonomousWithWobbleGoalPriroity extends LinearOpMode {
         Here is where all subsequent Autonomous code can go:
          */
 
-        // Moving the robot forward while also positioning the wobble goal
-        intake.setPower(-1);
-        sleep(100);
-        intake.setPower(0);
-        sleep(100);
-        intake.setPower(1);
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
-        sleep(50);
-        this.mecanumDrive.stopMoving();
-        claw.setPosition(clawPos);
-        sleep(200);
-        claw.setPosition(clawPos);
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),0.5,0);
-        claw.setPosition(clawPos);
-        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 90));
-        this.mecanumDrive.stopMoving();
-        claw.setPosition(clawPos);
+        if (opModeIsActive()) {
+            // Moving the robot forward while also positioning the wobble goal
 
-        //go left
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
-        claw.setPosition(clawPos);
-        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 15));
-        claw.setPosition(clawPos);
-        this.mecanumDrive.stopMoving();
+            intake.setPower(-1);
+            sleep(100);
+            intake.setPower(0);
+            sleep(100);
+            intake.setPower(1);
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
+            sleep(50);
+            this.mecanumDrive.stopMoving();
+            claw.setPosition(clawPos);
+            sleep(200);
+            claw.setPosition(clawPos);
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 0.5, 0);
+            claw.setPosition(clawPos);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 90));
+            this.mecanumDrive.stopMoving();
+            claw.setPosition(clawPos);
 
-
-
-
-        claw.setPosition(clawPos);
-        sleep(500);
-        claw.setPosition(clawPos);
-
-        // Shooting the pre-loaded rings
-        shooter1.setVelocity(1820);
-        arm.setPower(0.65);
-        sleep(2500);
-        arm.setPower(0);
-        sleep(2500);
-        hopperpush.setPower(-0.25);
-        shooter2.setPower(0.75);
-        sleep(5000);
+            //go left
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(), 0, -1);
+            claw.setPosition(clawPos);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 15));
+            claw.setPosition(clawPos);
+            this.mecanumDrive.stopMoving();
 
 
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(), 0, -1);
-        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
-        claw.setPosition(clawPos);
-        this.mecanumDrive.stopMoving();
-        claw.setPosition(clawPos);
+            claw.setPosition(clawPos);
+            sleep(500);
+            claw.setPosition(clawPos);
 
-        intake.setPower(0);
-
-
-
-        switch(fieldMode) {
-            case A:
-
-
-                telemetry.addLine("Field Configuration A running");
-                telemetry.update();
-
-                break;
-            case B:
+            // Shooting the pre-loaded rings
+            shooter1.setVelocity(1820);
+            arm.setPower(0.65);
+            sleep(2500);
+            arm.setPower(0);
+            sleep(2500);
+            hopperpush.setPower(-0.25);
+            shooter2.setPower(0.75);
+            sleep(5000);
 
 
-                //telemetry
-                telemetry.addLine("Field Configuration B running");
-                telemetry.update();
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(), 0, -1);
+            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
+            claw.setPosition(clawPos);
+            this.mecanumDrive.stopMoving();
+            claw.setPosition(clawPos);
+
+            intake.setPower(0);
 
 
-                //move toward square
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 130));
-                claw.setPosition(clawPos);
-                this.mecanumDrive.stopMoving();
-                claw.setPosition(clawPos);
+            switch (fieldMode) {
+                case A: {
+
+                    telemetry.addLine("Field Configuration A running");
+                    telemetry.update();
+
+                    // Move Toward Square
+                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 100));
+                    this.mecanumDrive.stopMoving();
+                    claw.setPosition(clawPos);
+
+                    // Dropping the Wobble Goal and Driving Away
+                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
+                    claw.setPosition(1);
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
+                    claw.setPosition(clawPos);
+                    this.mecanumDrive.stopMoving();
+
+                    break;
+                } // I added the brackets so I could collapse it in Android Studio
+                case B: {
+
+                    //telemetry
+                    telemetry.addLine("Field Configuration B running");
+                    telemetry.update();
 
 
-                //strafe to side
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
-                claw.setPosition(clawPos);
-                this.mecanumDrive.stopMoving();
-                claw.setPosition(clawPos);
+                    //move toward square
+                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 130));
+                    claw.setPosition(clawPos);
+                    this.mecanumDrive.stopMoving();
+                    claw.setPosition(clawPos);
 
 
-                claw.setPosition(1);
-
-                //strafe to side more
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 75));
-                this.mecanumDrive.stopMoving();
-
-
-
-                //go back for other goal
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 115));
-                this.mecanumDrive.stopMoving();
-
-                //strafe into goal
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(), 0, -1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
-                this.mecanumDrive.stopMoving();
-
-                claw.setPosition(0.63);
+                    //strafe to side
+                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
+                    claw.setPosition(clawPos);
+                    this.mecanumDrive.stopMoving();
+                    claw.setPosition(clawPos);
 
 
-                //strafe to wall
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
-                this.mecanumDrive.stopMoving();
+                    claw.setPosition(1);
 
-                claw.setPosition(0.63);
-
-                //move forward
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 140));
-                claw.setPosition(clawPos);
-                this.mecanumDrive.stopMoving();
-                claw.setPosition(clawPos);
-
-                //strafe to left somewhat
-                claw.setPosition(clawPos);
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(), 0, -1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 65));
-                claw.setPosition(clawPos);
-                this.mecanumDrive.stopMoving();
+                    //strafe to side more
+                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 75));
+                    this.mecanumDrive.stopMoving();
 
 
-                //open claw
-                claw.setPosition(1);
+                    //go back for other goal
+                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 115));
+                    this.mecanumDrive.stopMoving();
+
+                    //strafe into goal
+                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(), 0, -1);
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
+                    this.mecanumDrive.stopMoving();
+
+                    claw.setPosition(0.63);
 
 
+                    //strafe to wall
+                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
+                    this.mecanumDrive.stopMoving();
 
-                //move back to the wall
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 65));
-                this.mecanumDrive.stopMoving();
+                    claw.setPosition(0.63);
 
-                //Move To Line
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 75));
-                this.mecanumDrive.stopMoving();
+                    //move forward
+                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 140));
+                    claw.setPosition(clawPos);
+                    this.mecanumDrive.stopMoving();
+                    claw.setPosition(clawPos);
+
+                    //strafe to left somewhat
+                    claw.setPosition(clawPos);
+                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(), 0, -1);
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 65));
+                    claw.setPosition(clawPos);
+                    this.mecanumDrive.stopMoving();
 
 
+                    //open claw
+                    claw.setPosition(1);
 
 
+                    //move back to the wall
+                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 65));
+                    this.mecanumDrive.stopMoving();
 
-                break;
+                    //Move To Line
+                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 75));
+                    this.mecanumDrive.stopMoving();
 
-            case C:
 
-                break;
-            default:
-                telemetry.addLine("Field State: " + this.fieldMode.toString());
-                break;
+                    break;
+                }
+                case C:
+                    // Vuforia is detecting a quad where there is none for some reason, so I'm pasting this code here in order to test it.
+                    // TODO: Figure out why Vuforia is detecting a quad here
+                    telemetry.addLine("Field Configuration A running");
+                    telemetry.update();
+
+                    // Move Toward Square
+                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 60));
+                    this.mecanumDrive.stopMoving();
+                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(), -1, 0);
+                    sleep(850);
+                    this.mecanumDrive.stopMoving();
+                    claw.setPosition(clawPos);
+                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 60));
+                    claw.setPosition(1);
+                    this.mecanumDrive.stopMoving();
+                    arm.setPower(-0.65);
+                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(), 0, -1);
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 100));
+                    arm.setPower(0);
+                    sleep(100);
+                    arm.setPower(0.65);
+                    sleep(2500);
+                    arm.setPower(0);
+                    this.mecanumDrive.stopMoving();
+                    claw.setPosition(clawPos);
+                    this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 100));
+                    claw.setPosition(1);
+                    this.mecanumDrive.stopMoving();
+
+                    // Dropping the Wobble Goal and Driving Away
+                    /*this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
+                    claw.setPosition(1);
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 50));
+                    claw.setPosition(clawPos);
+                    this.mecanumDrive.stopMoving();*/
+                    break;
+                default:
+                    telemetry.addLine("Field State: " + this.fieldMode.toString());
+                    break;
+            }
         }
-
 
 /*
 NO MORE AUTO CODE AFTER THIS POINT

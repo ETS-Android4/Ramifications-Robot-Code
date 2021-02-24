@@ -17,6 +17,8 @@ import org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage;
 import org.firstinspires.ftc.teamcode.Autonomous.SimplifiedMovement;
 import java.util.List;
 
+import javax.crypto.Mac;
+
 
 @Autonomous(name = "MainAutonomous", group = "Concept")
 
@@ -40,6 +42,9 @@ public class MainAutonomous extends LinearOpMode {
     private DcMotor shooter2;
     private CRServo hopperpush;
     private DcMotor arm;
+    private Servo claw;
+    private DcMotor intake;
+    private double clawPos = 0.63;
 
     // For Movement
     private double voltage;
@@ -76,24 +81,20 @@ public class MainAutonomous extends LinearOpMode {
         this.hopperpush = hardwareMap.get(CRServo.class, "hopperpush");
         this.voltage = hardwareMap.voltageSensor.get("Expansion Hub 10").getVoltage();
         this.arm = hardwareMap.get(DcMotor.class, "arm");
+        this.claw = hardwareMap.get(Servo.class, "claw");
+        this.intake = hardwareMap.get(DcMotor.class, "intake");
 
         //telemetry
         telemetry.addData(">", "Press Play to start op mode");
         telemetry.update();
 
         //wait for play button
+        claw.setPosition(clawPos);
         waitForStart();
 
         //if the play button has been hit, execute subsequent code
         if (opModeIsActive()) {
 
-
-            // TODO: 2/6/2021 CORRECT DRIVE DISTANCE HERE TO RELIABLY GET TO STACK POSITION
-            //drive to line
-
-            this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
-            sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 35));
-            this.mecanumDrive.stopMoving();
 
             //iterator variable (we could do a for loop, but we probably shouldn't mess with this much at all, since its the way vuforia wants us to do it
             int iterator = 1000;
@@ -161,16 +162,51 @@ public class MainAutonomous extends LinearOpMode {
          */
 
         // Moving the robot forward while also positioning the wobble goal
-        arm.setPower(-0.35);
-        SimplifiedMovement.Forward(this, robot, mecanumDrive, voltage, 25, 1);
-        arm.setPower(0);
+        intake.setPower(-1);
+        sleep(100);
+        intake.setPower(0);
+        sleep(100);
+        intake.setPower(1);
+        this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
+        sleep(50);
+        this.mecanumDrive.stopMoving();
+        claw.setPosition(clawPos);
+        sleep(200);
+        claw.setPosition(clawPos);
+        this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),0.5,0);
+        claw.setPosition(clawPos);
+        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 90));
+        this.mecanumDrive.stopMoving();
+        claw.setPosition(clawPos);
+        this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
+        claw.setPosition(clawPos);
+        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 20));
+        claw.setPosition(clawPos);
+        this.mecanumDrive.stopMoving();
+        claw.setPosition(clawPos);
+        sleep(500);
+        claw.setPosition(clawPos);
 
         // Shooting the pre-loaded rings
-        shooter1.setVelocity(1850);
-        sleep(2000);
-        hopperpush.setPower(-0.75);
+        shooter1.setVelocity(1820);
+        arm.setPower(0.65);
+        sleep(2500);
+        arm.setPower(0);
+        sleep(2500);
+        hopperpush.setPower(-0.5);
         shooter2.setPower(0.75);
         sleep(5000);
+
+        this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
+        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 30));
+        claw.setPosition(clawPos);
+        this.mecanumDrive.stopMoving();
+        claw.setPosition(clawPos);
+        this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 0.2, 0);
+        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 160));
+        this.mecanumDrive.stopMoving();
+        claw.setPosition(clawPos);
+
         /*switch(fieldMode) {
             case A:
                 this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);

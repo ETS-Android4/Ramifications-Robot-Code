@@ -125,6 +125,8 @@ public class MainAutonomousWithWobbleGoalPriroity extends LinearOpMode {
                                 telemetry.update();
                                 fieldMode = Enums.FieldMode.A;
                             }
+
+                            //Unecessary Telemtry Data Which Was Pushing the USEFUL DATA Away
                             //telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
                             //        recognition.getLeft(), recognition.getTop());
                             //telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
@@ -205,6 +207,9 @@ public class MainAutonomousWithWobbleGoalPriroity extends LinearOpMode {
             claw.setPosition(clawPos);
 
             intake.setPower(0);
+            shooter1.setVelocity(0);
+            shooter2.setPower(0);
+            hopperpush.setPower(0);
 
 
             switch (fieldMode) {

@@ -19,9 +19,9 @@ import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 import java.util.List;
 
 
-@Autonomous(name = "ULTIMATE AUTO", group = "Concept")
+@Autonomous(name = "Testing Vuforia", group = "Concept")
 
-public class ULTIMATE_AUTO extends LinearOpMode {
+public class TestingVuforia extends LinearOpMode {
 
 
     // instance variables for auto
@@ -68,7 +68,9 @@ public class ULTIMATE_AUTO extends LinearOpMode {
         if (tfod != null) {
             tfod.activate();
 
-            tfod.setZoom(1.5, 1.5); //uncomment this to adjust field of view or zoom on camera
+
+            // TODO: 2/24/2021 uncomment and ajust this value maybe
+            //tfod.setZoom(1.5, 1.5); //uncomment this to adjust field of view or zoom on camera
         }
 
 
@@ -94,10 +96,23 @@ public class ULTIMATE_AUTO extends LinearOpMode {
         //if the play button has been hit, execute subsequent code
         if (opModeIsActive()) {
 
+            SimplifiedMovement.Forward(this, robot, mecanumDrive, voltage, 15, 1);
+            this.sleep(1000);
+
+
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 0.12, 0);
 
             //iterator variable (we could do a for loop, but we probably shouldn't mess with this much at all, since its the way vuforia wants us to do it
-            int iterator = 1000;
+            int iterator = 3500;  // TODO: 2/24/2021 test & adjust this value
             while (iterator>0) {
+
+
+                // TODO: 2/24/2021 test & adjust this value
+                if(iterator < 500){ //stop the robot about 500 iterations prior to vuforia termination
+                    this.mecanumDrive.stopMoving();
+                }
+
+
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
                     // the last time that call was made.
@@ -110,26 +125,21 @@ public class ULTIMATE_AUTO extends LinearOpMode {
                         for (Recognition recognition : updatedRecognitions) {
                             telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
 
-
-
-                            if(recognition.getLabel().equals("Quad")){ //tell the rest of the auto if we are dealing with quad stack
+                            if (recognition.getLabel().equals("Quad")) { //tell the rest of the auto if we are dealing with quad stack
                                 telemetry.addLine("Quad Detected");
                                 telemetry.update();
                                 this.fieldMode = Enums.FieldMode.C;
-                            }
-
-                            else if(recognition.getLabel().equals("Single")){ //tell the rest of the auto if we are dealing with single stack
-
+                            } else if (recognition.getLabel().equals("Single")) { //tell the rest of the auto if we are dealing with single stack
                                 telemetry.addLine("Single Detected");
                                 telemetry.update();
                                 fieldMode = Enums.FieldMode.B;
-                            }
-
-                            else{ //tell the rest of the auto if we are dealing with no stack
+                            } else { //tell the rest of the auto if we are dealing with no stack
                                 telemetry.addLine("None Detected");
                                 telemetry.update();
                                 fieldMode = Enums.FieldMode.A;
                             }
+
+                            //Unecessary Telemtry Data Which Was Pushing the USEFUL DATA Away
                             //telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
                             //        recognition.getLeft(), recognition.getTop());
                             //telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
@@ -141,7 +151,7 @@ public class ULTIMATE_AUTO extends LinearOpMode {
                 iterator--;
             }
 
-            sleep(1000);
+            this.mecanumDrive.stopMoving();
 
         }
         //shut down vuforia sequence
@@ -156,188 +166,44 @@ public class ULTIMATE_AUTO extends LinearOpMode {
 
 
 
-        /*
-        Here is where all subsequent Autonomous code can go:
-         */
 
-        // Moving the robot forward while also positioning the wobble goal
-        intake.setPower(-1);
-        sleep(100);
-        intake.setPower(0);
-        sleep(100);
-        intake.setPower(1);
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
-        sleep(50);
-        this.mecanumDrive.stopMoving();
-        claw.setPosition(clawPos);
-        sleep(200);
-        claw.setPosition(clawPos);
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),0.5,0);
-        claw.setPosition(clawPos);
-        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 90));
-        this.mecanumDrive.stopMoving();
-        claw.setPosition(clawPos);
-
-        //go left
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
-        claw.setPosition(clawPos);
-        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 15));
-        claw.setPosition(clawPos);
-        this.mecanumDrive.stopMoving();
+        if (opModeIsActive()) {
+            // Moving the robot forward while also positioning the wobble goal
 
 
 
+            switch (fieldMode) {
+                case A: {
 
-        claw.setPosition(clawPos);
-        sleep(500);
-        claw.setPosition(clawPos);
-
-        // Shooting the pre-loaded rings
-        shooter1.setVelocity(1820);
-        arm.setPower(0.65);
-        sleep(2500);
-        arm.setPower(0);
-        sleep(2500);
-        hopperpush.setPower(-0.25);
-        shooter2.setPower(0.75);
-        sleep(5000);
+                    telemetry.addLine("Field Configuration A running");
+                    telemetry.addLine("Wobble zone is on bottom, 0 rings");
+                    telemetry.update();
 
 
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(), 0, -1);
-        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
-        claw.setPosition(clawPos);
-        this.mecanumDrive.stopMoving();
-        claw.setPosition(clawPos);
+                    break;
+                } // I added the brackets so I could collapse it in Android Studio
+                case B: {
 
-        intake.setPower(0);
-        shooter1.setVelocity(0);
-        shooter2.setPower(0);
-        hopperpush.setPower(0);
+                    //telemetry
+                    telemetry.addLine("Field Configuration B running");
+                    telemetry.addLine("Wobble zone is in the middle, 1 ring");
+                    telemetry.update();
 
 
+                    break;
+                }
+                case C:
+                    telemetry.addLine("Field Configuration C running");
+                    telemetry.addLine("Wobble zone is on top, 4 rings");
+                    telemetry.update();
 
-        switch(fieldMode) {
-            case A:
-
-
-                telemetry.addLine("Field Configuration A running");
-                telemetry.update();
-
-                break;
-            case B:
-
-
-                //telemetry
-                telemetry.addLine("Field Configuration B running");
-                telemetry.update();
-
-
-                //move toward square
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 130));
-                claw.setPosition(clawPos);
-                this.mecanumDrive.stopMoving();
-                claw.setPosition(clawPos);
-
-
-                //strafe to side
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
-                claw.setPosition(clawPos);
-                this.mecanumDrive.stopMoving();
-                claw.setPosition(clawPos);
-
-
-                claw.setPosition(1);
-
-                //strafe to side more
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 75));
-                this.mecanumDrive.stopMoving();
-
-
-
-                //go back for other goal
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 115));
-                this.mecanumDrive.stopMoving();
-
-                //strafe into goal
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(), 0, -1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
-                this.mecanumDrive.stopMoving();
-
-                claw.setPosition(0.63);
-
-
-                //strafe to wall
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
-                this.mecanumDrive.stopMoving();
-
-                claw.setPosition(0.63);
-
-                //move forward
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 140));
-                claw.setPosition(clawPos);
-                this.mecanumDrive.stopMoving();
-                claw.setPosition(clawPos);
-
-                //strafe to left somewhat
-                claw.setPosition(clawPos);
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(), 0, -1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 65));
-                claw.setPosition(clawPos);
-                this.mecanumDrive.stopMoving();
-
-
-                //open claw
-                claw.setPosition(1);
-
-
-
-                //move back to the wall
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 65));
-                this.mecanumDrive.stopMoving();
-
-                //Move To Line
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 75));
-                this.mecanumDrive.stopMoving();
-
-
-                break;
-
-            case C:
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
-                claw.setPosition(clawPos);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 20));
-                claw.setPosition(clawPos);
-                this.mecanumDrive.stopMoving();
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 30));
-                claw.setPosition(clawPos);
-                this.mecanumDrive.stopMoving();
-                claw.setPosition(clawPos);
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 0.2, 0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 350));
-                this.mecanumDrive.stopMoving();
-                claw.setPosition(clawPos);
-
-                break;
-            default:
-                telemetry.addLine("Field State: " + this.fieldMode.toString());
-                break;
+                    break;
+                default:
+                    telemetry.addLine("Field State: " + this.fieldMode.toString());
+                    break;
+            }
         }
 
-
-/*
-NO MORE AUTO CODE AFTER THIS POINT
- */
     } //end of class
 
     /**

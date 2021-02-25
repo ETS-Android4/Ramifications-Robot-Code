@@ -178,11 +178,11 @@ public class MainAutonomousWithWobbleGoalPriroity extends LinearOpMode {
             claw.setPosition(clawPos);
 
             //go left
-            this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(), 0, -1);
+            /*this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(), 0, -1);
             claw.setPosition(clawPos);
             sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 15));
             claw.setPosition(clawPos);
-            this.mecanumDrive.stopMoving();
+            this.mecanumDrive.stopMoving();*/
 
 
             claw.setPosition(clawPos);
@@ -190,14 +190,24 @@ public class MainAutonomousWithWobbleGoalPriroity extends LinearOpMode {
             claw.setPosition(clawPos);
 
             // Shooting the pre-loaded rings
-            shooter1.setVelocity(1820);
-            arm.setPower(0.65);
-            sleep(2500);
+            shooter1.setVelocity(1850);
+            arm.setPower(-0.65);
+            sleep(600);
             arm.setPower(0);
-            sleep(2500);
-            hopperpush.setPower(-0.25);
+            sleep(100);
             shooter2.setPower(0.75);
-            sleep(5000);
+            hopperpush.setPower(-0.56);
+            sleep(700);
+            hopperpush.setPower(0);
+            sleep(600);
+            hopperpush.setPower(-0.56);
+            sleep(700);
+            hopperpush.setPower(0);
+            sleep(600);
+            hopperpush.setPower(-0.56);
+            sleep(700);
+            hopperpush.setPower(0);
+            sleep(100);
 
 
             this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(), 0, -1);
@@ -332,7 +342,7 @@ public class MainAutonomousWithWobbleGoalPriroity extends LinearOpMode {
                     this.mecanumDrive.stopMoving();
                     claw.setPosition(clawPos);
                     this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
-                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 60));
+                    sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 30));
                     claw.setPosition(1);
                     this.mecanumDrive.stopMoving();
                     arm.setPower(-0.65);

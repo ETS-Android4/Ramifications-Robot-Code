@@ -70,7 +70,7 @@ public class TestingVuforia extends LinearOpMode {
 
 
             // TODO: 2/24/2021 uncomment and ajust this value maybe
-            //tfod.setZoom(1.5, 1.5); //uncomment this to adjust field of view or zoom on camera
+            tfod.setZoom(1.25, 1.25); //uncomment this to adjust field of view or zoom on camera
         }
 
 
@@ -100,15 +100,15 @@ public class TestingVuforia extends LinearOpMode {
             this.sleep(1000);
 
 
-            this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 0.12, 0);
+            this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 0.25, 0);
 
             //iterator variable (we could do a for loop, but we probably shouldn't mess with this much at all, since its the way vuforia wants us to do it
-            int iterator = 3500;  // TODO: 2/24/2021 test & adjust this value
+            long iterator = 1000000;  // TODO: 2/24/2021 test & adjust this value
             while (iterator>0) {
 
 
                 // TODO: 2/24/2021 test & adjust this value
-                if(iterator < 500){ //stop the robot about 500 iterations prior to vuforia termination
+                if(iterator < 50000){ //stop the robot about 500 iterations prior to vuforia termination
                     this.mecanumDrive.stopMoving();
                 }
 

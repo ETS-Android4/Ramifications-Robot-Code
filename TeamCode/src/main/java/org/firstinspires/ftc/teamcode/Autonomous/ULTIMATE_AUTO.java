@@ -68,7 +68,7 @@ public class ULTIMATE_AUTO extends LinearOpMode {
         if (tfod != null) {
             tfod.activate();
 
-            tfod.setZoom(1.5, 1.5); //uncomment this to adjust field of view or zoom on camera
+            tfod.setZoom(2, 2); //uncomment this to adjust field of view or zoom on camera
         }
 
 
@@ -91,12 +91,15 @@ public class ULTIMATE_AUTO extends LinearOpMode {
         claw.setPosition(clawPos);
         waitForStart();
 
+
+
+
         //if the play button has been hit, execute subsequent code
         if (opModeIsActive()) {
 
 
             //iterator variable (we could do a for loop, but we probably shouldn't mess with this much at all, since its the way vuforia wants us to do it
-            int iterator = 1000;
+            int iterator = 1000000;
             while (iterator>0) {
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
@@ -141,7 +144,7 @@ public class ULTIMATE_AUTO extends LinearOpMode {
                 iterator--;
             }
 
-            sleep(1000);
+            sleep(200);
 
         }
         //shut down vuforia sequence
@@ -161,53 +164,75 @@ public class ULTIMATE_AUTO extends LinearOpMode {
          */
 
         // Moving the robot forward while also positioning the wobble goal
+
+
         intake.setPower(-1);
         sleep(100);
         intake.setPower(0);
         sleep(100);
         intake.setPower(1);
+
         this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
         sleep(50);
         this.mecanumDrive.stopMoving();
+        intake.setPower(0);
         claw.setPosition(clawPos);
         sleep(200);
         claw.setPosition(clawPos);
         this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),0.5,0);
         claw.setPosition(clawPos);
-        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 90));
+        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 89));
         this.mecanumDrive.stopMoving();
         claw.setPosition(clawPos);
 
+        /*
         //go left
         this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
         claw.setPosition(clawPos);
         sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 15));
         claw.setPosition(clawPos);
         this.mecanumDrive.stopMoving();
-
+*/
 
 
 
         claw.setPosition(clawPos);
-        sleep(500);
-        claw.setPosition(clawPos);
+
 
         // Shooting the pre-loaded rings
-        shooter1.setVelocity(1820);
-        arm.setPower(0.65);
-        sleep(2500);
+
+
+        shooter1.setVelocity(1900);
+        arm.setPower(-0.80);
+        claw.setPosition(clawPos);
+        sleep(2000);
+        claw.setPosition(clawPos);
         arm.setPower(0);
-        sleep(2500);
-        hopperpush.setPower(-0.25);
+        claw.setPosition(clawPos);
         shooter2.setPower(0.75);
-        sleep(5000);
+        claw.setPosition(clawPos);
+
+        sleep(1000);
+        hopperpush.setPower(-1);
+        sleep(700);
+        shooter1.setVelocity(1825);
+        hopperpush.setPower(0);
+        sleep(200);
+        hopperpush.setPower(-1);
+        sleep(700);
+        hopperpush.setPower(0);
+        sleep(200);
+        shooter1.setVelocity(1740);
+        hopperpush.setPower(-1);
+        sleep(700);
+        hopperpush.setPower(0);
+        sleep(200);
+        hopperpush.setPower(-1);
+        shooter1.setVelocity(1635);
+        hopperpush.setPower(0);
+        sleep(200);
 
 
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(), 0, -1);
-        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
-        claw.setPosition(clawPos);
-        this.mecanumDrive.stopMoving();
-        claw.setPosition(clawPos);
 
         intake.setPower(0);
         shooter1.setVelocity(0);
@@ -231,10 +256,16 @@ public class ULTIMATE_AUTO extends LinearOpMode {
                 telemetry.addLine("Field Configuration B running");
                 telemetry.update();
 
+                this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(), 0, -1);
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
+                claw.setPosition(clawPos);
+                this.mecanumDrive.stopMoving();
+                claw.setPosition(clawPos);
+
 
                 //move toward square
                 this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 130));
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 125));
                 claw.setPosition(clawPos);
                 this.mecanumDrive.stopMoving();
                 claw.setPosition(clawPos);
@@ -259,12 +290,12 @@ public class ULTIMATE_AUTO extends LinearOpMode {
 
                 //go back for other goal
                 this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 115));
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 110));
                 this.mecanumDrive.stopMoving();
 
                 //strafe into goal
                 this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(), 0, -1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 47));
                 this.mecanumDrive.stopMoving();
 
                 claw.setPosition(0.63);
@@ -272,14 +303,14 @@ public class ULTIMATE_AUTO extends LinearOpMode {
 
                 //strafe to wall
                 this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 40));
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 47));
                 this.mecanumDrive.stopMoving();
 
                 claw.setPosition(0.63);
 
                 //move forward
                 this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 1, 0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 140));
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 125));
                 claw.setPosition(clawPos);
                 this.mecanumDrive.stopMoving();
                 claw.setPosition(clawPos);
@@ -287,7 +318,7 @@ public class ULTIMATE_AUTO extends LinearOpMode {
                 //strafe to left somewhat
                 claw.setPosition(clawPos);
                 this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(), 0, -1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 65));
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 62));
                 claw.setPosition(clawPos);
                 this.mecanumDrive.stopMoving();
 

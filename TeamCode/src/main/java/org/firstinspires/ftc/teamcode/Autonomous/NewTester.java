@@ -29,15 +29,17 @@ package org.firstinspires.ftc.teamcode.Autonomous;/* Copyright (c) 2019 FIRST. A
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import java.util.List;
+
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
-import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
+import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
+
+import java.util.List;
 
 /**
  * This 2020-2021 OpMode illustrates the basics of using the TensorFlow Object Detection API to
@@ -49,9 +51,12 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@Autonomous(name = "FieldObjectDetectorBaseClass", group = "Concept")
+@Autonomous(name = "New Tester", group = "Concept")
 //@Disabled
-public class FieldObjectDetectorBaseClass extends LinearOpMode {
+public class NewTester extends LinearOpMode {
+
+    private Robot robot;
+    private MecanumDrive mecanumDrive;
     private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
     private static final String LABEL_FIRST_ELEMENT = "Quad";
     private static final String LABEL_SECOND_ELEMENT = "Single";
@@ -104,8 +109,8 @@ public class FieldObjectDetectorBaseClass extends LinearOpMode {
             // should be set to the value of the images used to create the TensorFlow Object Detection model
             // (typically 1.78 or 16/9).
 
-            //Uncomment the following line if you want to adjust the magnification and/or the aspect ratio of the input images.
-            tfod.setZoom(2, 2);
+            // Uncomment the following line if you want to adjust the magnification and/or the aspect ratio of the input images.
+            //tfod.setZoom(2.5, 1.78);
         }
 
         /** Wait for the game to begin */

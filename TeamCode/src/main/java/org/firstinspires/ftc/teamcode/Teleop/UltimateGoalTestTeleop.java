@@ -70,7 +70,7 @@ public class UltimateGoalTestTeleop extends OpMode {
 
         //hopper + feeding control
         if(gamepad1.right_trigger>0){
-            hopperpush.setPower(-0.75);
+            hopperpush.setPower(-0.80);
             shooter2.setPower(0.75);
         }
         else if(gamepad1.a){
@@ -98,7 +98,7 @@ public class UltimateGoalTestTeleop extends OpMode {
 
 
        //override shooter power
-        if(gamepad1.left_bumper){
+        if(gamepad1.left_bumper || gamepad2.b){
             motorVelocity = 1850; // TODO: 2/11/2021 change this to be a power drivers are happy with
             telemetry.addLine("POWERSHOT");
             telemetry.update();
@@ -120,7 +120,7 @@ public class UltimateGoalTestTeleop extends OpMode {
         this.mecanumDrive.complexDrive(-gamepad1.right_stick_x, -gamepad1.left_stick_y, -gamepad1.left_stick_x, telemetry);
 
         //extend or retract wobble arm
-        arm.setPower(gamepad2.left_stick_y); // TODO: 2/11/2021 might need to reverse again
+        arm.setPower(-gamepad2.left_stick_y); // TODO: 2/11/2021 might need to reverse again
 
         // Wobble Goal Claw
         if (gamepad2.a) {

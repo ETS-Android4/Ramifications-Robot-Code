@@ -248,6 +248,8 @@ public class ULTIMATE_AUTO extends LinearOpMode {
                 telemetry.addLine("Field Configuration A running");
                 telemetry.update();
 
+                // TODO: 2/26/2021 ya know, maybe actually code this section of the auto ;) 
+
                 break;
             case B:
 
@@ -354,10 +356,26 @@ public class ULTIMATE_AUTO extends LinearOpMode {
                 claw.setPosition(clawPos);
                 this.mecanumDrive.stopMoving();
                 claw.setPosition(clawPos);
+                
+                
+                //engage shooting systems
+                intake.setPower(1);
+                hopperpush.setPower(0.5);
+                shooter2.setPower(1);
+                shooter1.setVelocity(1825);
+                
                 this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 0.2, 0);
                 sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 350));
                 this.mecanumDrive.stopMoving();
                 claw.setPosition(clawPos);
+                
+                //shut off 
+                intake.setPower(0);
+                hopperpush.setPower(0);
+                shooter2.setPower(0);
+                shooter1.setVelocity(0);
+
+                // TODO: 2/26/2021 code rest of sequence to maybe deliver wobble goal and then park on line 
 
                 break;
             default:

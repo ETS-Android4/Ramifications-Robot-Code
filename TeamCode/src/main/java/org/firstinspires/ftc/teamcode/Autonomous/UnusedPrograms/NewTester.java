@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous;/* Copyright (c) 2019 FIRST. All rights reserved.
+package org.firstinspires.ftc.teamcode.Autonomous.UnusedPrograms;/* Copyright (c) 2019 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -29,6 +29,7 @@ package org.firstinspires.ftc.teamcode.Autonomous;/* Copyright (c) 2019 FIRST. A
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -51,6 +52,12 @@ import java.util.List;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
+
+
+@Disabled
+@Deprecated
+
+
 @Autonomous(name = "New Tester", group = "Concept")
 //@Disabled
 public class NewTester extends LinearOpMode {

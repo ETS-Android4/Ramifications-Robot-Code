@@ -68,7 +68,7 @@ public class ULTIMATE_AUTO extends LinearOpMode {
         if (tfod != null) {
             tfod.activate();
 
-            tfod.setZoom(2, 2); //uncomment this to adjust field of view or zoom on camera
+            tfod.setZoom(1.8, 1.8); //uncomment this to adjust field of view or zoom on camera
         }
 
 
@@ -82,6 +82,7 @@ public class ULTIMATE_AUTO extends LinearOpMode {
         this.arm = hardwareMap.get(DcMotor.class, "arm");
         this.claw = hardwareMap.get(Servo.class, "claw");
         this.intake = hardwareMap.get(DcMotor.class, "intake");
+        this.shooter1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //telemetry
         telemetry.addData(">", "Press Play to start op mode");
@@ -360,12 +361,12 @@ public class ULTIMATE_AUTO extends LinearOpMode {
                 
                 //engage shooting systems
                 intake.setPower(1);
-                hopperpush.setPower(0.5);
+                hopperpush.setPower(-0.5);
                 shooter2.setPower(1);
                 shooter1.setVelocity(1825);
                 
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 0.2, 0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 350));
+                this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 0.16, 0);
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 550));
                 this.mecanumDrive.stopMoving();
                 claw.setPosition(clawPos);
                 

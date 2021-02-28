@@ -1,15 +1,21 @@
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.Autonomous.UnusedPrograms;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 
+@Disabled
+@Deprecated
+
+
+
 @Autonomous(name = "shortMovement", group = "Concept")
 //@Disabled
-public class ShortMovement extends LinearOpMode {
+public class ShortMovement2 extends LinearOpMode {
     private Robot robot;
     private MecanumDrive mecanumDrive;
     private DcMotor shooter1;

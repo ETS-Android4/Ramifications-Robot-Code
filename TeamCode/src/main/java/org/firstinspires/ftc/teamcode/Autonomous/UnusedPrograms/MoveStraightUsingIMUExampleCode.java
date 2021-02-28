@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous;// Simple autonomous program that drives bot forward until end of period
+package org.firstinspires.ftc.teamcode.Autonomous.UnusedPrograms;// Simple autonomous program that drives bot forward until end of period
 // or touch sensor is hit. If touched, backs up a bit and turns 90 degrees
 // right and keeps going. Demonstrates obstacle avoidance and use of the
 // REV Hub's built in IMU in place of a gyro. Also uses gamepad1 buttons to
@@ -10,6 +10,7 @@ package org.firstinspires.ftc.teamcode.Autonomous;// Simple autonomous program t
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.TouchSensor;
@@ -20,6 +21,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
+
+
+@Disabled
+@Deprecated
+
 
 @Autonomous(name="Drive Avoid Imu", group="Exercises")
 //@Disabled

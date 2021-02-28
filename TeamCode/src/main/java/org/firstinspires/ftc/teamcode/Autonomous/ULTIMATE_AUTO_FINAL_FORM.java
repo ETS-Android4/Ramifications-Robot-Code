@@ -1,24 +1,27 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+import org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
-import org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage;
-import org.firstinspires.ftc.teamcode.Autonomous.Enums;
+
 import java.util.List;
 
 
-@Autonomous(name = "testhopperpush", group = "Concept")
+@Autonomous(name = "ULTIMATE AUTO FINAL FORM", group = "Concept")
 
-public class testhopperpush extends LinearOpMode {
+public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
 
 
     // instance variables for auto
@@ -34,10 +37,17 @@ public class testhopperpush extends LinearOpMode {
     // Hardware
     private Robot robot;
     private MecanumDrive mecanumDrive;
-    private DcMotor shooter1;
+    private DcMotorEx shooter1;
     private DcMotor shooter2;
     private CRServo hopperpush;
+    private DcMotor arm;
+    private Servo claw;
     private DcMotor intake;
+    private double clawPos = 0.63;
+    private DcMotor main1;
+    private DcMotor main2;
+    private DcMotor minor1;
+    private DcMotor minor2;
 
     // For Movement
     private double voltage;
@@ -62,35 +72,43 @@ public class testhopperpush extends LinearOpMode {
         if (tfod != null) {
             tfod.activate();
 
-            tfod.setZoom(1.5, 1.5); //uncomment this to adjust field of view or zoom on camera
+            tfod.setZoom(1.8, 1.8); //uncomment this to adjust field of view or zoom on camera
         }
 
 
         //hardware mapping
         this.robot = new Robot(hardwareMap);
         this.mecanumDrive = (MecanumDrive) this.robot.getDrivetrain();
-        this.shooter1 = hardwareMap.get(DcMotor.class, "shooter1");
+        this.shooter1 = (DcMotorEx) hardwareMap.get(DcMotor.class, "shooter1");
         this.shooter2 = hardwareMap.get(DcMotor.class, "shooter2");
         this.hopperpush = hardwareMap.get(CRServo.class, "hopperpush");
         this.voltage = hardwareMap.voltageSensor.get("Expansion Hub 10").getVoltage();
+        this.arm = hardwareMap.get(DcMotor.class, "arm");
+        this.claw = hardwareMap.get(Servo.class, "claw");
         this.intake = hardwareMap.get(DcMotor.class, "intake");
+        this.shooter1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.main1 = hardwareMap.get(DcMotor.class, "main1");
+        this.main2 = hardwareMap.get(DcMotor.class, "main2");
+        this.minor1 = hardwareMap.get(DcMotor.class, "minor1");
+        this.minor2 = hardwareMap.get(DcMotor.class, "minor2");
 
         //telemetry
         telemetry.addData(">", "Press Play to start op mode");
         telemetry.update();
 
         //wait for play button
+        claw.setPosition(clawPos);
         waitForStart();
+
+
+
 
         //if the play button has been hit, execute subsequent code
         if (opModeIsActive()) {
-            intake.setPower(1);
 
-            // TODO: 2/6/2021 CORRECT DRIVE DISTANCE HERE TO RELIABLY GET TO STACK POSITION
-            //drive to line
 
             //iterator variable (we could do a for loop, but we probably shouldn't mess with this much at all, since its the way vuforia wants us to do it
-            int iterator = 1000;
+            int iterator = 1000000;
             while (iterator>0) {
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
@@ -135,7 +153,7 @@ public class testhopperpush extends LinearOpMode {
                 iterator--;
             }
 
-            sleep(1000);
+            sleep(200);
 
         }
         //shut down vuforia sequence
@@ -154,7 +172,191 @@ public class testhopperpush extends LinearOpMode {
         Here is where all subsequent Autonomous code can go:
          */
 
+        // Moving the robot forward while also positioning the wobble goal
 
+
+        intake.setPower(-1);
+        sleep(100);
+        intake.setPower(0);
+        sleep(100);
+        intake.setPower(1);
+
+
+        AccuDrive.Backward(this,  robot,  main1,  main2,  minor1,  minor2 ,  1.5,  1);
+        intake.setPower(0);
+        claw.setPosition(clawPos);
+        sleep(200);
+        claw.setPosition(clawPos);
+        AccuDrive.Forward(this,  robot,  main1,  main2,  minor1,  minor2 ,  19,  0.5);
+        claw.setPosition(clawPos);
+
+        /*
+        //go left
+        this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
+        claw.setPosition(clawPos);
+        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 15));
+        claw.setPosition(clawPos);
+        this.mecanumDrive.stopMoving();
+*/
+
+
+
+        claw.setPosition(clawPos);
+
+
+        // Shooting the pre-loaded rings
+
+
+        shooter1.setVelocity(1900);
+        arm.setPower(-0.80);
+        claw.setPosition(clawPos);
+        sleep(2000);
+        claw.setPosition(clawPos);
+        arm.setPower(0);
+        claw.setPosition(clawPos);
+        shooter2.setPower(0.75);
+        claw.setPosition(clawPos);
+
+        sleep(1000);
+        hopperpush.setPower(-1);
+        sleep(700);
+        shooter1.setVelocity(1825);
+        hopperpush.setPower(0);
+        sleep(200);
+        hopperpush.setPower(-1);
+        sleep(700);
+        hopperpush.setPower(0);
+        sleep(200);
+        shooter1.setVelocity(1740);
+        hopperpush.setPower(-1);
+        sleep(700);
+        hopperpush.setPower(0);
+        sleep(200);
+        hopperpush.setPower(-1);
+        shooter1.setVelocity(1635);
+        hopperpush.setPower(0);
+        sleep(200);
+
+
+
+        intake.setPower(0);
+        shooter1.setVelocity(0);
+        shooter2.setPower(0);
+        hopperpush.setPower(0);
+
+
+
+        switch(fieldMode) {
+            case A:
+
+
+                telemetry.addLine("Field Configuration A running");
+                telemetry.update();
+
+                // TODO: 2/26/2021 ya know, maybe actually code this section of the auto ;) 
+
+                break;
+            case B:
+
+
+                //telemetry
+                telemetry.addLine("Field Configuration B running");
+                telemetry.update();
+
+                AccuDrive.Left(this,  robot,  main1,  main2,  minor1,  minor2 ,  18,  1);
+                claw.setPosition(clawPos);
+
+                //move toward square
+                AccuDrive.Forward(this,  robot,  main1,  main2,  minor1,  minor2 ,  96,  1);
+                claw.setPosition(clawPos);
+
+                //strafe to side
+                AccuDrive.Right(this,  robot,  main1,  main2,  minor1,  minor2 ,  30,  1);;
+                claw.setPosition(clawPos);
+
+
+                claw.setPosition(1);
+
+                //strafe to side more
+                AccuDrive.Right(this,  robot,  main1,  main2,  minor1,  minor2 ,  37,  1);
+
+
+
+                //go back for other goal
+                AccuDrive.Backward(this,  robot,  main1,  main2,  minor1,  minor2 ,  72,  1);
+
+                //strafe into goal
+                AccuDrive.Left(this,  robot,  main1,  main2,  minor1,  minor2 ,  9,  1);
+
+                claw.setPosition(0.63);
+
+
+                //strafe to wall
+                AccuDrive.Right(this,  robot,  main1,  main2,  minor1,  minor2 ,  12,  1);
+
+                claw.setPosition(0.63);
+
+                //move forward
+                AccuDrive.Forward(this,  robot,  main1,  main2,  minor1,  minor2 ,  72,  1);
+                claw.setPosition(clawPos);
+
+                //strafe to left somewhat
+                AccuDrive.Left(this,  robot,  main1,  main2,  minor1,  minor2 ,  33,  1);
+                claw.setPosition(clawPos);
+
+                //open claw
+                claw.setPosition(1);
+
+
+
+                //move back to the wall
+                AccuDrive.Right(this,  robot,  main1,  main2,  minor1,  minor2 ,  35,  1);
+
+                //Move To Line
+                AccuDrive.Backward(this,  robot,  main1,  main2,  minor1,  minor2 ,  24,  1);
+
+
+                break;
+
+            case C:
+
+                this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
+                claw.setPosition(clawPos);
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 20));
+                claw.setPosition(clawPos);
+                this.mecanumDrive.stopMoving();
+
+                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 30));
+                claw.setPosition(clawPos);
+                this.mecanumDrive.stopMoving();
+                claw.setPosition(clawPos);
+                
+                
+                //engage shooting systems
+                intake.setPower(1);
+                hopperpush.setPower(-0.5);
+                shooter2.setPower(1);
+                shooter1.setVelocity(1825);
+                
+                this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 0.16, 0);
+                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 550));
+                this.mecanumDrive.stopMoving();
+                claw.setPosition(clawPos);
+                
+                //shut off 
+                intake.setPower(0);
+                hopperpush.setPower(0);
+                shooter2.setPower(0);
+                shooter1.setVelocity(0);
+
+                // TODO: 2/26/2021 code rest of sequence to maybe deliver wobble goal and then park on line 
+
+                break;
+            default:
+                telemetry.addLine("Field State: " + this.fieldMode.toString());
+                break;
+        }
 
 
 /*

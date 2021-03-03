@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 
 
 
-@Autonomous(name = "shortMovement", group = "Concept")
+@Autonomous(name = "shortMovement2", group = "Concept")
 //@Disabled
 public class ShortMovement2 extends LinearOpMode {
     private Robot robot;

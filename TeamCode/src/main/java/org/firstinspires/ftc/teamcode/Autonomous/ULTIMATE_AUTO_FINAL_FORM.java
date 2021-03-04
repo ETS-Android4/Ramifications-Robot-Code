@@ -82,7 +82,7 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
         this.shooter1 = (DcMotorEx) hardwareMap.get(DcMotor.class, "shooter1");
         this.shooter2 = hardwareMap.get(DcMotor.class, "shooter2");
         this.hopperpush = hardwareMap.get(CRServo.class, "hopperpush");
-        this.voltage = hardwareMap.voltageSensor.get("Expansion Hub 10").getVoltage();
+        this.voltage = hardwareMap.voltageSensor.get("Expansion Hub 1").getVoltage();
         this.arm = hardwareMap.get(DcMotor.class, "arm");
         this.claw = hardwareMap.get(Servo.class, "claw");
         this.intake = hardwareMap.get(DcMotor.class, "intake");
@@ -182,7 +182,7 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
         intake.setPower(1);
 
 
-        AccuDrive.Backward(this,  robot,  main1,  main2,  minor1,  minor2 ,  1.5,  1);
+        /*AccuDrive.Backward(this,  robot,  main1,  main2,  minor1,  minor2 ,  1.5,  1);*/
         intake.setPower(0);
         claw.setPosition(clawPos);
         sleep(200);
@@ -209,7 +209,6 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
 
         shooter1.setVelocity(1900);
         arm.setPower(-0.80);
-        claw.setPosition(clawPos);
         sleep(2000);
         claw.setPosition(clawPos);
         arm.setPower(0);
@@ -278,7 +277,7 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
                 claw.setPosition(1);
 
                 //strafe to side more
-                AccuDrive.Right(this,  robot,  main1,  main2,  minor1,  minor2 ,  37,  1);
+                AccuDrive.Right(this,  robot,  main1,  main2,  minor1,  minor2 ,  50,  1);
 
 
 
@@ -286,13 +285,13 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
                 AccuDrive.Backward(this,  robot,  main1,  main2,  minor1,  minor2 ,  72,  1);
 
                 //strafe into goal
-                AccuDrive.Left(this,  robot,  main1,  main2,  minor1,  minor2 ,  9,  1);
+                AccuDrive.Left(this,  robot,  main1,  main2,  minor1,  minor2 ,  12,  1);
 
                 claw.setPosition(0.63);
 
 
                 //strafe to wall
-                AccuDrive.Right(this,  robot,  main1,  main2,  minor1,  minor2 ,  12,  1);
+                AccuDrive.Right(this,  robot,  main1,  main2,  minor1,  minor2 ,  16,  1);
 
                 claw.setPosition(0.63);
 

@@ -42,15 +42,15 @@ public class AccuDriveSetup extends LinearOpMode {
 
         waitForStart();
 
-        AccuDrive.Forward(this,  robot,  main1,  main2,  minor1,  minor2 ,  44,  0.5);
+        /*AccuDrive.Forward(this,  robot,  main1,  main2,  minor1,  minor2 ,  44,  1);
 
-        /*AccuDrive.Right(this,  robot,  main1,  main2,  minor1,  minor2 ,  30,  1);
+        AccuDrive.Right(this,  robot,  main1,  main2,  minor1,  minor2 ,  100,  1);
 
-        AccuDrive.Backward(this,  robot,  main1,  main2,  minor1,  minor2 ,  30,  1);
+        AccuDrive.Backward(this,  robot,  main1,  main2,  minor1,  minor2 ,  30,  1);*/
 
         AccuDrive.Left(this,  robot,  main1,  main2,  minor1,  minor2 ,  30,  1);
 
-        AccuDrive.TurnLeft(this,  robot,  main1,  main2,  minor1,  minor2 ,  30,  1);
+        /*AccuDrive.TurnLeft(this,  robot,  main1,  main2,  minor1,  minor2 ,  30,  1);
 
         AccuDrive.TurnRight(this,  robot,  main1,  main2,  minor1,  minor2 ,  30,  1);*/
 

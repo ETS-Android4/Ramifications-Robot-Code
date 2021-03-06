@@ -175,12 +175,15 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
 
         // Moving the robot forward while also positioning the wobble goal
 
+        shooter1.setVelocity(1850);
 
         intake.setPower(-1);
         sleep(100);
         intake.setPower(0);
+        hopperpush.setPower(0.1);
         sleep(100);
         intake.setPower(1);
+        hopperpush.setPower(0);
 
 
         /*AccuDrive.Backward(this,  main1,  main2,  minor1,  minor2 ,  1.5,  1);
@@ -188,54 +191,20 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
         claw.setPosition(clawPos);
         sleep(200);
         claw.setPosition(clawPos);
+        arm.setPower(-0.7);
         AccuDrive.Forward(this,  main1,  main2,  minor1,  minor2 ,  19,  0.5);
-        claw.setPosition(clawPos);
-
-        /*
-        //go left
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
-        claw.setPosition(clawPos);
-        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 15));
-        claw.setPosition(clawPos);
-        this.mecanumDrive.stopMoving();
-*/
-
-
-
-        claw.setPosition(clawPos);
-
-
-        // Shooting the pre-loaded rings
-
-
-        shooter1.setVelocity(1900);
-        arm.setPower(-0.80);
-        sleep(2000);
-        claw.setPosition(clawPos);
         arm.setPower(0);
         claw.setPosition(clawPos);
-        shooter2.setPower(0.75);
+
+
         claw.setPosition(clawPos);
 
-        sleep(1000);
         hopperpush.setPower(-1);
-        sleep(700);
-        shooter1.setVelocity(1825);
-        hopperpush.setPower(0);
-        sleep(200);
-        hopperpush.setPower(-1);
-        sleep(700);
-        hopperpush.setPower(0);
-        sleep(200);
-        shooter1.setVelocity(1740);
-        hopperpush.setPower(-1);
-        sleep(700);
-        hopperpush.setPower(0);
-        sleep(200);
-        hopperpush.setPower(-1);
-        shooter1.setVelocity(1635);
-        hopperpush.setPower(0);
-        sleep(200);
+        shooter2.setPower(1);
+        sleep(  750);
+        shooter1.setVelocity(1700);
+        sleep(1250);
+
 
 
 
@@ -328,7 +297,7 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
                 telemetry.addLine("Field Configuration B running");
                 telemetry.update();
 
-                AccuDrive.Left(this,  main1,  main2,  minor1,  minor2 ,  18,  1);
+                AccuDrive.Left(this,  main1,  main2,  minor1,  minor2 ,  18,  0.8);
                 claw.setPosition(0.63);
 
                 //move toward square
@@ -413,16 +382,7 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
 
             case C:
 
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
-                claw.setPosition(clawPos);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 20));
-                claw.setPosition(clawPos);
-                this.mecanumDrive.stopMoving();
-
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 30));
-                claw.setPosition(clawPos);
-                this.mecanumDrive.stopMoving();
+               AccuDrive.Right(this, main1, main2, minor1, minor2 , 10, 1);
                 claw.setPosition(clawPos);
                 
                 
@@ -431,10 +391,9 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
                 hopperpush.setPower(-0.5);
                 shooter2.setPower(1);
                 shooter1.setVelocity(1825);
+                claw.setPosition(clawPos);
                 
-                this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 0.16, 0);
-                sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 550));
-                this.mecanumDrive.stopMoving();
+                AccuDrive.Forward(this, main1, main2, minor1, minor2 , 40, 0.05);
                 claw.setPosition(clawPos);
                 
                 //shut off 

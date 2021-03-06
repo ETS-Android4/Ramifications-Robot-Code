@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -249,10 +250,75 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
             case A:
 
 
+                //telemetry
                 telemetry.addLine("Field Configuration A running");
                 telemetry.update();
 
-                // TODO: 2/26/2021 ya know, maybe actually code this section of the auto ;) 
+
+                //move to same parallel point as squre
+                AccuDrive.Forward(this, main1,  main2,  minor1,  minor2 ,  70,  1);
+                claw.setPosition(0.63);
+
+                //move toward wall and drop wobble goal
+                //AccuDrive.Right(this, main1,  main2,  minor1,  minor2 ,  35,  1);
+
+
+                main1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                main2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                minor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                minor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+                main1.setDirection(DcMotorSimple.Direction.FORWARD);
+                main2.setDirection(DcMotorSimple.Direction.FORWARD);
+                minor1.setDirection(DcMotorSimple.Direction.FORWARD);
+                minor2.setDirection(DcMotorSimple.Direction.FORWARD);
+
+                main1.setPower(0.9);
+                main2.setPower(-0.9);
+                minor1.setPower(0.9);
+                minor2.setPower(-0.9);
+
+                sleep(2200);
+                claw.setPosition(1);
+
+                main1.setPower(0);
+                main2.setPower(0);
+                minor1.setPower(0);
+                minor2.setPower(0);
+
+                claw.setPosition(1);
+
+                //move forward
+                AccuDrive.Forward(this, main1,  main2,  minor1,  minor2 ,  8,  1);
+                claw.setPosition(1);
+
+
+                //move to the left
+                AccuDrive.Left(this, main1,  main2,  minor1,  minor2 ,  10,  1);
+                claw.setPosition(1);
+
+                //go to get next wobble goal
+                AccuDrive.Backward(this, main1,  main2,  minor1,  minor2 ,  68,  1);
+
+                //Strafe left to put claw in position
+                AccuDrive.Left(this, main1, main2, minor1, minor2 , 10, 1);
+                claw.setPosition(0.63);
+                sleep(700);
+
+                //go to get next wobble goal
+                AccuDrive.Forward(this, main1,  main2,  minor1,  minor2 ,  55,  1);
+
+                //yeet wobble goal in
+                AccuDrive.Right(this, main1, main2, minor1, minor2, 15, 1);
+                claw.setPosition(1);
+
+                //skrrt robot away
+                AccuDrive.Right(this, main1, main2, minor1, minor2, 3, 1);
+
+                //skrrt robot away
+                AccuDrive.Forward(this, main1, main2, minor1, minor2, 6, 1);
+
+
 
                 break;
             case B:
@@ -263,21 +329,43 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
                 telemetry.update();
 
                 AccuDrive.Left(this,  main1,  main2,  minor1,  minor2 ,  18,  1);
-                claw.setPosition(clawPos);
+                claw.setPosition(0.63);
 
                 //move toward square
-                AccuDrive.Forward(this, main1,  main2,  minor1,  minor2 ,  96,  1);
-                claw.setPosition(clawPos);
+                AccuDrive.Forward(this, main1,  main2,  minor1,  minor2 ,  90,  1);
+                claw.setPosition(0.63);
 
                 //strafe to side
-                AccuDrive.Right(this,  main1,  main2,  minor1,  minor2 ,  30,  1);;
-                claw.setPosition(clawPos);
+                main1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                main2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                minor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                minor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+                main1.setDirection(DcMotorSimple.Direction.FORWARD);
+                main2.setDirection(DcMotorSimple.Direction.FORWARD);
+                minor1.setDirection(DcMotorSimple.Direction.FORWARD);
+                minor2.setDirection(DcMotorSimple.Direction.FORWARD);
+
+
+
+
+                main1.setPower(1);
+                main2.setPower(-1);
+                minor1.setPower(1);
+                minor2.setPower(-1);
+
+                sleep(1150);
+                claw.setPosition(1);
+                sleep(1600);
+
+                main1.setPower(0);
+                main2.setPower(0);
+                minor1.setPower(0);
+                minor2.setPower(0);
+                claw.setPosition(0.63);
 
 
                 claw.setPosition(1);
-
-                //strafe to side more
-                AccuDrive.Right(this,   main1,  main2,  minor1,  minor2 ,  37,  1);
 
 
 
@@ -285,22 +373,23 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
                 AccuDrive.Backward(this,  main1,  main2,  minor1,  minor2 ,  72,  1);
 
                 //strafe into goal
-                AccuDrive.Left(this,   main1,  main2,  minor1,  minor2 ,  9,  1);
+                AccuDrive.Left(this,  main1,  main2,  minor1,  minor2 ,  17,  1);
 
                 claw.setPosition(0.63);
 
 
                 //strafe to wall
-                AccuDrive.Right(this,   main1,  main2,  minor1,  minor2 ,  12,  1);
+                AccuDrive.Right(this,  main1,  main2,  minor1,  minor2 ,  20,  1);
 
                 claw.setPosition(0.63);
 
+
                 //move forward
-                AccuDrive.Forward(this,  main1,  main2,  minor1,  minor2 ,  72,  1);
+                AccuDrive.Forward(this,  main1,  main2,  minor1,  minor2 ,  85,  1);
                 claw.setPosition(clawPos);
 
                 //strafe to left somewhat
-                AccuDrive.Left(this,  main1,  main2,  minor1,  minor2 ,  33,  1);
+                AccuDrive.Left(this,  main1,  main2,  minor1,  minor2 ,  35,  1);
                 claw.setPosition(clawPos);
 
                 //open claw
@@ -309,10 +398,15 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
 
 
                 //move back to the wall
-                AccuDrive.Right(this,  main1,  main2,  minor1,  minor2 ,  35,  1);
+                AccuDrive.Right(this,  main1,  main2,  minor1,  minor2 ,  37,  1);
 
                 //Move To Line
-                AccuDrive.Backward(this, main1,  main2,  minor1,  minor2 ,  24,  1);
+                AccuDrive.Backward(this, main1,  main2,  minor1,  minor2 ,  35,  1);
+
+
+
+
+
 
 
                 break;

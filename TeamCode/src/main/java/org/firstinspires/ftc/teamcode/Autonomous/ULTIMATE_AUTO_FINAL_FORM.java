@@ -82,7 +82,7 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
         this.shooter1 = (DcMotorEx) hardwareMap.get(DcMotor.class, "shooter1");
         this.shooter2 = hardwareMap.get(DcMotor.class, "shooter2");
         this.hopperpush = hardwareMap.get(CRServo.class, "hopperpush");
-        this.voltage = hardwareMap.voltageSensor.get("Expansion Hub 10").getVoltage();
+        this.voltage = hardwareMap.voltageSensor.get("Expansion Hub 1").getVoltage();
         this.arm = hardwareMap.get(DcMotor.class, "arm");
         this.claw = hardwareMap.get(Servo.class, "claw");
         this.intake = hardwareMap.get(DcMotor.class, "intake");
@@ -182,12 +182,12 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
         intake.setPower(1);
 
 
-        AccuDrive.Backward(this,  robot,  main1,  main2,  minor1,  minor2 ,  1.5,  1);
-        intake.setPower(0);
+        /*AccuDrive.Backward(this,  main1,  main2,  minor1,  minor2 ,  1.5,  1);
+        intake.setPower(0);*/
         claw.setPosition(clawPos);
         sleep(200);
         claw.setPosition(clawPos);
-        AccuDrive.Forward(this,  robot,  main1,  main2,  minor1,  minor2 ,  19,  0.5);
+        AccuDrive.Forward(this,  main1,  main2,  minor1,  minor2 ,  19,  0.5);
         claw.setPosition(clawPos);
 
         /*
@@ -263,45 +263,45 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
                 telemetry.addLine("Field Configuration B running");
                 telemetry.update();
 
-                AccuDrive.Left(this,  robot,  main1,  main2,  minor1,  minor2 ,  18,  1);
+                AccuDrive.Left(this,  main1,  main2,  minor1,  minor2 ,  18,  1);
                 claw.setPosition(clawPos);
 
                 //move toward square
-                AccuDrive.Forward(this,  robot,  main1,  main2,  minor1,  minor2 ,  96,  1);
+                AccuDrive.Forward(this, main1,  main2,  minor1,  minor2 ,  96,  1);
                 claw.setPosition(clawPos);
 
                 //strafe to side
-                AccuDrive.Right(this,  robot,  main1,  main2,  minor1,  minor2 ,  30,  1);;
+                AccuDrive.Right(this,  main1,  main2,  minor1,  minor2 ,  30,  1);;
                 claw.setPosition(clawPos);
 
 
                 claw.setPosition(1);
 
                 //strafe to side more
-                AccuDrive.Right(this,  robot,  main1,  main2,  minor1,  minor2 ,  37,  1);
+                AccuDrive.Right(this,  main1,  main2,  minor1,  minor2 ,  37,  1);
 
 
 
                 //go back for other goal
-                AccuDrive.Backward(this,  robot,  main1,  main2,  minor1,  minor2 ,  72,  1);
+                AccuDrive.Backward(this,  main1,  main2,  minor1,  minor2 ,  72,  1);
 
                 //strafe into goal
-                AccuDrive.Left(this,  robot,  main1,  main2,  minor1,  minor2 ,  9,  1);
+                AccuDrive.Left(this,  main1,  main2,  minor1,  minor2 ,  9,  1);
 
                 claw.setPosition(0.63);
 
 
                 //strafe to wall
-                AccuDrive.Right(this,  robot,  main1,  main2,  minor1,  minor2 ,  12,  1);
+                AccuDrive.Right(this,  main1,  main2,  minor1,  minor2 ,  12,  1);
 
                 claw.setPosition(0.63);
 
                 //move forward
-                AccuDrive.Forward(this,  robot,  main1,  main2,  minor1,  minor2 ,  72,  1);
+                AccuDrive.Forward(this,  main1,  main2,  minor1,  minor2 ,  72,  1);
                 claw.setPosition(clawPos);
 
                 //strafe to left somewhat
-                AccuDrive.Left(this,  robot,  main1,  main2,  minor1,  minor2 ,  33,  1);
+                AccuDrive.Left(this,  main1,  main2,  minor1,  minor2 ,  33,  1);
                 claw.setPosition(clawPos);
 
                 //open claw
@@ -310,10 +310,10 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
 
 
                 //move back to the wall
-                AccuDrive.Right(this,  robot,  main1,  main2,  minor1,  minor2 ,  35,  1);
+                AccuDrive.Right(this,  main1,  main2,  minor1,  minor2 ,  35,  1);
 
                 //Move To Line
-                AccuDrive.Backward(this,  robot,  main1,  main2,  minor1,  minor2 ,  24,  1);
+                AccuDrive.Backward(this, main1,  main2,  minor1,  minor2 ,  24,  1);
 
 
                 break;

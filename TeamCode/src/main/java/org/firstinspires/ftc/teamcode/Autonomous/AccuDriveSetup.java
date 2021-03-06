@@ -1,18 +1,17 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.robot.Robot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
-import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 
-@Autonomous(name = "AccuDrive Setup", group = "Concept")
-//@Disabled
+@Autonomous(name = "AccuDrive Setup (ANROID STUDIO version)", group = "Concept")
+
 public class AccuDriveSetup extends LinearOpMode {
-    private Robot robot;
-    private MecanumDrive mecanumDrive;
+
+
 
 
     // to use accurdive, you have to declare the encodervalues
@@ -28,8 +27,7 @@ public class AccuDriveSetup extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        this.robot = new Robot(hardwareMap);
-        this.mecanumDrive = (MecanumDrive) this.robot.getDrivetrain();
+
 
         this.main1 =  hardwareMap.get(DcMotor.class, "main1");
         this.main2 =  hardwareMap.get(DcMotor.class, "main2");
@@ -42,7 +40,14 @@ public class AccuDriveSetup extends LinearOpMode {
 
         waitForStart();
 
-        AccuDrive.Forward(this,  robot,  main1,  main2,  minor1,  minor2 ,  44,  0.5);
+        //AccuDrive.Forward(this, main1,  main2,  minor1,  minor2 ,  5,  1);
+
+        //AccuDrive.Left(this, main1,  main2,  minor1,  minor2 ,  50,  1);
+
+        AccuDrive.Forward(this, main1,  main2,  minor1,  minor2 ,  50,  1);
+        AccuDrive.Right(this, main1,  main2,  minor1,  minor2 ,  50,  0.5);
+        AccuDrive.Backward(this, main1,  main2,  minor1,  minor2 ,  50,  0.75);
+        AccuDrive.Left(this, main1,  main2,  minor1,  minor2 ,  50,  0.25);
 
         /*AccuDrive.Right(this,  robot,  main1,  main2,  minor1,  minor2 ,  30,  1);
 
@@ -54,11 +59,6 @@ public class AccuDriveSetup extends LinearOpMode {
 
         AccuDrive.TurnRight(this,  robot,  main1,  main2,  minor1,  minor2 ,  30,  1);*/
 
-        telemetry.addLine("finished stuff");
-        telemetry.update();
-        sleep(4000);
-        telemetry.addLine("done");
-        telemetry.update();
 
 
 

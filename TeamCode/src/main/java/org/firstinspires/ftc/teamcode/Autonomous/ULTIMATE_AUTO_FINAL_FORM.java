@@ -277,7 +277,7 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
                 claw.setPosition(1);
 
                 //strafe to side more
-                AccuDrive.Right(this,  robot,  main1,  main2,  minor1,  minor2 ,  37,  1);
+                AccuDrive.Right(this,   main1,  main2,  minor1,  minor2 ,  37,  1);
 
 
 
@@ -285,13 +285,13 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
                 AccuDrive.Backward(this,  main1,  main2,  minor1,  minor2 ,  72,  1);
 
                 //strafe into goal
-                AccuDrive.Left(this,  robot,  main1,  main2,  minor1,  minor2 ,  9,  1);
+                AccuDrive.Left(this,   main1,  main2,  minor1,  minor2 ,  9,  1);
 
                 claw.setPosition(0.63);
 
 
                 //strafe to wall
-                AccuDrive.Right(this,  robot,  main1,  main2,  minor1,  minor2 ,  12,  1);
+                AccuDrive.Right(this,   main1,  main2,  minor1,  minor2 ,  12,  1);
 
                 claw.setPosition(0.63);
 

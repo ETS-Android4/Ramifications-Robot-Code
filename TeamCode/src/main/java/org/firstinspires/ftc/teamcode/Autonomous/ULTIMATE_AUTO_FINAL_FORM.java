@@ -278,7 +278,7 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
                 AccuDrive.Forward(this, main1,  main2,  minor1,  minor2 ,  55,  1);
 
                 //yeet wobble goal in
-                AccuDrive.Right(this, main1, main2, minor1, minor2, 15, 1);
+                AccuDrive.Right(this, main1, main2, minor1, minor2, 12, 1);
                 claw.setPosition(1);
 
                 //skrrt robot away

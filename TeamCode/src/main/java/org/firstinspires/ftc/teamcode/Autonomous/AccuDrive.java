@@ -12,6 +12,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 
 public class AccuDrive {
+
+
     public static void Forward(LinearOpMode lop, DcMotor main1, DcMotor main2, DcMotor minor1, DcMotor minor2 , double distance, double power) {
         distance = distance*1.67*100*0.1389*3*70/69;
 
@@ -71,6 +73,10 @@ public class AccuDrive {
         minor1.setPower(0);
         minor2.setPower(0);
     }
+
+
+
+
 
     public static void Backward(LinearOpMode lop, DcMotor main1, DcMotor main2, DcMotor minor1, DcMotor minor2 , double distance, double power) {
 
@@ -133,6 +139,7 @@ public class AccuDrive {
         minor2.setPower(0);
 
     }
+
 
     public static void Right(LinearOpMode lop, DcMotor main1, DcMotor main2, DcMotor minor1, DcMotor minor2 , double distance, double power) {
 
@@ -377,4 +384,6 @@ public class AccuDrive {
         main2.setPower(0);
 
     }
+
+
 }

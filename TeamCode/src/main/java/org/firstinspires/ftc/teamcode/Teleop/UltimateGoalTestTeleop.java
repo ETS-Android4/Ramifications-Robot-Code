@@ -70,7 +70,7 @@ public class UltimateGoalTestTeleop extends OpMode {
 
         //hopper + feeding control
         if(gamepad1.right_trigger>0){
-            hopperpush.setPower(-0.80);
+            hopperpush.setPower(-1);
             shooter2.setPower(0.75);
         }
         else if(gamepad1.a){

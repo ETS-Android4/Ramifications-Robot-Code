@@ -382,6 +382,8 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
 
             case C:
 
+                // TODO: 3/13/2021 fix this and uncomment 
+
 
                 //telemetry
                 telemetry.addLine("Field Configuration C running");

@@ -73,7 +73,7 @@ public class UltimateGoalTestTeleop extends OpMode {
             hopperpush.setPower(-1);
             shooter2.setPower(0.75);
         }
-        else if(gamepad1.a){
+        else if(gamepad1.a || gamepad2.b){
             hopperpush.setPower(0.75);
             shooter2.setPower(0); // TODO: 2/11/2021 maybe change this to -1 to push rings back? testing required!
         }
@@ -98,7 +98,7 @@ public class UltimateGoalTestTeleop extends OpMode {
 
 
        //override shooter power
-        if(gamepad1.left_bumper || gamepad2.b){
+        if(gamepad1.left_bumper || gamepad2.right_bumper){
             motorVelocity = 1850; // TODO: 2/11/2021 change this to be a power drivers are happy with
             telemetry.addLine("POWERSHOT");
             telemetry.update();

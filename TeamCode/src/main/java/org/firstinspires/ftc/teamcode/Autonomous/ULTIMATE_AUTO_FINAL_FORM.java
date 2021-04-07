@@ -175,7 +175,7 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
 
         // Moving the robot forward while also positioning the wobble goal
 
-        shooter1.setVelocity(1825);
+        shooter1.setVelocity(1600);
 
         intake.setPower(-1);
         sleep(100);
@@ -193,17 +193,19 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
         claw.setPosition(clawPos);
         arm.setPower(-0.6);
         AccuDrive.Forward(this,  main1,  main2,  minor1,  minor2 ,  19,  0.5);
+        AccuDrive.Left(this,  main1,  main2,  minor1,  minor2 ,  3.5,  0.5);
+
         arm.setPower(0);
         claw.setPosition(clawPos);
 
 
         claw.setPosition(clawPos);
 
-        hopperpush.setPower(-1);
+        hopperpush.setPower(-0.75);
         shooter2.setPower(1);
         sleep(  750);
-        shooter1.setVelocity(1675);
-        sleep(1250);
+        shooter1.setVelocity(1450);
+        sleep(1750);
 
 
 
@@ -225,7 +227,7 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
 
 
                 //move to same parallel point as square
-                AccuDrive.Forward(this, main1,  main2,  minor1,  minor2 ,  70,  1);
+                AccuDrive.Forward(this, main1,  main2,  minor1,  minor2 ,  60,  1);
                 claw.setPosition(0.63);
 
                 //move toward wall and drop wobble goal
@@ -247,7 +249,7 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
                 minor1.setPower(0.9);
                 minor2.setPower(-0.9);
 
-                sleep(2200);
+                sleep(2500);
                 claw.setPosition(1);
 
                 main1.setPower(0);
@@ -263,7 +265,7 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
 
 
                 //move to the left
-                AccuDrive.Left(this, main1,  main2,  minor1,  minor2 ,  10,  1);
+                AccuDrive.Left(this, main1,  main2,  minor1,  minor2 ,  7.5,  1);
                 claw.setPosition(1);
 
                 //go to get next wobble goal
@@ -275,7 +277,7 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
                 sleep(700);
 
                 //go to get next wobble goal
-                AccuDrive.Forward(this, main1,  main2,  minor1,  minor2 ,  55,  1);
+                AccuDrive.Forward(this, main1,  main2,  minor1,  minor2 ,  60,  1);
 
                 //yeet wobble goal in
                 AccuDrive.Right(this, main1, main2, minor1, minor2, 12, 1);
@@ -285,7 +287,7 @@ public class ULTIMATE_AUTO_FINAL_FORM extends LinearOpMode {
                 AccuDrive.Right(this, main1, main2, minor1, minor2, 2, 1);
 
                 //skrrt robot away
-                AccuDrive.Forward(this, main1, main2, minor1, minor2, 7, 1);
+                AccuDrive.Forward(this, main1, main2, minor1, minor2, 4, 1);
 
 
 

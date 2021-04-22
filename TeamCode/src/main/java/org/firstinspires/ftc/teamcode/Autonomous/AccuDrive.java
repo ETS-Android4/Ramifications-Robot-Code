@@ -41,6 +41,7 @@ public class AccuDrive {
         minor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         minor2.setPower(power);
 
+        //while(minor1.getCurrentPosition() < distance || minor2.getCurrentPosition() < distance || main1.getCurrentPosition() < distance || main2.getCurrentPosition() < distance) {
         while(minor1.isBusy() || minor2.isBusy() || main1.isBusy() || main2.isBusy()) {
             lop.telemetry.addLine("minor1 position: " + minor1.getCurrentPosition());
             lop.telemetry.addLine("minor2 position: " + minor2.getCurrentPosition());
@@ -68,6 +69,7 @@ public class AccuDrive {
             }
 
         }
+        lop.sleep(500);
         main1.setPower(0);
         main2.setPower(0);
         minor1.setPower(0);
@@ -106,6 +108,7 @@ public class AccuDrive {
         minor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         minor2.setPower(power);
 
+        //while(minor1.getCurrentPosition() < distance || minor2.getCurrentPosition() < distance || main1.getCurrentPosition() < distance || main2.getCurrentPosition() < distance) {
         while(minor1.isBusy() || minor2.isBusy() || main1.isBusy() || main2.isBusy()) {
             lop.telemetry.addLine("minor1 position: " + minor1.getCurrentPosition());
             lop.telemetry.addLine("minor2 position: " + minor2.getCurrentPosition());
@@ -133,6 +136,7 @@ public class AccuDrive {
             }
 
         }
+        lop.sleep(500);
         main1.setPower(0);
         main2.setPower(0);
         minor1.setPower(0);
@@ -169,6 +173,7 @@ public class AccuDrive {
         minor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         minor2.setPower(power);
 
+        //while(minor1.getCurrentPosition() < distance || minor2.getCurrentPosition() < distance || main1.getCurrentPosition() < distance || main2.getCurrentPosition() < distance) {
         while(minor1.isBusy() || minor2.isBusy() || main1.isBusy() || main2.isBusy()) {
             lop.telemetry.addLine("minor1 position: " + minor1.getCurrentPosition());
             lop.telemetry.addLine("minor2 position: " + minor2.getCurrentPosition());
@@ -207,13 +212,8 @@ public class AccuDrive {
             if(minor2.getTargetPosition()== minor2.getCurrentPosition()){
                 minor2.setPower(0);
             }
-
-
-
-
-
-
         }
+        lop.sleep(500);
         minor1.setPower(0);
         minor2.setPower(0);
         main1.setPower(0);
@@ -253,8 +253,8 @@ public class AccuDrive {
         minor2.setPower(power);
 
 
+        //while(minor1.getCurrentPosition() < distance || minor2.getCurrentPosition() < distance || main1.getCurrentPosition() < distance || main2.getCurrentPosition() < distance) {
         while(minor1.isBusy() || minor2.isBusy() || main1.isBusy() || main2.isBusy()) {
-
             lop.telemetry.addLine("minor1 position: " + minor1.getCurrentPosition());
             lop.telemetry.addLine("minor2 position: " + minor2.getCurrentPosition());
             lop.telemetry.addLine("main2 position: " + main2.getCurrentPosition());
@@ -294,6 +294,7 @@ public class AccuDrive {
             }
 
         }
+        lop.sleep(500);
         minor1.setPower(0);
         minor2.setPower(0);
         main1.setPower(0);
@@ -332,11 +333,12 @@ public class AccuDrive {
         minor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         minor2.setPower(power);
 
+        //while(minor1.getCurrentPosition() < distance || minor2.getCurrentPosition() < distance || main1.getCurrentPosition() < distance || main2.getCurrentPosition() < distance) {
         while(minor1.isBusy() || minor2.isBusy() || main1.isBusy() || main2.isBusy()) {
 
 
-
         }
+        lop.sleep(500);
         minor1.setPower(0);
         minor2.setPower(0);
         main1.setPower(0);
@@ -373,11 +375,12 @@ public class AccuDrive {
         minor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         minor2.setPower(power);
 
+        //while(minor1.getCurrentPosition() < distance || minor2.getCurrentPosition() < distance || main1.getCurrentPosition() < distance || main2.getCurrentPosition() < distance) {
         while(minor1.isBusy() || minor2.isBusy() || main1.isBusy() || main2.isBusy()) {
 
 
-
         }
+        lop.sleep(500);
         minor1.setPower(0);
         minor2.setPower(0);
         main1.setPower(0);

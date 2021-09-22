@@ -3,11 +3,8 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
-import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
-import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
+import org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
 
@@ -31,19 +28,6 @@ public class MoveSquare extends LinearOpMode {
 
         this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),1,0);
         sleep(2000);
-        this.mecanumDrive.stopMoving();
-
-        //this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(),0,1);
-        ///sleep(600);
-        //this.mecanumDrive.stopMoving();
-
-        //this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
-        //sleep(500);
-        //this.mecanumDrive.stopMoving();
-
-        //this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
-        //sleep(600);
-
         this.mecanumDrive.stopMoving();
 
     }

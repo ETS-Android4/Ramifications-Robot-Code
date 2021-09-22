@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -8,16 +9,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+import org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
-import org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage;
-import org.firstinspires.ftc.teamcode.Autonomous.SimplifiedMovement;
-import java.util.List;
 
-import javax.crypto.Mac;
+import java.util.List;
 
 
 @Autonomous(name = "MainAutonomousWithGrabbingMoreRings", group = "Concept")
@@ -37,7 +35,7 @@ public class MainAutonomousWithGrabbingMoreRings extends LinearOpMode {
 
     // Hardware
     private Robot robot;
-    private MecanumDrive mecanumDrive;
+    private org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive mecanumDrive;
     private DcMotorEx shooter1;
     private DcMotor shooter2;
     private CRServo hopperpush;
@@ -75,7 +73,7 @@ public class MainAutonomousWithGrabbingMoreRings extends LinearOpMode {
 
         //hardware mapping
         this.robot = new Robot(hardwareMap);
-        this.mecanumDrive = (MecanumDrive) this.robot.getDrivetrain();
+        this.mecanumDrive = (org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive) this.robot.getDrivetrain();
         this.shooter1 = (DcMotorEx) hardwareMap.get(DcMotor.class, "shooter1");
         this.shooter2 = hardwareMap.get(DcMotor.class, "shooter2");
         this.hopperpush = hardwareMap.get(CRServo.class, "hopperpush");
@@ -167,22 +165,22 @@ public class MainAutonomousWithGrabbingMoreRings extends LinearOpMode {
         intake.setPower(0);
         sleep(100);
         intake.setPower(1);
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(), 1, 0);
+        this.mecanumDrive.complexDrive(org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive.Direction.DOWN.angle(), 1, 0);
         sleep(50);
         this.mecanumDrive.stopMoving();
         claw.setPosition(clawPos);
         sleep(200);
         claw.setPosition(clawPos);
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(),0.5,0);
+        this.mecanumDrive.complexDrive(org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive.Direction.UP.angle(),0.5,0);
         claw.setPosition(clawPos);
-        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 90));
+        sleep(org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage.calculateDistance(this.voltage, 90));
         this.mecanumDrive.stopMoving();
         claw.setPosition(clawPos);
 
         //go left
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.LEFT.angle(),0,-1);
+        this.mecanumDrive.complexDrive(org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive.Direction.LEFT.angle(),0,-1);
         claw.setPosition(clawPos);
-        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 15));
+        sleep(org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage.calculateDistance(this.voltage, 15));
         claw.setPosition(clawPos);
         this.mecanumDrive.stopMoving();
 
@@ -204,19 +202,19 @@ public class MainAutonomousWithGrabbingMoreRings extends LinearOpMode {
         sleep(5000);
 
 
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.DOWN.angle(),1,0);
+        this.mecanumDrive.complexDrive(org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive.Direction.DOWN.angle(),1,0);
         claw.setPosition(clawPos);
-        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 20));
+        sleep(org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage.calculateDistance(this.voltage, 20));
         claw.setPosition(clawPos);
         this.mecanumDrive.stopMoving();
 
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.RIGHT.angle(), 0, 1);
-        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 30));
+        this.mecanumDrive.complexDrive(org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive.Direction.RIGHT.angle(), 0, 1);
+        sleep(org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage.calculateDistance(this.voltage, 30));
         claw.setPosition(clawPos);
         this.mecanumDrive.stopMoving();
         claw.setPosition(clawPos);
-        this.mecanumDrive.complexDrive(MecanumDrive.Direction.UP.angle(), 0.2, 0);
-        sleep(TimeOffsetVoltage.calculateDistance(this.voltage, 350));
+        this.mecanumDrive.complexDrive(org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive.Direction.UP.angle(), 0.2, 0);
+        sleep(org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage.calculateDistance(this.voltage, 350));
         this.mecanumDrive.stopMoving();
         claw.setPosition(clawPos);
 
@@ -235,7 +233,7 @@ NO MORE AUTO CODE AFTER THIS POINT
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
-        parameters.cameraDirection = CameraDirection.BACK;
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 
         //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);

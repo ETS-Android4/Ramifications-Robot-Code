@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
+
 
 public class SimplifiedMovement {
     public static void Forward(LinearOpMode lop, Robot robot, MecanumDrive mecanumDrive, double voltage, double distance, double velocity) {

@@ -1,28 +1,19 @@
 package org.firstinspires.ftc.teamcode.Teleop;//package org.firstinspires.ftc.teamcode;
 
-import android.util.Log;
-
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.IntegratingGyroscope;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
 //import org.firstinspires.ftc.teamcode.lib.AutonomousConstants;
 //import org.firstinspires.ftc.teamcode.lib.ClampState;
 //import org.firstinspires.ftc.teamcode.lib.GrabberState;
 //import org.firstinspires.ftc.teamcode.lib.TeleOpConstants;
 //import org.firstinspires.ftc.teamcode.lib.perceptron.CollisionExecutor;
-import org.firstinspires.ftc.teamcode.RapidFire;
-import org.firstinspires.ftc.teamcode.robotplus.hardware.IMUWrapper;
-import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
-import org.firstinspires.ftc.teamcode.robotplus.hardware.MotorPair;
-import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
+import org.firstinspires.ftc.teamcode.MicdsFtcSdk.hardware.MecanumDrive;
+import org.firstinspires.ftc.teamcode.MicdsFtcSdk.hardware.Robot;
 
 
 @TeleOp(name = "Teleop But Slower", group = "Basic")

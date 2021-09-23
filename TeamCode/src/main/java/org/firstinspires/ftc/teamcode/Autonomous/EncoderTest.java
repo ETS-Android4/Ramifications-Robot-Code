@@ -6,9 +6,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage;
-import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
-import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
+import org.firstinspires.ftc.teamcode.MicdsFtcSdk.hardware.Robot;
 
 @Autonomous(name = "Encoder Test", group = "Concept")
 public class EncoderTest extends LinearOpMode {

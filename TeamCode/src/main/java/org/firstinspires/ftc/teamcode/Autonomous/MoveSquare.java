@@ -3,12 +3,8 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
-import org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage;
-import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
-import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
-
-import java.util.List;
+import org.firstinspires.ftc.teamcode.MicdsFtcSdk.hardware.MecanumDrive;
+import org.firstinspires.ftc.teamcode.MicdsFtcSdk.hardware.Robot;
 
 @Autonomous(name = "movesquare", group = "Concept")
 //@Disabled

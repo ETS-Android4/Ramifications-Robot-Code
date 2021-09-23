@@ -6,15 +6,14 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
-import org.firstinspires.ftc.teamcode.robotplus.autonomous.TimeOffsetVoltage;
-import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
-import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
+
+import org.firstinspires.ftc.teamcode.MicdsFtcSdk.hardware.Robot;
 
 @Autonomous(name = "shortMovementWithShooter", group = "Concept")
 //@Disabled
 public class ShortMovementWithShooter extends LinearOpMode {
     private Robot robot;
-    private org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive mecanumDrive;
+    private org.firstinspires.ftc.teamcode.MicdsFtcSdk.hardware.MecanumDrive mecanumDrive;
     private DcMotorEx shooter1;
     private DcMotor shooter2;
     private CRServo hopperpush;
@@ -24,7 +23,7 @@ public class ShortMovementWithShooter extends LinearOpMode {
     @Override
     public void runOpMode() {
         this.robot = new Robot(hardwareMap);
-        this.mecanumDrive = (org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive) this.robot.getDrivetrain();
+        this.mecanumDrive = (org.firstinspires.ftc.teamcode.MicdsFtcSdk.hardware.MecanumDrive) this.robot.getDrivetrain();
         this.shooter1 = (DcMotorEx) hardwareMap.get(DcMotor.class, "shooter1");
         this.shooter2 = hardwareMap.get(DcMotor.class, "shooter2");
         this.hopperpush = hardwareMap.get(CRServo.class, "hopperpush");
@@ -37,7 +36,7 @@ public class ShortMovementWithShooter extends LinearOpMode {
         arm.setPower(0.45); // TODO: 2/11/2021 might need to reverse again
         claw.setPosition(0.63);
 
-        this.mecanumDrive.complexDrive(org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive.Direction.UP.angle(),1,0);
+        this.mecanumDrive.complexDrive(org.firstinspires.ftc.teamcode.MicdsFtcSdk.hardware.MecanumDrive.Direction.UP.angle(),1,0);
         sleep(1800);
         this.mecanumDrive.stopMoving();
 
@@ -54,7 +53,7 @@ public class ShortMovementWithShooter extends LinearOpMode {
         claw.setPosition(0.63);
 
         arm.setPower(-0.25); // TODO: 2/11/2021 might need to reverse again
-        this.mecanumDrive.complexDrive(org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive.Direction.UP.angle(), 1, 0);
+        this.mecanumDrive.complexDrive(org.firstinspires.ftc.teamcode.MicdsFtcSdk.hardware.MecanumDrive.Direction.UP.angle(), 1, 0);
         sleep(450);
         this.mecanumDrive.stopMoving();
         claw.setPosition(0.63);

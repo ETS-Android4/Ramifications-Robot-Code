@@ -7,14 +7,13 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
-import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
-import org.firstinspires.ftc.teamcode.robotplus.hardware.Robot;
+import org.firstinspires.ftc.teamcode.MicdsFtcSdk.hardware.MecanumDrive;
+import org.firstinspires.ftc.teamcode.MicdsFtcSdk.hardware.Robot;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-import org.firstinspires.ftc.teamcode.robotplus.hardware.MecanumDrive;
 
 import java.util.List;
 

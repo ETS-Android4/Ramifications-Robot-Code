@@ -1,20 +1,21 @@
 package org.firstinspires.ftc.teamcode.Teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.firstinspires.ftc.teamcode.GertrudeV2;
 
 @TeleOp(name = "First Steps!", group = "Basic")
 public class FirstSteps extends OpMode {
-    private DcMotor backleft, backright, frontleft, frontright;
+    private GertrudeV2 robot = new GertrudeV2();
 
     @Override
     public void init() {
-        this.backleft = hardwareMap.get(DcMotor.class, "backleft");
-        this.backright = hardwareMap.get(DcMotor.class, "backright");
-        this.backright.setPower(.5);
-        this.backleft.setPower(.5);
+        this.robot.initHardware(hardwareMap);
+        robot.backLeft.setPower(.5);
+        robot.backRight.setPower(-.5);
+        robot.backRight.setPower(-.5);
+        robot.frontLeft.setPower(.5);
     }
 
     @Override

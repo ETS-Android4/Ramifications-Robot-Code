@@ -85,3 +85,6 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+# This stuff shouldn't really be changed
+/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MicdsFtcSdk/

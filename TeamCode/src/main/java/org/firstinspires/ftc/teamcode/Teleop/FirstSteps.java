@@ -12,10 +12,7 @@ public class FirstSteps extends OpMode {
     @Override
     public void init() {
         this.robot.initHardware(hardwareMap);
-        robot.backLeft.setPower(.5);
-        robot.backRight.setPower(-.5);
-        robot.backRight.setPower(-.5);
-        robot.frontLeft.setPower(.5);
+        this.robot.setForwardPower(1.0);
     }
 
     @Override

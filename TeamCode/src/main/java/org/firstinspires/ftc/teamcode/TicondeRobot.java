@@ -7,7 +7,7 @@ import org.firstinspires.ftc.micdsrobotics.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.micdsrobotics.robotplus.hardware.Robot;
 
 // FYI The robot's name is GertrudeV2
-public class GertrudeV2 extends Robot<MecanumDrive> {
+public class TicondeRobot extends Robot<MecanumDrive> {
     public DcMotor backLeft, backRight, frontLeft, frontRight;
 
     @Override
@@ -36,5 +36,19 @@ public class GertrudeV2 extends Robot<MecanumDrive> {
         this.frontRight.setPower(0);
         this.frontLeft.setPower(0);
         this.backLeft.setPower(0);
+    }
+
+    public void setSidewaysTankMovement(double speed){
+        speed = Math.min(Math.max(-1, speed), 1);
+        this.frontRight.setPower(speed);
+        this.backRight.setPower(speed);
+        this.frontLeft.setPower(-speed);
+        this.backLeft.setPower(-speed);
+        this.frontLeft.
+    }
+
+    private double getJoystickMovement(double input){
+        double tanh = Math.tanh(input);
+        return Math.pow(tanh, 3) * 2.1;
     }
 }

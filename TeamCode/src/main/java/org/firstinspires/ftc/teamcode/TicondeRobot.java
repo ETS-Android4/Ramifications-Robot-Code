@@ -23,11 +23,18 @@ public class GertrudeV2 extends Robot<MecanumDrive> {
         return 0;
     }
 
-    public void setForwardPower(double speed) {
-        speed = Math.min(Math.max(0, speed), 1);
+    public void setForwardMovement(double speed) {
+        speed = Math.min(Math.max(-1, speed), 1);
         this.backRight.setPower(speed);
         this.frontRight.setPower(speed);
         this.frontLeft.setPower(-speed);
         this.backLeft.setPower(-speed);
+    }
+
+    public void stopMovement() {
+        this.backRight.setPower(0);
+        this.frontRight.setPower(0);
+        this.frontLeft.setPower(0);
+        this.backLeft.setPower(0);
     }
 }

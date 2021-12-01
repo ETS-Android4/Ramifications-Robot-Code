@@ -30,14 +30,21 @@ public class TicondeRobot extends Robot<MecanumDrive> {
         return 0;
     }
 
-    public void stopMovement() {
-        this.backRight.setPower(0);
-        this.frontRight.setPower(0);
-        this.frontLeft.setPower(0);
-        this.backLeft.setPower(0);
+    private void setMovement(MotorPower power){
+        this.backRight.setPower(power.backRightPower);
+        this.frontRight.setPower(power.frontRightPower);
+        this.frontLeft.setPower(power.frontLeftPower);
+        this.backLeft.setPower(power.backLeftPower);
     }
 
-    public void move(double left_y, double left_x, double right_x){
+    private void setMovement(double fr, double fl, double br, double bl) {
+        this.backRight.setPower(br);
+        this.frontRight.setPower(fr);
+        this.frontLeft.setPower(fl);
+        this.backLeft.setPower(bl);
+    }
+
+    public MotorPower move(double left_y, double left_x, double right_x){
         double y = -left_y;
         double x = left_x;
         double rx = right_x;
@@ -48,10 +55,11 @@ public class TicondeRobot extends Robot<MecanumDrive> {
         double frontRightPower = SPEED_LIMITER * ((y - x - rx) / denominator);
         double backRightPower = SPEED_LIMITER * ((y + x - rx) / denominator);
 
-        this.frontLeft.setPower(frontLeftPower);
-        this.frontRight.setPower(frontRightPower);
-        this.backLeft.setPower(backLeftPower);
-        this.backRight.setPower(backRightPower);
+        MotorPower power = new MotorPower(frontRightPower, frontLeftPower, backRightPower, backLeftPower);
+        this.setMovement(power);
 
+        return power;
     }
+
+
 }

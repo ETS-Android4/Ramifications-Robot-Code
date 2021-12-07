@@ -12,9 +12,8 @@ public class MotorPower {
         this.backLeftPower = bl;
     }
 
-    // TODO
     @Override
     public String toString(){
-        return String.format("fl");
+        return String.format("|%-5.3f %5.3f|\n|%-5.3f %5.3f|", frontLeftPower, frontRightPower, backLeftPower, backRightPower);
     }
 }

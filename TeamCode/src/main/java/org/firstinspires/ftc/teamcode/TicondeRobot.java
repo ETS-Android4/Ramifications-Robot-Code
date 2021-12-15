@@ -3,14 +3,19 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import java.lang.Math;
+import static java.lang.Thread.sleep;
 import org.firstinspires.ftc.micdsrobotics.robotplus.hardware.MecanumDrive;
 import org.firstinspires.ftc.micdsrobotics.robotplus.hardware.Robot;
 
 // FYI The robot's name is TicondeRobot
 // https://gm0.org/en/latest/docs/software/mecanum-drive.html
 public class TicondeRobot extends Robot<MecanumDrive> {
-    public DcMotor backLeft, backRight, frontLeft, frontRight;
+    public DcMotor backLeft, backRight, frontLeft, frontRight, outtakeRaise, outtakeLower, spinner;
+    public Servo intakeRotate, outtakeRotate;
+
     private final static double SPEED_LIMITER = 0.65;
 
 
@@ -20,9 +25,17 @@ public class TicondeRobot extends Robot<MecanumDrive> {
         this.backRight = hardwareMap.get(DcMotor.class, "backright");
         this.frontRight = hardwareMap.get(DcMotor.class, "frontright");
         this.frontLeft = hardwareMap.get(DcMotor.class, "frontleft");
+
         // reverse the left motors
         this.backRight.setDirection(DcMotorSimple.Direction.REVERSE);
         this.frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        //intake/outtake
+        this.intakeRotate = hardwareMap.get(Servo.class, "intake");
+        this.outtakeRotate = hardwareMap.get(Servo.class, "outtake");
+        this.outtakeRaise = hardwareMap.get(DcMotor.class, "outtakeRaise");
+        this.spinner = hardwareMap.get(DcMotor.class, "spinnyWheel");
+        this.outtakeLower = hardwareMap.get(DcMotor.class, "outtakeLower");
     }
 
     @Override
@@ -59,6 +72,15 @@ public class TicondeRobot extends Robot<MecanumDrive> {
         this.setMovement(power);
 
         return power;
+    }
+
+    // sleep function
+    public static void HaltAndCatchFire(long milli) {
+        try {
+            sleep(milli);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 

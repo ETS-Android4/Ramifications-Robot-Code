@@ -18,7 +18,7 @@ public class TicondeRobot extends Robot<MecanumDrive> {
 
     private final static double SPEED_LIMITER = 0.65;
     public final static int ULTRA_PLANETARY_TICKS_PER_REV = 28;
-    public final static MotorPower STOP_ALL = new MotorPower(0, 0, 0, 0);
+    public final static MotorPower ALL_ZERO = new MotorPower(0, 0, 0, 0);
 
 
     @Override

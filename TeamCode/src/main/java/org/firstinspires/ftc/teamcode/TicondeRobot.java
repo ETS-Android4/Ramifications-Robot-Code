@@ -14,9 +14,11 @@ import org.firstinspires.ftc.micdsrobotics.robotplus.hardware.Robot;
 // https://gm0.org/en/latest/docs/software/mecanum-drive.html
 public class TicondeRobot extends Robot<MecanumDrive> {
     public DcMotor backLeft, backRight, frontLeft, frontRight, outtakeRaise, outtakeLower, spinner;
-    public Servo intakeRotate, outtakeRotate;
+    public Servo intakeRotate, outtakeRotate, intakeSpinnerLeft, intakeSpinnerRight;
 
     private final static double SPEED_LIMITER = 0.65;
+    public final static int ULTRA_PLANETARY_TICKS_PER_REV = 28;
+    public final static MotorPower STOP_ALL = new MotorPower(0, 0, 0, 0);
 
 
     @Override
@@ -30,12 +32,23 @@ public class TicondeRobot extends Robot<MecanumDrive> {
         this.backRight.setDirection(DcMotorSimple.Direction.REVERSE);
         this.frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        //intake/outtake
+        //tell the drivetrain to brake on zero power
+        this.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        //intake + outtake
         this.intakeRotate = hardwareMap.get(Servo.class, "intake");
         this.outtakeRotate = hardwareMap.get(Servo.class, "outtake");
         this.outtakeRaise = hardwareMap.get(DcMotor.class, "outtakeRaise");
         this.spinner = hardwareMap.get(DcMotor.class, "spinnyWheel");
         this.outtakeLower = hardwareMap.get(DcMotor.class, "outtakeLower");
+        this.intakeSpinnerLeft = hardwareMap.get(Servo.class, "left_spin_intake");
+        this.intakeSpinnerRight = hardwareMap.get(Servo.class, "right_spin_intake");
+
+        //reverse servos or motors that need to be reversed
+        this.spinner.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     @Override
@@ -43,14 +56,14 @@ public class TicondeRobot extends Robot<MecanumDrive> {
         return 0;
     }
 
-    private void setMovement(MotorPower power){
+    public void setMovement(MotorPower power){
         this.backRight.setPower(power.backRightPower);
         this.frontRight.setPower(power.frontRightPower);
         this.frontLeft.setPower(power.frontLeftPower);
         this.backLeft.setPower(power.backLeftPower);
     }
 
-    private void setMovement(double fr, double fl, double br, double bl) {
+    public void setMovement(double fr, double fl, double br, double bl) {
         this.backRight.setPower(br);
         this.frontRight.setPower(fr);
         this.frontLeft.setPower(fl);
@@ -81,6 +94,13 @@ public class TicondeRobot extends Robot<MecanumDrive> {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setDriveTrainMode(DcMotor.RunMode mode){
+        backRight.setMode(mode);
+        backLeft.setMode(mode);
+        frontRight.setMode(mode);
+        frontLeft.setMode(mode);
     }
 
 

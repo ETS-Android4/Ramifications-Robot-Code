@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 /**
  * Contains functionality that is only needed in autonomous mode.
  * This was done to keep the main TicondeRobot.java from becoming cluttered.
@@ -24,12 +26,17 @@ public class AutonomousTicondeRobot extends TicondeRobot{
         this.backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         this.frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        this.backRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     public void goForward() {
         // meaning the right wheels are reversed
         this.backRight.setDirection(DcMotorSimple.Direction.REVERSE);
         this.frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        this.backLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     private void setDriveTrainEncoderEndpoint(int pos) {
@@ -39,7 +46,7 @@ public class AutonomousTicondeRobot extends TicondeRobot{
         this.frontRight.setTargetPosition(pos);
     }
 
-    public void moveToPositionPID(int targetPos){
+    public void moveToPositionPID(int targetPos, Telemetry telemetry){
         // if targetPos is negative, we need to go backwards
         if (targetPos < 0) {
             targetPos = -targetPos;
@@ -56,17 +63,24 @@ public class AutonomousTicondeRobot extends TicondeRobot{
         while (this.isBusy()) {
             double error = targetPos - this.getAveragePosition();
             integral = integral + error;
-            power = error * KI + integral * KI;
+            power = error * KP + integral * KI;
 
             MotorPower motorPower = new MotorPower(power, power, power, power);
             this.setMovement(motorPower);
 
             System.out.println("HEY" + motorPower.toString());
+            telemetry.addLine(motorPower.toString());
+            telemetry.addLine(this.frontLeft.getCurrentPosition() + "");
+            telemetry.update();
             TicondeRobot.HaltAndCatchFire(dT);
         }
 
-        // now that we're done, set the robot to the default forward
+        // now that we're done, set the robot to the default forward and stop
         this.goForward();
+        this.setMovement(TicondeRobot.ALL_ZERO);
+        telemetry.addLine(TicondeRobot.ALL_ZERO.toString());
+        telemetry.addLine(this.frontLeft.getCurrentPosition() + "");
+        telemetry.update();
     }
 
     public boolean isBusy() {

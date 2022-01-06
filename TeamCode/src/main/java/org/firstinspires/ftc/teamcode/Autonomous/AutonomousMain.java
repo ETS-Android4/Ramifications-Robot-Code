@@ -2,14 +2,10 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.AutonomousTicondeRobot;
-import org.firstinspires.ftc.teamcode.AutonomousTicondeRobot;
-import org.firstinspires.ftc.teamcode.MotorPower;
-import org.firstinspires.ftc.teamcode.TicondeRobot;
 
-@Autonomous(name = "Autonomous Simple V1 1", group = "Basic")
+@Autonomous(name = "Autonomous Simple V1", group = "Basic")
 public class AutonomousMain extends LinearOpMode {
     private AutonomousTicondeRobot robot = new AutonomousTicondeRobot();
 
@@ -19,7 +15,7 @@ public class AutonomousMain extends LinearOpMode {
 
         waitForStart();
 
-        robot.moveToPositionPID(-28 * 5);
+        robot.moveToPositionPID(-28 * 5, telemetry);
 
         robot.runSpinner();
     }

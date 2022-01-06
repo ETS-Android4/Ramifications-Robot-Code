@@ -13,8 +13,8 @@ public class TeleOpMain extends OpMode {
     @Override
     public void init() {
         this.robot.initHardware(hardwareMap);
-        //robot.intakeRotate.setPosition(0);
-        //robot.outtakeRotate.setPosition(0);
+        robot.intakeRotate.setPosition(0.35);
+        robot.outtakeRotate.setPosition(0);
     }
 
     @Override
@@ -28,11 +28,10 @@ public class TeleOpMain extends OpMode {
         //intake
         if (gamepad1.x) {
 
-
-            if (robot.intakeRotate.getPosition() != 0) {
-                robot.intakeRotate.setPosition(0);
-            } else {
+            if (robot.intakeRotate.getPosition() == 0) {
                 robot.intakeRotate.setPosition(0.35);
+            } else if (robot.intakeRotate.getPosition() == 0.35) {
+                robot.intakeRotate.setPosition(0);
             }
         }
 
@@ -46,9 +45,9 @@ public class TeleOpMain extends OpMode {
         //outtake
         if (gamepad1.y) {
 
-            if (robot.outtakeRotate.getPosition() != -0.7) {
-                robot.outtakeRotate.setPosition(-0.7);
-            } else {
+            if (robot.outtakeRotate.getPosition() == 0) {
+                robot.outtakeRotate.setPosition(0.4);
+            } else if (robot.outtakeRotate.getPosition() == 0.4) {
                 robot.outtakeRotate.setPosition(0);
             }
 

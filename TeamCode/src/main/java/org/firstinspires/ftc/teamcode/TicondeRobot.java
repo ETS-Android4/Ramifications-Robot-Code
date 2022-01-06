@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -14,7 +15,8 @@ import org.firstinspires.ftc.micdsrobotics.robotplus.hardware.Robot;
 // https://gm0.org/en/latest/docs/software/mecanum-drive.html
 public class TicondeRobot extends Robot<MecanumDrive> {
     public DcMotor backLeft, backRight, frontLeft, frontRight, outtakeRaise, outtakeLower, spinner;
-    public Servo intakeRotate, outtakeRotate, intakeSpinnerLeft, intakeSpinnerRight;
+    public Servo intakeRotate, outtakeRotate;
+    public CRServo intakeSpinnerLeft, intakeSpinnerRight;
 
     private final static double SPEED_LIMITER = 0.65;
     public final static int ULTRA_PLANETARY_TICKS_PER_REV = 28;
@@ -44,8 +46,8 @@ public class TicondeRobot extends Robot<MecanumDrive> {
         this.outtakeRaise = hardwareMap.get(DcMotor.class, "outtakeRaise");
         this.spinner = hardwareMap.get(DcMotor.class, "spinnyWheel");
         this.outtakeLower = hardwareMap.get(DcMotor.class, "outtakeLower");
-        this.intakeSpinnerLeft = hardwareMap.get(Servo.class, "left_spin_intake");
-        this.intakeSpinnerRight = hardwareMap.get(Servo.class, "right_spin_intake");
+        this.intakeSpinnerLeft = hardwareMap.get(CRServo.class, "left_spin_intake");
+        this.intakeSpinnerRight = hardwareMap.get(CRServo.class, "right_spin_intake");
 
         //reverse servos or motors that need to be reversed
         this.spinner.setDirection(DcMotorSimple.Direction.REVERSE);

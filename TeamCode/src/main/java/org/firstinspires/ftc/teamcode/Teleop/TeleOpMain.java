@@ -14,8 +14,8 @@ public class TeleOpMain extends OpMode {
     @Override
     public void init() {
         this.robot.initHardware(hardwareMap);
-        robot.intakeRotate.setPosition(0);
-        robot.outtakeRotate.setPosition(0);
+        //robot.intakeRotate.setPosition(0);
+        //robot.outtakeRotate.setPosition(0);
     }
 
     @Override
@@ -34,6 +34,15 @@ public class TeleOpMain extends OpMode {
             }
             robot.intakeRotate.setPosition(0);
         }
+
+
+        //intake spinner
+        if (gamepad1.left_trigger > 0) {
+            robot.intakeSpinnerLeft.setPower(0.5);
+            robot.intakeSpinnerRight.setPower(0.5);
+
+        }
+
         //outtake
         if (gamepad1.y) {
             robot.outtakeRotate.setPosition(1);
@@ -42,6 +51,7 @@ public class TeleOpMain extends OpMode {
             }
             robot.outtakeRotate.setPosition(0);
         }
+        /*
         //Outtake up
         if (gamepad1.dpad_up || outtakeRaisePosition != 2) {
             robot.outtakeRaise.setPower(1);
@@ -61,6 +71,8 @@ public class TeleOpMain extends OpMode {
             robot.outtakeLower.setPower(0);
             outtakeRaisePosition --;
         }
+
+         */
         //Carousel wheel
         if (gamepad1.right_trigger>0) {
             robot.spinner.setPower(gamepad1.right_trigger);

@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.TicondeRobot;
 @TeleOp(name = "TeleOP Main V2", group = "Basic")
 public class TeleOpMain extends OpMode {
     private TicondeRobot robot = new TicondeRobot();
+    private boolean isIntakeSpinning, isIntakeSamePress = false;
 
 
     @Override
@@ -36,10 +37,21 @@ public class TeleOpMain extends OpMode {
         }
 
         //intake spinner
-        if ((gamepad1.left_trigger > 0) || (gamepad2.left_trigger > 0)) {
-            robot.intakeSpinnerLeft.setPower(0.5);
-            robot.intakeSpinnerRight.setPower(0.5);
+        if (gamepad1.left_trigger > 0 || gamepad2.left_trigger > 0) {
+            if (!isIntakeSamePress) {
+                isIntakeSpinning = !isIntakeSpinning;
+                isIntakeSamePress = true;
+            }
+        } else {
+            isIntakeSamePress = false;
+        }
 
+        if (isIntakeSpinning) {
+            robot.intakeSpinnerRight.setPower(1);
+            robot.intakeSpinnerLeft.setPower(-1);
+        } else {
+            robot.intakeSpinnerLeft.setPower(0);
+            robot.intakeSpinnerRight.setPower(0);
         }
 
         //outtake

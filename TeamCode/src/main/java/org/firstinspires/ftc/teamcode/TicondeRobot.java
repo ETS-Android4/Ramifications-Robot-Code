@@ -31,8 +31,8 @@ public class TicondeRobot extends Robot<MecanumDrive> {
         this.frontLeft = hardwareMap.get(DcMotor.class, "frontleft");
 
         // reverse the left motors
-        this.backRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //tell the drivetrain to brake on zero power
         this.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -52,7 +52,7 @@ public class TicondeRobot extends Robot<MecanumDrive> {
         //reverse servos or motors that need to be reversed
         this.spinner.setDirection(DcMotorSimple.Direction.REVERSE);
         this.intakeRotate.setDirection(Servo.Direction.REVERSE);
-//        this.outtakeRotate.setDirection(Servo.Direction.REVERSE);
+        this.outtakeRotate.setDirection(Servo.Direction.REVERSE);
     }
 
     public void setMovement(MotorPower power){

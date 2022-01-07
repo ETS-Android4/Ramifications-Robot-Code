@@ -16,7 +16,7 @@ public class TeleOpMain extends OpMode {
     private boolean isIntakeSpinning = false, isIntakeSamePress = false;
     private boolean isIntakeUp = false, isIntakeUpSamePress = false;
 
-    private boolean isOuttakeUp = false, isOuttakeUpSamePress = false;
+    private boolean isOuttakeUp = true, isOuttakeUpSamePress = true;
 
 
 
@@ -74,16 +74,15 @@ public class TeleOpMain extends OpMode {
             if (!isOuttakeUpSamePress) {
                 isOuttakeUp = !isOuttakeUp;
                 isOuttakeUpSamePress = true;
-            } else {
-                isOuttakeUpSamePress = false;
             }
-            robot.outtakeRotate.setPosition(0.5);
-//            if (robot.outtakeRotate.getPosition() == 0) {
-//                robot.outtakeRotate.setPosition(0.4);
-//            } else if (robot.outtakeRotate.getPosition() == 0.4) {
-//                robot.outtakeRotate.setPosition(0);
-//            }
+        }  else {
+            isOuttakeUpSamePress = false;
+        }
 
+        if (isOuttakeUp) {
+            robot.outtakeRotate.setPosition(0.5);
+        } else {
+            robot.outtakeRotate.setPosition(0);
         }
 
         //Outtake up

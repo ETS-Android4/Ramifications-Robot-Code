@@ -8,6 +8,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 /**
  * Contains functionality that is only needed in autonomous mode.
  * This was done to keep the main TicondeRobot.java from becoming cluttered.
+ *
+ * Created by Sam B.
+ * 1/7/2022
  */
 public class AutonomousTicondeRobot extends TicondeRobot{
     private final double KI = .00005;

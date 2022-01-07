@@ -51,11 +51,8 @@ public class TicondeRobot extends Robot<MecanumDrive> {
 
         //reverse servos or motors that need to be reversed
         this.spinner.setDirection(DcMotorSimple.Direction.REVERSE);
-    }
-
-    @Override
-    public double voltageToDistance(double voltage) {
-        return 0;
+        this.intakeRotate.setDirection(Servo.Direction.REVERSE);
+//        this.outtakeRotate.setDirection(Servo.Direction.REVERSE);
     }
 
     public void setMovement(MotorPower power){
@@ -106,4 +103,8 @@ public class TicondeRobot extends Robot<MecanumDrive> {
     }
 
 
+    @Override
+    public double voltageToDistance(double voltage) {
+        return 0;
+    }
 }

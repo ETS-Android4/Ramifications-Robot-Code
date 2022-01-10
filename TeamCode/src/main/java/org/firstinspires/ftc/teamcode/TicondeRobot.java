@@ -31,8 +31,8 @@ public class TicondeRobot extends Robot<MecanumDrive> {
         this.frontLeft = hardwareMap.get(DcMotor.class, "frontleft");
 
         // reverse the left motors
-        this.backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //tell the drivetrain to brake on zero power
         this.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -108,3 +108,8 @@ public class TicondeRobot extends Robot<MecanumDrive> {
         return 0;
     }
 }
+/**
+ * Go over depot
+ * try removing 3:1 gearbox
+ * create one push intake-outake
+ * */

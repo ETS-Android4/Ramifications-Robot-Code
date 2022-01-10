@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.TicondeRobot;
 public class TeleOpMain extends OpMode {
     private TicondeRobot robot = new TicondeRobot();
     private boolean isIntakeSpinning = false, isIntakeSamePress = false;
-    private boolean isIntakeUp = false, isIntakeUpSamePress = false;
+    private boolean isIntakeUp = true, isIntakeUpSamePress = true;
 
     private boolean isOuttakeUp = true, isOuttakeUpSamePress = true;
 
@@ -23,8 +23,6 @@ public class TeleOpMain extends OpMode {
     @Override
     public void init() {
         this.robot.initHardware(hardwareMap);
-        robot.intakeRotate.setPosition(0.5);
-//        robot.outtakeRotate.setPosition(1);
     }
 
     @Override
@@ -36,7 +34,7 @@ public class TeleOpMain extends OpMode {
         telemetry.addLine(power.toString());
 
         //intake
-        if (gamepad1.x) {
+        if (gamepad1.x || gamepad2.x) {
             if (!isIntakeUpSamePress) {
                 isIntakeUp = !isIntakeUp;
             }
@@ -45,7 +43,7 @@ public class TeleOpMain extends OpMode {
             isIntakeUpSamePress = false;
         }
 
-        if (!isIntakeUp ) {
+        if (!isIntakeUp) {
             robot.intakeRotate.setPosition(0.5);
         } else {
             robot.intakeRotate.setPosition(1);
@@ -70,7 +68,7 @@ public class TeleOpMain extends OpMode {
         }
 
         //outtake
-        if (gamepad1.y) {
+        if (gamepad1.y || gamepad2.y) {
             if (!isOuttakeUpSamePress) {
                 isOuttakeUp = !isOuttakeUp;
                 isOuttakeUpSamePress = true;
@@ -86,9 +84,9 @@ public class TeleOpMain extends OpMode {
         }
 
         //Outtake up
-        if (gamepad1.dpad_up) {
+        if (gamepad1.dpad_up || gamepad2.dpad_up) {
 
-            while (gamepad1.dpad_up) {
+            while (gamepad1.dpad_up || gamepad2.dpad_up) {
                 robot.outtakeRaise.setPower(1);
                 robot.outtakeLower.setPower(0);
             }
@@ -99,8 +97,8 @@ public class TeleOpMain extends OpMode {
 
         }
         //Outtake down
-        if (gamepad1.dpad_down) {
-            while (gamepad1.dpad_down) {
+        if (gamepad1.dpad_down || gamepad2.dpad_down) {
+            while (gamepad1.dpad_down || gamepad2.dpad_down) {
                 robot.outtakeRaise.setPower(-1);
                 robot.outtakeLower.setPower(1);
             }
@@ -112,8 +110,12 @@ public class TeleOpMain extends OpMode {
 
 
         //Carousel wheel
-        if (gamepad1.right_trigger>0) {
-            robot.spinner.setPower(gamepad1.right_trigger);
+        if (gamepad1.right_trigger > 0 || gamepad2.right_trigger > 0) {
+            robot.spinner.setPower(1);
+        } else if (gamepad1.right_bumper || gamepad2.right_bumper) {
+            robot.spinner.setPower(-1);
+        } else {
+            robot.spinner.setPower(0);
         }
     }
 

@@ -5,24 +5,48 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.MotorPower;
 import org.firstinspires.ftc.teamcode.TicondeRobot;
+import org.firstinspires.ftc.teamcode.Toggler;
 
 /**
  * Our 2021-2022 Season TeleOp Code. See TicondeRobot.java for more.
- *
  */
 @TeleOp(name = "TeleOP Main V2", group = "Basic")
 public class TeleOpMain extends OpMode {
     private TicondeRobot robot = new TicondeRobot();
-    private boolean isIntakeSpinning = false, isIntakeSamePress = false;
-    private boolean isIntakeUp = true, isIntakeUpSamePress = true;
-
-    private boolean isOuttakeUp = true, isOuttakeUpSamePress = true;
-
-
+    private Toggler toggleIntake, toggleOuttake, toggleIntakeSpinner;
 
     @Override
     public void init() {
         this.robot.initHardware(hardwareMap);
+
+        //intake spinner
+        toggleIntakeSpinner = new Toggler(false, (isOn) -> {
+            if (isOn) {
+                robot.intakeSpinnerRight.setPower(1);
+                robot.intakeSpinnerLeft.setPower(-1);
+            } else {
+                robot.intakeSpinnerLeft.setPower(0);
+                robot.intakeSpinnerRight.setPower(0);
+            }
+        });
+
+        //intake
+        toggleIntake = new Toggler(false, (isOn) -> {
+            if (!isOn) {
+                robot.intakeRotate.setPosition(0.5);
+            } else {
+                robot.intakeRotate.setPosition(1);
+            }
+        });
+
+        //outtake
+        toggleOuttake = new Toggler(true, (isOn) -> {
+            if (isOn) {
+                robot.outtakeRotate.setPosition(0.5);
+            } else {
+                robot.outtakeRotate.setPosition(0);
+            }
+        });
     }
 
     @Override
@@ -33,55 +57,11 @@ public class TeleOpMain extends OpMode {
         MotorPower power = robot.move(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
         telemetry.addLine(power.toString());
 
-        //intake
-        if (gamepad1.x || gamepad2.x) {
-            if (!isIntakeUpSamePress) {
-                isIntakeUp = !isIntakeUp;
-            }
-            isIntakeUpSamePress = true;
-        } else {
-            isIntakeUpSamePress = false;
-        }
+        toggleIntake.checkAndRun(gamepad1.x || gamepad2.x);
 
-        if (!isIntakeUp) {
-            robot.intakeRotate.setPosition(0.5);
-        } else {
-            robot.intakeRotate.setPosition(1);
-        }
+        toggleIntakeSpinner.checkAndRun(gamepad1.left_trigger > 0 || gamepad2.left_trigger > 0);
 
-        //intake spinner
-        if (gamepad1.left_trigger > 0 || gamepad2.left_trigger > 0) {
-            if (!isIntakeSamePress) {
-                isIntakeSpinning = !isIntakeSpinning;
-                isIntakeSamePress = true;
-            }
-        } else {
-            isIntakeSamePress = false;
-        }
-
-        if (isIntakeSpinning) {
-            robot.intakeSpinnerRight.setPower(1);
-            robot.intakeSpinnerLeft.setPower(-1);
-        } else {
-            robot.intakeSpinnerLeft.setPower(0);
-            robot.intakeSpinnerRight.setPower(0);
-        }
-
-        //outtake
-        if (gamepad1.y || gamepad2.y) {
-            if (!isOuttakeUpSamePress) {
-                isOuttakeUp = !isOuttakeUp;
-                isOuttakeUpSamePress = true;
-            }
-        }  else {
-            isOuttakeUpSamePress = false;
-        }
-
-        if (isOuttakeUp) {
-            robot.outtakeRotate.setPosition(0.5);
-        } else {
-            robot.outtakeRotate.setPosition(0);
-        }
+        toggleOuttake.checkAndRun(gamepad1.y || gamepad2.y);
 
         //Outtake up
         if (gamepad1.dpad_up || gamepad2.dpad_up) {

@@ -13,8 +13,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * 1/7/2022
  */
 public class AutonomousTicondeRobot extends TicondeRobot{
-    private final double KI = .000005;
-    private final double KP = .006;
+    private final double KI = 0.000005;
+    private final double KP = 0.001;
+    private final double KD = 0.1;
     private final int dT = 15; // in milliseconds
 
 
@@ -60,18 +61,18 @@ public class AutonomousTicondeRobot extends TicondeRobot{
         this.setDriveTrainEncoderEndpoint(targetPos);
         this.setDriveTrainMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        double power = 1;
-        double integral = 0;
+        double power, integral = 0, prevError = 0, derivative = 0, error = 0;
 
         while (this.isBusy()) {
-            double error = targetPos - this.getAveragePosition();
+            error = targetPos - this.getAveragePosition();
             integral = integral + error;
-            power = error * KP + integral * KI;
+            derivative = error - prevError;
+            prevError = error;
+            power = error * KP + integral * KI + derivative * KD;
 
             MotorPower motorPower = new MotorPower(power, power, power, power);
             this.setMovement(motorPower);
 
-            System.out.println("HEY" + motorPower.toString());
             telemetry.addLine(motorPower.toString());
             telemetry.addLine(this.frontLeft.getCurrentPosition() + "");
             telemetry.update();

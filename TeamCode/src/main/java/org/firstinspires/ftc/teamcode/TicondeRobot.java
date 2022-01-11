@@ -110,6 +110,5 @@ public class TicondeRobot extends Robot<MecanumDrive> {
 }
 /**
  * Go over depot
- * try removing 3:1 gearbox
  * create one push intake-outake
  * */

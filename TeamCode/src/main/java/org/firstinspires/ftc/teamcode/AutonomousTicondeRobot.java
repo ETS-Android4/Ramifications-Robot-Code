@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * 1/7/2022
  */
 public class AutonomousTicondeRobot extends TicondeRobot{
-    private final double KI = .00005;
+    private final double KI = .000005;
     private final double KP = .006;
     private final int dT = 15; // in milliseconds
 

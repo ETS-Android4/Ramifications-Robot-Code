@@ -1,0 +1,24 @@
+Mapping of Expansion Hub Ports to Phones
+
+# Expansion Hub 1
+
+## Motors
+0: Robotics Core Hex Motor - outtakeRaise
+1: Robotics Core Hex Motor - outtakeLower
+2: Robotics Core Hex Motor - spinnyWheel
+
+## Servos
+3: CRServo - right_spin_intake
+5: Servo - outtake
+
+# Expansion Hub 2
+
+## Motors
+0: Rev Robotics UltraPlanetary HD Hex Motor - backleft
+1: Rev Robotics UltraPlanetary HD Hex Motor - backright
+2: Rev Robotics UltraPlanetary HD Hex Motor - frontleft
+3: Rev Robotics UltraPlanetary HD Hex Motor - frontright
+
+## Servos
+0: Servo - intake
+3: CRServo - left_spin_intake

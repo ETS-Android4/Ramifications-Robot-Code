@@ -14,6 +14,7 @@ public class Toggler {
         if (condition) {
             if (!isSamePress) {
                 this.on = !this.on;
+                isSamePress = true;
             }
         } else {
             isSamePress = false;

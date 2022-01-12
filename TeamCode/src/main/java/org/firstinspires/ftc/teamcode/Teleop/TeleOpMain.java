@@ -31,7 +31,7 @@ public class TeleOpMain extends OpMode {
         });
 
         //intake
-        toggleIntake = new Toggler(false, (isOn) -> {
+        toggleIntake = new Toggler(true, (isOn) -> {
             if (!isOn) {
                 robot.intakeRotate.setPosition(0.5);
             } else {
@@ -63,6 +63,7 @@ public class TeleOpMain extends OpMode {
 
         toggleOuttake.checkAndRun(gamepad1.y || gamepad2.y);
 
+
         //Outtake up
         if (gamepad1.dpad_up || gamepad2.dpad_up) {
 
@@ -91,9 +92,9 @@ public class TeleOpMain extends OpMode {
 
         //Carousel wheel
         if (gamepad1.right_trigger > 0 || gamepad2.right_trigger > 0) {
-            robot.spinner.setPower(1);
+            robot.spinner.setPower(0.5);
         } else if (gamepad1.right_bumper || gamepad2.right_bumper) {
-            robot.spinner.setPower(-1);
+            robot.spinner.setPower(-0.5);
         } else {
             robot.spinner.setPower(0);
         }

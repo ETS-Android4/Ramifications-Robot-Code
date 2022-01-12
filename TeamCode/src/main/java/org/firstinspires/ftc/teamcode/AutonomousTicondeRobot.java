@@ -13,15 +13,15 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * 1/7/2022
  */
 public class AutonomousTicondeRobot extends TicondeRobot{
-    private final double KI = 0.000005;
-    private final double KP = 0.001;
-    private final double KD = 0.1;
+    private final double KI = 10e-6;
+    private final double KP = 0.0005;
+    private final double KD = 0.00125;
     private final int dT = 15; // in milliseconds
 
 
     public void runSpinner() {
-        this.spinner.setPower(1);
-        TicondeRobot.HaltAndCatchFire(6 * 1000);
+        this.spinner.setPower(0.33);
+        TicondeRobot.HaltAndCatchFire((int) 4.5 * 1000);
         this.spinner.setPower(0);
     }
 
@@ -50,7 +50,7 @@ public class AutonomousTicondeRobot extends TicondeRobot{
         this.frontRight.setTargetPosition(pos);
     }
 
-    public void moveToPositionPID(int targetPos, Telemetry telemetry){
+    public void moveToPositionPID(int targetPos, Telemetry telemetry, ShouldContinue shouldContinue){
         // if targetPos is negative, we need to go backwards
         if (targetPos < 0) {
             targetPos = -targetPos;
@@ -63,27 +63,33 @@ public class AutonomousTicondeRobot extends TicondeRobot{
 
         double power, integral = 0, prevError = 0, derivative = 0, error = 0;
 
-        while (this.isBusy()) {
+        while (this.isBusy() && shouldContinue.shouldContinue()) {
             error = targetPos - this.getAveragePosition();
-            integral = integral + error;
+            integral =+ error;
             derivative = error - prevError;
-            prevError = error;
             power = error * KP + integral * KI + derivative * KD;
+            String data = error * KP + " " + integral * KI + " " + derivative * KD;
+            telemetry.addLine(data);
+            System.out.println("HEY " + data);
+            prevError = error;
 
             MotorPower motorPower = new MotorPower(power, power, power, power);
             this.setMovement(motorPower);
 
             telemetry.addLine(motorPower.toString());
-            telemetry.addLine(this.frontLeft.getCurrentPosition() + "");
             telemetry.update();
             TicondeRobot.HaltAndCatchFire(dT);
+
+            if ((targetPos - this.getAveragePosition()) / targetPos < .01 && derivative == 0.0) {
+                break;
+            }
         }
 
         // now that we're done, set the robot to the default forward and stop
         this.goForward();
         this.setMovement(TicondeRobot.ALL_ZERO);
         telemetry.addLine(TicondeRobot.ALL_ZERO.toString());
-        telemetry.addLine(this.frontLeft.getCurrentPosition() + "");
+        telemetry.addLine(this.getAveragePosition() + "");
         telemetry.update();
     }
 
@@ -98,5 +104,8 @@ public class AutonomousTicondeRobot extends TicondeRobot{
         return total / 4.0;
     }
 
+    public interface ShouldContinue {
+        public boolean shouldContinue();
+    }
 
 }

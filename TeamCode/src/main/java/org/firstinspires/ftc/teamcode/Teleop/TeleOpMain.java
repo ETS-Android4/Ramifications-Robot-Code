@@ -60,7 +60,7 @@ public class TeleOpMain extends OpMode {
     public void loop() {
         telemetry.update(); // Telemetry displayed at the bottom of the FTC app must be updated every loop
 
-        // these two lines handle omnidirectional movement and report the motor values to telemetry
+        // these two lines handle omnidirectional~ movement and report the motor values to telemetry
         MotorPower power = robot.move(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
         telemetry.addLine(power.toString());
 

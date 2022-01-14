@@ -20,7 +20,7 @@ public class AutonomousTicondeRobot extends TicondeRobot{
 
 
     public void runSpinner() {
-        this.spinner.setPower(0.33);
+        this.spinner.setPower(0.2);
         TicondeRobot.HaltAndCatchFire((int) 4.5 * 1000);
         this.spinner.setPower(0);
     }

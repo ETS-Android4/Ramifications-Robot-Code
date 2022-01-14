@@ -15,7 +15,7 @@ public class TeleOpMain extends OpMode {
     private TicondeRobot robot = new TicondeRobot();
     private Toggler toggleIntake, toggleOuttake, toggleIntakeSpinner;
 
-    private boolean isOuttakeMoving;
+    private boolean wasOuttakeMoving = false;
 
     @Override
     public void init() {
@@ -72,22 +72,24 @@ public class TeleOpMain extends OpMode {
 
         //Outtake up
         if (gamepad1.dpad_up || gamepad2.dpad_up) {
-            while (gamepad1.dpad_up || gamepad2.dpad_up) {
-                robot.outtakeRaise.setPower(1);
-                robot.outtakeLower.setPower(0);
-            }
+            wasOuttakeMoving = true;
+            robot.outtakeRaise.setPower(1);
+            robot.outtakeLower.setPower(0);
+        } else if (wasOuttakeMoving) {
+            wasOuttakeMoving = false;
             robot.outtakeRaise.setPower(0);
             robot.outtakeLower.setPower(1);
-            robot.HaltAndCatchFire(1);
+            robot.HaltAndCatchFire(50);
             robot.outtakeLower.setPower(0);
-
         }
-        //Outtake down
-        if (gamepad1.dpad_down || gamepad2.dpad_down) {
-            while (gamepad1.dpad_down || gamepad2.dpad_down) {
-                robot.outtakeRaise.setPower(-1);
-                robot.outtakeLower.setPower(1);
-            }
+
+        //Outtake down - make sure you don't press up as well
+        if (gamepad1.dpad_down || gamepad2.dpad_down && !(gamepad1.dpad_up || gamepad2.dpad_up)) {
+            wasOuttakeMoving = true;
+            robot.outtakeRaise.setPower(-1);
+            robot.outtakeLower.setPower(1);
+        } else if (wasOuttakeMoving) {
+            wasOuttakeMoving = false;
             robot.outtakeLower.setPower(0);
             robot.outtakeRaise.setPower(1);
             robot.HaltAndCatchFire(50);

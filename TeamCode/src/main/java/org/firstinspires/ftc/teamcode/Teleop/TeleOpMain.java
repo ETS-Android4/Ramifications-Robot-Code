@@ -15,6 +15,8 @@ public class TeleOpMain extends OpMode {
     private TicondeRobot robot = new TicondeRobot();
     private Toggler toggleIntake, toggleOuttake, toggleIntakeSpinner;
 
+    private boolean isOuttakeMoving;
+
     @Override
     public void init() {
         this.robot.initHardware(hardwareMap);
@@ -24,6 +26,9 @@ public class TeleOpMain extends OpMode {
             if (isOn) {
                 robot.intakeSpinnerRight.setPower(1);
                 robot.intakeSpinnerLeft.setPower(-1);
+            } else if (gamepad1.left_bumper || gamepad2.left_bumper) {
+                robot.intakeSpinnerRight.setPower(-1);
+                robot.intakeSpinnerLeft.setPower(1);
             } else {
                 robot.intakeSpinnerLeft.setPower(0);
                 robot.intakeSpinnerRight.setPower(0);
@@ -35,7 +40,9 @@ public class TeleOpMain extends OpMode {
             if (!isOn) {
                 robot.intakeRotate.setPosition(0.5);
             } else {
-                robot.intakeRotate.setPosition(1);
+                if (robot.outtakeRotate.getPosition() == 0.5) {
+                    robot.intakeRotate.setPosition(1);
+                }
             }
         });
 
@@ -63,10 +70,8 @@ public class TeleOpMain extends OpMode {
 
         toggleOuttake.checkAndRun(gamepad1.y || gamepad2.y);
 
-
         //Outtake up
         if (gamepad1.dpad_up || gamepad2.dpad_up) {
-
             while (gamepad1.dpad_up || gamepad2.dpad_up) {
                 robot.outtakeRaise.setPower(1);
                 robot.outtakeLower.setPower(0);
@@ -92,9 +97,9 @@ public class TeleOpMain extends OpMode {
 
         //Carousel wheel
         if (gamepad1.right_trigger > 0 || gamepad2.right_trigger > 0) {
-            robot.spinner.setPower(0.5);
+            robot.spinner.setPower(0.25);
         } else if (gamepad1.right_bumper || gamepad2.right_bumper) {
-            robot.spinner.setPower(-0.5);
+            robot.spinner.setPower(-0.25);
         } else {
             robot.spinner.setPower(0);
         }

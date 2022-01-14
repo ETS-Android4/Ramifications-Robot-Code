@@ -75,10 +75,10 @@ public class TicondeRobot extends Robot<MecanumDrive> {
         double rx = right_x;
 
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double frontLeftPower = SPEED_LIMITER * ((y + x + rx) / denominator);
-        double backLeftPower = SPEED_LIMITER * ((y - x + rx) / denominator);
-        double frontRightPower = SPEED_LIMITER * ((y - x - rx) / denominator);
-        double backRightPower = SPEED_LIMITER * ((y + x - rx) / denominator);
+        double frontLeftPower = SPEED_LIMITER * ((y + x - rx) / denominator);
+        double backLeftPower = SPEED_LIMITER * ((y - x - rx) / denominator);
+        double frontRightPower = SPEED_LIMITER * ((y - x + rx) / denominator);
+        double backRightPower = SPEED_LIMITER * ((y + x + rx) / denominator);
 
         MotorPower power = new MotorPower(frontRightPower, frontLeftPower, backRightPower, backLeftPower);
         this.setMovement(power);
@@ -106,6 +106,14 @@ public class TicondeRobot extends Robot<MecanumDrive> {
     @Override
     public double voltageToDistance(double voltage) {
         return 0;
+    }
+
+    private double exponentialPowerConversion(double speed) {
+        double newSpeed = 0.0;
+
+        newSpeed = Math.pow(25, speed - 1) - .03;
+
+        return Math.min(1, Math.max(-1, newSpeed)); // cap to -1 to 1;
     }
 }
 /**

@@ -20,12 +20,12 @@ public class AutonomousTicondeRobot extends TicondeRobot{
 
 
     public void runSpinner() {
-        this.spinner.setPower(0.2);
+        this.spinner.setPower(TicondeRobot.CAROUSEL_SPEED);
         TicondeRobot.HaltAndCatchFire((int) 4.5 * 1000);
         this.spinner.setPower(0);
     }
 
-    public void goBackward() {
+    public void goForward() {
         // meaning the left wheels are reversed
         this.backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         this.frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -34,7 +34,7 @@ public class AutonomousTicondeRobot extends TicondeRobot{
         this.frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
-    public void goForward() {
+    public void goBackward() {
         // meaning the right wheels are reversed
         this.backRight.setDirection(DcMotorSimple.Direction.REVERSE);
         this.frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -70,7 +70,6 @@ public class AutonomousTicondeRobot extends TicondeRobot{
             power = error * KP + integral * KI + derivative * KD;
             String data = error * KP + " " + integral * KI + " " + derivative * KD;
             telemetry.addLine(data);
-            System.out.println("HEY " + data);
             prevError = error;
 
             MotorPower motorPower = new MotorPower(power, power, power, power);
@@ -87,9 +86,7 @@ public class AutonomousTicondeRobot extends TicondeRobot{
 
         // now that we're done, set the robot to the default forward and stop
         this.goForward();
-        this.setMovement(TicondeRobot.ALL_ZERO);
-        telemetry.addLine(TicondeRobot.ALL_ZERO.toString());
-        telemetry.addLine(this.getAveragePosition() + "");
+        this.setMovement(0,0,0,0);
         telemetry.update();
     }
 

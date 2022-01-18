@@ -14,14 +14,13 @@ import org.firstinspires.ftc.micdsrobotics.robotplus.hardware.Robot;
 // FYI The robot's name is TicondeRobot
 // https://gm0.org/en/latest/docs/software/mecanum-drive.html
 public class TicondeRobot extends Robot<MecanumDrive> {
-    public DcMotor backLeft, backRight, frontLeft, frontRight, outtakeRaise, outtakeLower, spinner;
+    public DcMotor backLeft, backRight, frontLeft, frontRight, outtakeRaise, spinner;
     public Servo intakeRotate, outtakeRotate;
     public CRServo intakeSpinnerLeft, intakeSpinnerRight;
 
     private final static double SPEED_LIMITER = 1;
     public final static int ULTRA_PLANETARY_TICKS_PER_REV = 28;
-    public final static MotorPower ALL_ZERO = new MotorPower(0, 0, 0, 0);
-
+    public final static double CAROUSEL_SPEED = 0.22;
 
     @Override
     public void initHardware(HardwareMap hardwareMap) {
@@ -45,7 +44,6 @@ public class TicondeRobot extends Robot<MecanumDrive> {
         this.outtakeRotate = hardwareMap.get(Servo.class, "outtake");
         this.outtakeRaise = hardwareMap.get(DcMotor.class, "outtakeRaise");
         this.spinner = hardwareMap.get(DcMotor.class, "spinnyWheel");
-        this.outtakeLower = hardwareMap.get(DcMotor.class, "outtakeLower");
         this.intakeSpinnerLeft = hardwareMap.get(CRServo.class, "left_spin_intake");
         this.intakeSpinnerRight = hardwareMap.get(CRServo.class, "right_spin_intake");
 
@@ -116,7 +114,3 @@ public class TicondeRobot extends Robot<MecanumDrive> {
         return Math.min(1, Math.max(-1, newSpeed)); // cap to -1 to 1;
     }
 }
-/**
- * Go over depot
- * create one push intake-outake
- * */

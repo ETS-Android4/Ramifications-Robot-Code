@@ -83,7 +83,6 @@ public class TeleOpMain extends OpMode {
         if (gamepad1.dpad_down || gamepad2.dpad_down && !(gamepad1.dpad_up || gamepad2.dpad_up)) {
             wasOuttakeMoving = true;
             robot.outtakeRaise.setPower(-1);
-
         } else if (wasOuttakeMoving) {
             wasOuttakeMoving = false;
             robot.outtakeRaise.setPower(0);
@@ -92,9 +91,9 @@ public class TeleOpMain extends OpMode {
 
         //Carousel wheel
         if (gamepad1.right_trigger > 0 || gamepad2.right_trigger > 0) {
-            robot.spinner.setPower(0.25);
+            robot.spinner.setPower(TicondeRobot.CAROUSEL_SPEED);
         } else if (gamepad1.right_bumper || gamepad2.right_bumper) {
-            robot.spinner.setPower(-0.25);
+            robot.spinner.setPower(-TicondeRobot.CAROUSEL_SPEED);
         } else {
             robot.spinner.setPower(0);
         }

@@ -4,7 +4,6 @@ Mapping of Expansion Hub Ports to Phones
 
 ## Motors
 0: Robotics Core Hex Motor - outtakeRaise
-1: Robotics Core Hex Motor - outtakeLower
 2: Robotics Core Hex Motor - spinnyWheel
 
 ## Servos

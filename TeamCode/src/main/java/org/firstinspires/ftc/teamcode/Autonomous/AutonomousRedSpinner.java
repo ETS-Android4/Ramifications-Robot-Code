@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.AutonomousTicondeRobot;
 import org.firstinspires.ftc.teamcode.TicondeRobot;
 
-@Autonomous(name = "Autonomous Blue Spinner", group = "Blue")
-public class AutonomousBlueSpinner extends LinearOpMode {
+@Autonomous(name = "Autonomous Red Spinner", group = "Blue")
+public class AutonomousRedSpinner extends LinearOpMode {
     private AutonomousTicondeRobot robot = new AutonomousTicondeRobot();
 
     @Override
@@ -17,12 +17,23 @@ public class AutonomousBlueSpinner extends LinearOpMode {
 
         waitForStart();
 
-        robot.moveToPositionPID(70, telemetry, () -> opModeIsActive());
+        robot.moveToPositionPID(75, telemetry, () -> opModeIsActive());
         robot.setDriveTrainMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.setMovement(-.05,-.05,-.05,-.05);
+
+        robot.move(0, 0, 0.5);
+        TicondeRobot.HaltAndCatchFire(550);
+        robot.move(0,0,0);
+        TicondeRobot.HaltAndCatchFire(50);
+        robot.runSpinner(true);
+        robot.setMovement(-.25,-0.25,-0.25,-0.25);
         robot.runSpinner(true);
         robot.setMovement(0,0,0,0);
-        robot.runSpinner(true);
+
+
+//        robot.setMovement(-.016,-.016,-.016,-.016);
+//        robot.runSpinner();
+//        robot.setMovement(0,0,0,0);
+//        robot.runSpinner();
 
     }
 }

@@ -15,7 +15,9 @@ public class TeleOpMain extends OpMode {
     private TicondeRobot robot = new TicondeRobot();
     private Toggler toggleIntake, toggleOuttake, toggleIntakeSpinner;
 
-    private boolean wasOuttakeMoving = false;
+    private boolean isOuttakeRaised = false;
+
+    private boolean isOneClickDone = true;
 
     @Override
     public void init() {
@@ -37,19 +39,19 @@ public class TeleOpMain extends OpMode {
 
         //intake
         toggleIntake = new Toggler(true, (isOn) -> {
-            if (!isOn) {
-                robot.intakeRotate.setPosition(0.5);
-            } else {
-                if (robot.outtakeRotate.getPosition() == 0.5) {
+            if (isOn) {
+                if (robot.outtakeRotate.getPosition() == 0.6) {
                     robot.intakeRotate.setPosition(1);
                 }
+            } else {
+                robot.intakeRotate.setPosition(0.5);
             }
         });
 
         //outtake
         toggleOuttake = new Toggler(true, (isOn) -> {
             if (isOn) {
-                robot.outtakeRotate.setPosition(0.5);
+                robot.outtakeRotate.setPosition(0.6);
             } else {
                 robot.outtakeRotate.setPosition(0);
             }
@@ -70,21 +72,14 @@ public class TeleOpMain extends OpMode {
 
         toggleOuttake.checkAndRun(gamepad1.y || gamepad2.y);
 
-        //Outtake up
+        //Outtake up - or down
         if (gamepad1.dpad_up || gamepad2.dpad_up) {
-            wasOuttakeMoving = true;
             robot.outtakeRaise.setPower(1);
-        } else if (wasOuttakeMoving) {
-            wasOuttakeMoving = false;
-            robot.outtakeRaise.setPower(0);
-        }
-
-        //Outtake down - make sure you don't press up as well
-        if (gamepad1.dpad_down || gamepad2.dpad_down && !(gamepad1.dpad_up || gamepad2.dpad_up)) {
-            wasOuttakeMoving = true;
+            isOuttakeRaised = true;
+        } else if (gamepad1.dpad_down || gamepad2.dpad_down) {
             robot.outtakeRaise.setPower(-1);
-        } else if (wasOuttakeMoving) {
-            wasOuttakeMoving = false;
+            isOuttakeRaised = false;
+        } else if (isOneClickDone) {
             robot.outtakeRaise.setPower(0);
         }
 
@@ -97,6 +92,43 @@ public class TeleOpMain extends OpMode {
         } else {
             robot.spinner.setPower(0);
         }
+
+        // One click down
+        // Only do outtake because intake might make it harder to move
+        if ((gamepad1.b || gamepad2.b) && !toggleOuttake.on && isOuttakeRaised){
+            robot.outtakeRaise.setPower(-1);
+            toggleOuttake.checkAndRun(true);
+            isOneClickDone = false;
+            new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        robot.outtakeRaise.setPower(0);
+                        isOneClickDone = true;
+                        isOuttakeRaised = false;
+                    }
+                }, 725
+            );
+        }
+
+        //One click up - outtake must be down and ready for intake, intake must be down
+//        if ((gamepad1.a || gamepad2.a) && toggleOuttake.on && !isOuttakeRaised && !toggleIntake.on){
+//            toggleIntake.checkAndRun(true);
+//            TicondeRobot.HaltAndCatchFire(720);
+//            robot.outtakeRaise.setPower(1);
+//            isOneClickDone = false;
+//            new java.util.Timer().schedule(
+//                    new java.util.TimerTask() {
+//                        @Override
+//                        public void run() {
+//                            robot.outtakeRaise.setPower(0);
+//                            isOneClickDone = true;
+//                            toggleOuttake.checkAndRun(true);
+//                            isOuttakeRaised = true;
+//                        }
+//                    }, 925
+//            );
+//        }
     }
 
 }

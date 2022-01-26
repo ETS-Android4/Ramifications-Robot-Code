@@ -14,14 +14,18 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  */
 public class AutonomousTicondeRobot extends TicondeRobot{
     private final double KI = 10e-6;
-    private final double KP = 0.0005;
+    private final double KP = 0.00075;
     private final double KD = 0.00125;
     private final int dT = 15; // in milliseconds
 
 
-    public void runSpinner() {
-        this.spinner.setPower(TicondeRobot.CAROUSEL_SPEED);
-        TicondeRobot.HaltAndCatchFire((int) 4.5 * 1000);
+    public void runSpinner(boolean isBlue) {
+        if (isBlue) {
+            this.spinner.setPower(TicondeRobot.CAROUSEL_SPEED);
+        } else {
+            this.spinner.setPower(-TicondeRobot.CAROUSEL_SPEED);
+        }
+        TicondeRobot.HaltAndCatchFire((int) 5.5 * 1000);
         this.spinner.setPower(0);
     }
 

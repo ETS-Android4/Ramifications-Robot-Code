@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.AutonomousTicondeRobot;
 
-@Autonomous(name = "Autonomous Red Depot V1", group = "Red")
+@Autonomous(name = "Autonomous Red Depot", group = "Red")
 public class AutonomousRedDepot extends LinearOpMode {
     private AutonomousTicondeRobot robot = new AutonomousTicondeRobot();
 

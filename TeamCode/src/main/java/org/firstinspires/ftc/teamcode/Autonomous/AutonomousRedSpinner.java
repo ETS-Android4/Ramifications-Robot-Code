@@ -24,9 +24,9 @@ public class AutonomousRedSpinner extends LinearOpMode {
         TicondeRobot.HaltAndCatchFire(550);
         robot.move(0,0,0);
         TicondeRobot.HaltAndCatchFire(50);
-        robot.runSpinner(true);
+        robot.runSpinner(false);
         robot.setMovement(-.25,-0.25,-0.25,-0.25);
-        robot.runSpinner(true);
+        robot.runSpinner(false);
         robot.setMovement(0,0,0,0);
 
 
